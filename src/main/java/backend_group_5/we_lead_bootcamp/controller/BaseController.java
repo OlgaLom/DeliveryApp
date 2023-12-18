@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 public abstract class BaseController<T extends BaseModel, R extends BaseResource> extends BaseComponent {
+//    T stands for Type | R stands for Resource
     protected abstract BaseService<T, Long> getBaseService();
     protected abstract BaseMapper<T, R> getMapper();
 
@@ -21,7 +22,7 @@ public abstract class BaseController<T extends BaseModel, R extends BaseResource
     public ResponseEntity<ApiResponse<R>> get(@PathVariable("id") final Long id){
         return ResponseEntity.ok(
                 ApiResponse.<R>builder()
-                        .data(getMapper().toResource(getBaseService().get(id)))
+                        .data(getMapper().toResource(getBaseService().getById(id)))
                         .build());
     }
 

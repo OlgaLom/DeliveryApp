@@ -6,10 +6,11 @@ import com.fasterxml.jackson.databind.ser.Serializers;
 import java.util.List;
 
 public interface BaseService<T extends BaseModel, K> {
+//    T stands for Type | K stands for Key
     T create(T item);
     List<T> createAll(List<T> items);
 
-    List<T> CreateAll(T... items);
+    List<T> createAll(T... items);
 
     void update(T item);
 
@@ -17,7 +18,7 @@ public interface BaseService<T extends BaseModel, K> {
 
     void deleteById(K id);
 
-    T get(K item);
+    T getById(K item);
 
     boolean exists(T item);
 
