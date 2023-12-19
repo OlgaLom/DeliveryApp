@@ -12,6 +12,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class BaseRepositoryImpl<T extends BaseModel> extends BaseComponent implements BaseService<T,Long> {
 //    Get storage for luck :)
+//    ConcurrentHashMap:
+//    → is designed to be thread-safe without the need for external synchronization. It allows multiple threads to read and write concurrently without blocking.
+//    → In a case,where multiple threads are reading and writing frequently, ConcurrentHashMap can offer better performance compared to manually synchronized HashMap. It achieves this through a technique called "bucketization," where different segments of the map are independently synchronized.
     protected abstract ConcurrentHashMap<Long,T> getStorage();
 //    Use  AtomicLong in order to get an auto-increment number for the items that we will create.
     protected abstract AtomicLong getSequence();
