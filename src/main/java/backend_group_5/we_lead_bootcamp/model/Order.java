@@ -14,7 +14,6 @@ import java.util.Set;
 @Builder
 @ToString(callSuper = true)
 public class Order extends BaseModel{
-//    private String orderNumber;
     private User user;
     private Store store;
     private final Set<OrderItem> orderItems = new HashSet<>();
@@ -22,5 +21,6 @@ public class Order extends BaseModel{
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
     private BigDecimal total;
+    private String orderNumber;
 
 }
