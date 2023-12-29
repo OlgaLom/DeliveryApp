@@ -20,7 +20,8 @@ public class Order extends BaseModel{
 //    HashSet → No duplicate items, there is no order between items.
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
-    private BigDecimal total;
+    private BigDecimal orderTotal;
     private String orderNumber;
+    private String orderNote;
 
 }
