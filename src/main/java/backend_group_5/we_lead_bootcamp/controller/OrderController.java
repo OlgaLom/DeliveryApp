@@ -5,10 +5,13 @@ import backend_group_5.we_lead_bootcamp.mapper.OrderMapper;
 import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.OrderService;
+import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 // @RestController:
 // → With this annotation we define this class responsibly for handling incoming request and returning responses
@@ -31,6 +34,22 @@ public class OrderController extends BaseController<Order, OrderResource>{
     @Override
     protected BaseMapper<Order, OrderResource> getMapper(){return orderMapper;}
 
+    // Get order by order number
+    @GetMapping(params = {"orderNumber"})
+    public ResponseEntity<ApiResponse<OrderResource>> get(@RequestParam("orderNumber") final String ordNumber){
+        return ResponseEntity.ok(
+                ApiResponse.<OrderResource>builder()
+                        .data(orderMapper.toResource(orderService.FindByOrderNumber(ordNumber)))
+                        .build());
+    }
 
+    //Get all orders
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findAll(){
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(orderService.findAll()))
+                        .build());
+    }
 
 }
