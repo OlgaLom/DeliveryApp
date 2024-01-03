@@ -4,6 +4,7 @@ import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.BaseModel;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent implements BaseService<T,Long>{
@@ -15,6 +16,12 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
     @Override
     public List<T> createAll(final List<T> items){return getRepository().createAll(items);}
+
+    @Override
+    public List<T> createAll(final T... items) {
+        return createAll(Arrays.asList(items));
+    }
+
 
     @Override
     public void update(final T item){
