@@ -18,4 +18,14 @@ public class OrderRepositoryImpl extends BaseRepositoryImpl<Order> implements Or
 
     @Override
     public AtomicLong getSequence() { return sequence; }
+
+    @Override
+    public Order findByOrderNumber(String orderNum) {
+        return storage.values().stream()
+                .filter(ord -> orderNum.equalsIgnoreCase(ord.getOrderNumber()))
+                .findFirst()
+                .orElse(null);
+
+        // equalsIgnoreCase => ignoring differences in case.
+    }
 }
