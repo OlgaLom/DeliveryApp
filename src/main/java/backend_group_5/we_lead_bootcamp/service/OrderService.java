@@ -1,9 +1,10 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Order;
-import backend_group_5.we_lead_bootcamp.model.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.User;
+
+import java.util.List;
 
 public interface OrderService extends BaseService<Order, Long>{
     Order InitiateOrder(User user, Store store);
@@ -18,11 +19,12 @@ public interface OrderService extends BaseService<Order, Long>{
 
     void SelectAddress(User user);
 
-    void SelectPaymentMethod(User user);
+    void SelectPaymentMethod(Order order,User user);
 
-    // Ways to create method for Finalize and order.
-//    An order
-    //Order FinalizeOrder(Order order, PaymentMethod p_method,  )
+    void UpdateOrderNote(Order order);
 
+    Order FinalizeOrder(Order order);
+
+    Order FindByOrderNumber(String OrderNumber);
 
 }
