@@ -19,7 +19,7 @@ public class OrderResource extends BaseResource{
     private UserResource user;
     private Set<OrderItemResource> orderItems = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING)  // We declared in our application yml the default date format.
-    private Date submitOrderDate;
+    private Date CreateOrderDate;
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
     private Integer orderTotal;
