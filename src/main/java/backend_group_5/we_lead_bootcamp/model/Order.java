@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,5 +24,7 @@ public class Order extends BaseModel{
     private BigDecimal orderTotal;
     private String orderNumber;
     private String orderNote;
+    private Date CreateDate;
+    private Date UpdateDate;
 
 }
