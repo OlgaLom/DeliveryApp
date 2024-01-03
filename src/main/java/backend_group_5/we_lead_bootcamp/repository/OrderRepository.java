@@ -9,5 +9,5 @@ import java.util.concurrent.ConcurrentHashMap;
 // [ its primary purpose is to inform Spring to manage the bean lifecycle and provide additional features specific to data access. ]
 @Repository
 public interface OrderRepository extends BaseRepository<Order,Long>{
-
+    Order findByOrderNumber(final String orderNum);
 }
