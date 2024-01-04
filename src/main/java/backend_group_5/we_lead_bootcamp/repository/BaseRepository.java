@@ -17,7 +17,7 @@ public interface BaseRepository<T extends BaseModel, K> {
 
     T getById(K id);
 
-    boolean exists(T item);
+    boolean exists(Long item);
 
     List<T> findAll();
 

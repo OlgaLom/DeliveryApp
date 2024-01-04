@@ -1,9 +1,6 @@
 package backend_group_5.we_lead_bootcamp.service;
 
-import backend_group_5.we_lead_bootcamp.model.Order;
-import backend_group_5.we_lead_bootcamp.model.OrderItem;
-import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.User;
+import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;

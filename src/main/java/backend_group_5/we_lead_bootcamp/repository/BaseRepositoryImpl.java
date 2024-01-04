@@ -63,7 +63,7 @@ public abstract class BaseRepositoryImpl<T extends BaseModel> extends BaseCompon
     public T getById(final Long id){ return getStorage().get(id);}
 
     @Override
-    public boolean exists(final T item) {
+    public boolean exists(final Long item) {
         return getStorage().containsKey(item.getId());
     }
 

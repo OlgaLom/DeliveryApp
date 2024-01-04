@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
+import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService  {
+public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService {
+
     private final StoreRepository storeRepository;
 
     @Autowired
@@ -44,6 +46,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
+    public void deleteStoreCategory(Long storeId) {
+
+    }
+
+    @Override
     public void deleteStoreById(Long storeId) {
         storeRepository.deleteById(storeId);
     }
@@ -54,7 +61,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-   public boolean doesStoreExist(Long storeId) {
+    public boolean doesStoreExist(Long storeId) {
         return storeRepository.exists(storeId);
     }
 
@@ -66,6 +73,16 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     @Override
     public long countStores() {
         return count();
+    }
+
+    @Override
+    public List<Store> createAll(Store... items) {
+        return null;
+    }
+
+    @Override
+    protected BaseRepository<Store, Long> getRepository() {
+        return null;
     }
 }
 

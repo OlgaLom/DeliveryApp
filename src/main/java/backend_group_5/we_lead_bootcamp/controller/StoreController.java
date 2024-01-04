@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("stores")
+@RequestMapping("/stores")
 @RequiredArgsConstructor
-public class StoreController extends BaseController <Store, StoreResource> {
+public class StoreController extends BaseController<Store, StoreResource> {
+
 
     private final StoreService storeService;
     private final StoreMapper storeMapper;
@@ -22,6 +23,7 @@ public class StoreController extends BaseController <Store, StoreResource> {
     protected BaseService<Store, Long> getBaseService() {
         return storeService;
     }
+
     @Override
     protected BaseMapper<Store, StoreResource> getMapper() {
         return storeMapper;

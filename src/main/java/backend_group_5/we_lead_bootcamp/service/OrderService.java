@@ -1,9 +1,6 @@
 package backend_group_5.we_lead_bootcamp.service;
 
-import backend_group_5.we_lead_bootcamp.model.Order;
-import backend_group_5.we_lead_bootcamp.model.PaymentMethod;
-import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.User;
+import backend_group_5.we_lead_bootcamp.model.*;
 
 public interface OrderService extends BaseService<Order, Long>{
     Order InitiateOrder(User user, Store store);
