@@ -15,6 +15,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements User
 
     @Override
     protected AtomicLong getSequence() {
+
         return sequence;
     }
 

@@ -10,10 +10,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl extends BaseServiceImpl<Product> implements ProductService{
-    @Override
-    public List<Product> createAll(Product... items) {
-        return null;
-    }
 
     @Override
     protected BaseRepository<Product, Long> getRepository() {

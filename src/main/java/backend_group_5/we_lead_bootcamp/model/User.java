@@ -1,4 +1,8 @@
 package backend_group_5.we_lead_bootcamp.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +16,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class User extends  BaseModel{
-    private long id;
+@Entity
+@Table(name = "_user")
+public class User extends  BaseModel {
+    @Id
+    //annotation for unique identifier of user class
+    @GeneratedValue
+    //gia na to kanei generate mono toy to Id, default strategy auto
+    private Long id;
     private String email;
     private Integer phone;
     private String username;
@@ -24,4 +34,5 @@ public class User extends  BaseModel{
     private String firstName;
     private  String lastName;
     private  String city;
+    private AppUserRole appUserRole;
 }

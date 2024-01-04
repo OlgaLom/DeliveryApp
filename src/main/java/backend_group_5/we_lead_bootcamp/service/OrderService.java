@@ -4,7 +4,7 @@ import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.model.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.User;
-
+import backend_group_5.we_lead_bootcamp.model.Store;
 public interface OrderService extends BaseService<Order, Long>{
     Order InitiateOrder(User user, Store store);
 //    We probably need to add the store also

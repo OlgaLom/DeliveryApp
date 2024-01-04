@@ -14,7 +14,8 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
     public T create(final T item){ return getRepository().create(item);}
 
     @Override
-    public List<T> createAll(final List<T> items){return getRepository().createAll(items);}
+    public List<T> createAll(final T... items){return getRepository().createAll(items);}
+    public List<T> createAll(List<T> items){return null;}
 
     @Override
     public void update(final T item){

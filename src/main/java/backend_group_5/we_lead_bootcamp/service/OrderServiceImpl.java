@@ -3,6 +3,7 @@ package backend_group_5.we_lead_bootcamp.service;
 import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.model.OrderItem;
 import backend_group_5.we_lead_bootcamp.model.Product;
+import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
@@ -87,6 +88,16 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         }
     }
 
+    @Override
+    public void SelectAddress(User user) {
+
+    }
+
+    @Override
+    public void SelectPaymentMethod(User user) {
+
+    }
+
     // ~~~~ TO DO ~~~~
     // Create method Finalize Order
 
@@ -103,5 +114,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Order> createAll(Order... items) {
+        return null;
     }
 }

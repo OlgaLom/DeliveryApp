@@ -28,7 +28,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User findByEmail(String email) {
-        return null;
+
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -56,8 +57,5 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return null;
     }
 
-    @Override
-    public List<User> createAll(User... items) {
-        return null;
-    }
+
 }
