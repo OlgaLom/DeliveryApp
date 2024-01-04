@@ -61,7 +61,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public boolean doesStoreExist(Long storeId) {
+    public boolean doesStoreExist(Store storeId) {
         return storeRepository.exists(storeId);
     }
 

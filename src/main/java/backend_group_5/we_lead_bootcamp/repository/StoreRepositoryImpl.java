@@ -32,4 +32,9 @@ public class StoreRepositoryImpl extends BaseRepositoryImpl<Store> implements St
                 .toList();
     }
 
+    /*@Override edw evgaze provlima diarkws (mporei na epireastike to master gt to 1o change katalathos pige ekei uwu
+    sto Base logw tou exists method me Long h T item - )
+    public boolean exists(Long item) {
+        return false;
+    }*/
 }
