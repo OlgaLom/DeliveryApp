@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
 @Repository
-public interface CategoryRepositoryImpl extends BaseRepositoryImpl<Category> implements CategoryRepository{
+public class CategoryRepositoryImpl extends BaseRepositoryImpl<Category> implements CategoryRepository{
     private final ConcurrentHashMap<Long,Category> storage=new ConcurrentHashMap<>();
     private final AtomicLong sequence =new AtomicLong(0);
 
