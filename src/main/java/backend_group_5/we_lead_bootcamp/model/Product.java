@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 @ToString(callSuper = true)
 
 public class Product extends BaseModel {
-    private Long id;
     private String name;
     private BigDecimal price;
     private String description;
     private Category category;
     private Store store;
+    private String serial;
 }
