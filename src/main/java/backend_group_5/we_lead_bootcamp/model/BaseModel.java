@@ -10,5 +10,5 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class BaseModel implements Serializable {
-    private long id;
+    private Long id;
 }
