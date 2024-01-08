@@ -31,7 +31,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Override
     public Product create(Product product, final Long categoryId) {
-        var category=categoryService.get(categoryId);
+        var category = categoryService.getById(categoryId);
         product.setCategory(category);
         return productRepository.create(product);
     }
