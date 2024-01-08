@@ -12,4 +12,6 @@ public interface UserRepository extends BaseRepository<User,Long>{
     User updatePhone(Integer phone);
     User updateEmail(String email);
     User updatePassword(String password);
+
+
 }

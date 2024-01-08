@@ -22,7 +22,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements User
 
     @Override
     public User createAccount(User user) {
-        return null;
+        create(user);
+        return user;
     }
 
     @Override
