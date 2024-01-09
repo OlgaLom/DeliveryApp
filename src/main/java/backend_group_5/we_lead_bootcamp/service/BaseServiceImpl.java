@@ -22,7 +22,6 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
         return createAll(Arrays.asList(items));
     }
 
-
     @Override
     public void update(final T item){
         getRepository().update(item);
