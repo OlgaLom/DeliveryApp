@@ -9,5 +9,5 @@ public interface BaseMapper<D,R> {
     List<R> toResources(List<D> domain);
     D toDomain(R resource);
 
-    List<D> toDomains(List<R> resources);
+  //  List<D> toDomains(List<R> resources);
 }

@@ -1,11 +1,7 @@
 package backend_group_5.we_lead_bootcamp.model;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +20,8 @@ import java.util.List;
 public class User extends  BaseModel implements UserDetails {
     @Id
     //annotation for unique identifier of user class
-    @GeneratedValue
+   @GeneratedValue
+    @Column(name="_user_id")
     //gia na to kanei generate mono toy to Id, default strategy auto
     private Long id;
     private String email;
@@ -38,7 +35,7 @@ public class User extends  BaseModel implements UserDetails {
     private String firstName;
     private  String lastName;
     private  String city;
-    @Enumerated(EnumType.STRING)
+   // @Enumerated(EnumType.STRING)
     private Role appUserRole;
 
     @Override

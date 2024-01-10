@@ -1,12 +1,10 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
-import backend_group_5.we_lead_bootcamp.model.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.PaymentMethod;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Value;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,7 +18,7 @@ public class OrderResource extends BaseResource{
     private Set<OrderItemResource> orderItems = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING)  // We declared in our application yml the default date format.
     private Date submitOrderDate;
-    private OrderStatus orderStatus;
+ //   private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
     private Integer orderTotal;
 }
