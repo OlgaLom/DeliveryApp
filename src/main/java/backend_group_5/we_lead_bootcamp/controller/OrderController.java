@@ -2,12 +2,13 @@ package backend_group_5.we_lead_bootcamp.controller;
 
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
 import backend_group_5.we_lead_bootcamp.mapper.OrderMapper;
-import backend_group_5.we_lead_bootcamp.model.Order;
+import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.OrderService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     public ResponseEntity<ApiResponse<OrderResource>> get(@RequestParam("orderNumber") final String ordNumber){
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.FindByOrderNumber(ordNumber)))
+                        .data(orderMapper.toResource(orderService.findByOrderNumber(ordNumber)))
                         .build());
     }
 
@@ -51,5 +52,57 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResources(orderService.findAll()))
                         .build());
     }
+
+    //Initiate Order
+    @PostMapping(params = {"user", "store"})
+    @RequestMapping("create")
+    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestParam User user, @RequestParam Store store) {
+        return ResponseEntity.ok(
+                ApiResponse.<OrderResource>builder()
+                        .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
+                        .build());
+    }
+
+    //Add item
+    @PostMapping(params = {"order","product","quantity"})
+    @RequestMapping("additem")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addItem( @RequestParam Order order, @RequestParam Product product, @RequestParam int quantity){
+        orderService.addItem(order, product, quantity);
+    }
+
+    //Update item
+    @PutMapping(params = {"order","product","quantity"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping("updateitem")
+    public void updateItem(@RequestParam Order order, @RequestParam Product product, @RequestParam int quantity){
+        orderService.updateItem(order,product,quantity);
+    }
+    //Delete item - NOT SURE
+    @DeleteMapping(params = {"order","product"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping("removeitem")
+    public void removeItem(@RequestParam Order order, @RequestParam Product product){
+        //SHOULD I CONVERT OBJECTS TO RESOURCES?
+        orderService.removeItem(order,product);
+    }
+
+    //Finalize Order
+    @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
+    @RequestMapping("create")
+    public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
+            @RequestParam Order order,
+            @RequestParam PaymentMethod paymentMethod,
+            @RequestParam Address address,
+            @RequestParam String orderNote) {
+        return ResponseEntity.ok(
+                ApiResponse.<OrderResource>builder()
+                        .data(orderMapper.toResource(orderService.finalizeOrder(order,paymentMethod,address,orderNote)))
+                        .build());
+    }
+
+
+
+
 
 }
