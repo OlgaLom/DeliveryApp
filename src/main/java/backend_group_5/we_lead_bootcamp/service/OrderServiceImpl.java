@@ -7,20 +7,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
     private final OrderRepository orderRepository;
+
     @Override
     protected BaseRepository<Order, Long> getRepository() {
         return orderRepository;
     }
 
     @Override
-    public Order InitiateOrder(final User user, final Store store) {
+    public Order initiateOrder(final User user, final Store store) {
         return Order.builder().user(user).store(store).build();
     }
 
@@ -50,7 +53,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
     @Override
-    public void UpdateItem(Order order, Product product, int qty) {
+    public void updateItem(final Order order,final Product product, int qty) {
         if (checkNullability(order,product)){
             return;
         }
@@ -63,14 +66,12 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         // ~~~~~~~~~~
         // There is a different approach to these two steps. The other approach is to check if the product already exists in the collection getOrderItems and if it's exists then update just the quantity, if not added to the collection. This approach is better if we know that we will have many updates on the products. That depends on the real data flow of the app.
 
-        //~~~~ TO DO ~~~~
-        // add order number instead of order obj
-        logger.trace("Product[{}] is updated for the order with number #{}",product,order);
+        logger.trace("Product[{}] is updated for the order {}",product.getSerial(),order);
 
     }
 
     @Override
-    public void RemoveItem(Order order, Product product) {
+    public void removeItem(final Order order,final Product product) {
         if (checkNullability(order,product)){
             return;
         }
@@ -79,30 +80,26 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         boolean isRemoved = order.getOrderItems().removeIf(oi_obj -> oi_obj.getProduct().getId().equals(product.getId()));
 
         if (isRemoved){
-            logger.trace("Product[{}] is removed for the order with number #{}",product,order);
+            logger.trace("Product[{}] is removed for the order {}",product.getSerial(),order);
         }else{
-            logger.trace("No removal performed. Product [{}] not found in order with number #{}.",product,order);
+            logger.trace("No removal performed. Product [{}] not found in order {}.",product.getSerial(),order);
         }
     }
-    @Override
-    public void SelectPaymentMethod(Order order,User user) {
-        order.setPaymentMethod(user.getPaymentMethod());
-        logger.trace("Order Payment is set for order #{}",order);
-    }
 
+//    @Override
+//    public void updateOrderNote(final Order order,final String orderNote) {
+//        order.setOrderNote(orderNote);
+//        logger.trace("Order note is added for order {}",order);
+//    }
 
-    // ~~~~ TO DO ~~~~
-    // Add method about order note
-    // Complete method Finalize Order
     @Override
-    public Order FinalizeOrder(Order order){
-        //Check if order object if it is empty
+    public Order finalizeOrder(final Order order,final PaymentMethod paymentMethod,final Address address, final String orderNote){
+        //Check order object if it is empty
         if (!isOrderEmpty(order)){
             logger.warn("Order should have a user, at least one order item, and payment type defined before being able to finalize the order.");
             return null;
         }
-
-        // Set order fields with proper values
+        // Set creation date for order
         order.setCreateDate(new Date());
         // Create a temp obj for total price of order. Initialize it as zero
         BigDecimal temp_total = BigDecimal.ZERO;
@@ -113,8 +110,20 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         // Set the final order total
         order.setOrderTotal(temp_total);
 
+        // Set Payment Method
+        order.setPaymentMethod(paymentMethod);
+
+        // Set Address
+        order.setAddress(address);
+        // Set order note if any
+        if ( !orderNote.isEmpty() )
+            order.setOrderNote(orderNote);
+
         // Set Order status
         order.setOrderStatus(OrderStatus.IN_PROGRESS);
+
+        // Create and set Unique Order number
+        order.setOrderNumber( generateOrderNumber() );
 
         // Complete finalization of order
         return create(order);
@@ -122,7 +131,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     }
 
     @Override
-    public Order FindByOrderNumber(final String OrderNumber){
+    public Order findByOrderNumber(final String OrderNumber){
         return orderRepository.findByOrderNumber(OrderNumber);
     }
 
@@ -145,5 +154,24 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     private boolean isOrderEmpty(Order order){
         return order != null && !order.getOrderItems().isEmpty() && order.getUser() != null && order.getPaymentMethod() != null;
 
+    }
+
+    // Generates a unique order number combining random letters and a timestamp.
+    private String generateOrderNumber(){
+
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder ord_num = new StringBuilder();
+
+        // Add 4 random letters
+        for (int i = 0; i < 4; i++) {
+            //ThreadLocalRando: Generates a random integer between 0 and given number, in our cache alphabet length
+            int randomIndex = ThreadLocalRandom.current().nextInt(alphabet.length());
+            ord_num.append(alphabet.charAt(randomIndex));
+        }
+        // Generate a timestamp part
+        ord_num.append(ZonedDateTime.now().format(DateTimeFormatter.ofPattern( "yyMMddhhmmss" )));
+
+        // Return the order number
+        return ord_num.toString();
     }
 }
