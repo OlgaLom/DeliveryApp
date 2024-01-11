@@ -1,30 +1,23 @@
 package backend_group_5.we_lead_bootcamp.service;
 
-import backend_group_5.we_lead_bootcamp.model.Order;
-import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.User;
-
-import java.util.List;
+import backend_group_5.we_lead_bootcamp.model.*;
 
 public interface OrderService extends BaseService<Order, Long>{
-    Order InitiateOrder(User user, Store store);
+    Order initiateOrder(User user, Store store);
 //    We probably need to add the store also
 //    Order InitiateOrder(User user, Store store);
 
     void addItem(Order order, Product product, int quantity);
 
-    void UpdateItem(Order order, Product product, int quantity);
+    void updateItem(Order order, Product product, int quantity);
 
-    void RemoveItem(Order order, Product product);
+    void removeItem(Order order, Product product);
 
-    void SelectAddress(User user);
+    //There is no need for this methods. On finilizeOrder mathod just add the order note if any
+    //void updateOrderNote(Order order, String orderNote);
 
-    void SelectPaymentMethod(Order order,User user);
+    Order finalizeOrder(Order order, PaymentMethod paymentMethod, Address address,String orderNote);
 
-    void UpdateOrderNote(Order order);
-
-    Order FinalizeOrder(Order order);
-
-    Order FindByOrderNumber(String OrderNumber);
+    Order findByOrderNumber(String OrderNumber);
 
 }
