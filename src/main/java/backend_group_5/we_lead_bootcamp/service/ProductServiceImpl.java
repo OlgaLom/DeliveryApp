@@ -1,6 +1,5 @@
 package backend_group_5.we_lead_bootcamp.service;
 
-import backend_group_5.we_lead_bootcamp.model.Category;
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
@@ -13,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl extends BaseServiceImpl<Product> implements ProductService{
     private final ProductRepository productRepository;
-    private final CategoryService categoryService;
+    private final ProductCategoryService categoryService;
     @Override
     public List<Product> createAll(Product... items) {
         return null;
@@ -32,7 +31,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     @Override
     public Product create(Product product, final Long categoryId) {
         var category=categoryService.get(categoryId);
-        product.setCategory(category);
+        product.setProductCategory(category);
         return productRepository.create(product);
     }
 }

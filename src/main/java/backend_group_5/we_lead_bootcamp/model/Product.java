@@ -15,7 +15,7 @@ public class Product extends BaseModel {
     private String name;
     private BigDecimal price;
     private String description;
-    private Category category;
+    private ProductCategory productCategory;
     private Store store;
     private String serial;
 }
