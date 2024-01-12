@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(callSuper = true)
 public class User extends  BaseModel{
-    private long id;
+    private Long id;
     private String email;
     private Integer phone;
     private String username;
@@ -24,4 +24,7 @@ public class User extends  BaseModel{
     private String firstName;
     private  String lastName;
     private  String city;
+    private PaymentMethod paymentMethod;
+    //SetPaymentmethod
+
 }

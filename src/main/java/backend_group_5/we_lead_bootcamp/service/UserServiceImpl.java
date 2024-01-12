@@ -4,7 +4,6 @@ import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
     @Override
     public User createAccount(final User user){
-        return null;
+        //User user = new User();
+        user.setEmail(user.getEmail());
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
+       // user.setAppUserRole(Role.USER);
+      //  user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.createAccount(user);
+        return user;
     }
     @Override
     public void deleteAccount(final User  user){
