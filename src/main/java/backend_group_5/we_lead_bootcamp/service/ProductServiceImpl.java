@@ -15,8 +15,8 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
     @Override
-    public List<Product> createAll(Product... items) {
-        return null;
+    public List<Product> createAll(List<Product> products) {
+        return productRepository.createAll(products);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
 
     @Override
-    public Product create(Product product, final Long categoryId) {
+    public Product createProduct(Product product, final Long categoryId) {
         var category = categoryService.getById(categoryId);
         product.setCategory(category);
         return productRepository.create(product);
