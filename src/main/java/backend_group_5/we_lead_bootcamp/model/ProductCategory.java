@@ -9,6 +9,6 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString(callSuper = true)
-public class Category extends BaseModel {
+public class ProductCategory extends BaseModel {
     private String description;
 }

@@ -18,5 +18,5 @@ public class ProductResource extends BaseResource {
     @NotNull
     private BigDecimal price;
     @NotNull
-    private CategoryResource category;
+    private ProductCategoryResource category;
 }

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class CategoryResource extends BaseResource{
+public class ProductCategoryResource extends BaseResource{
     @NotNull(message="Description cannot be null")
     private String description;
 }
