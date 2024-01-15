@@ -1,6 +1,7 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.Order;
+import backend_group_5.we_lead_bootcamp.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,4 +11,5 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public interface OrderRepository extends BaseRepository<Order,Long>{
     Order findByOrderNumber(final String orderNum);
+
 }

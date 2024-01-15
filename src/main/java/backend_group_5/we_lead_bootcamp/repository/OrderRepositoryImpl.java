@@ -1,6 +1,7 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.Order;
+import backend_group_5.we_lead_bootcamp.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,4 +29,5 @@ public class OrderRepositoryImpl extends BaseRepositoryImpl<Order> implements Or
 
         // equalsIgnoreCase => ignoring differences in case.
     }
+
 }
