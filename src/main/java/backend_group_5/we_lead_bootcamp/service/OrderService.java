@@ -13,9 +13,6 @@ public interface OrderService extends BaseService<Order, Long>{
 
     void removeItem(Order order, Product product);
 
-    //There is no need for this methods. On finilizeOrder mathod just add the order note if any
-    //void updateOrderNote(Order order, String orderNote);
-
     Order finalizeOrder(Order order, PaymentMethod paymentMethod, Address address,String orderNote);
 
     Order findByOrderNumber(String OrderNumber);

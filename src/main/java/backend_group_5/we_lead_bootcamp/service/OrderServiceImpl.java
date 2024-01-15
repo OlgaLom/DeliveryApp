@@ -86,12 +86,6 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         }
     }
 
-//    @Override
-//    public void updateOrderNote(final Order order,final String orderNote) {
-//        order.setOrderNote(orderNote);
-//        logger.trace("Order note is added for order {}",order);
-//    }
-
     @Override
     public Order finalizeOrder(final Order order,final PaymentMethod paymentMethod,final Address address, final String orderNote){
         //Check order object if it is empty
