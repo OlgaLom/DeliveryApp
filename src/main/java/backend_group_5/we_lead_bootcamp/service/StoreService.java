@@ -17,6 +17,7 @@ public interface StoreService extends BaseService<Store, Long> {
     void deleteStoreCategory(Long storeId);
     void deleteStoreById(Long storeId);
     Store getStoreById(Long storeId);
+    Store getByCategory(StoreCategory category);
     boolean doesStoreExist(Store store);
     List<Store> findAllStores();
     long countStores();
