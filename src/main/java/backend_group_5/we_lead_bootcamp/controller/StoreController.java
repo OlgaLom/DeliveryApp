@@ -29,4 +29,16 @@ public class StoreController extends BaseController<Store, StoreResource> {
         return storeMapper;
     }
     //...
+
+    /*@ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<Void> handleNoSuchElementException(NoSuchElementException ex) {
+        return ApiResponse.<Void>builder()
+                .apiError(ApiError.builder()
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .message("Resource not found")
+                        .build())
+                .build();
+    }
+*/
 }

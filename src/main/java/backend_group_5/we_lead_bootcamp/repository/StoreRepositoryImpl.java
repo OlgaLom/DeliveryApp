@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class StoreRepositoryImpl extends BaseRepositoryImpl<Store> implements StoreRepository {
@@ -25,12 +26,23 @@ public class StoreRepositoryImpl extends BaseRepositoryImpl<Store> implements St
     }
 
     @Override
-    public List<Store> findByCategory(StoreCategory category) {
+    public List<Store> findStoresByCategory(StoreCategory category) {
         //ok auto isws thelei allagi ston tropo pou filtrarei
-        return storage.values().stream()
-                .filter(store -> store.getCategory().equals(category))
-                .toList();
+        return storage.values()
+                .stream()
+                .filter(c ->category.equals(c.getCategory()))
+                .collect(Collectors.toList());
     }
+    @Override
+    public Store findByCategory(StoreCategory category) {
+        return storage.values()
+                .stream()
+                .filter(c -> category.equals(c.getCategory()))
+                .findFirst()
+                .orElse(null);
+
+    }
+
 
     /*@Override edw evgaze provlima diarkws (mporei na epireastike to master gt to 1o change katalathos pige ekei uwu
     sto Base logw tou exists method me Long h T item - )

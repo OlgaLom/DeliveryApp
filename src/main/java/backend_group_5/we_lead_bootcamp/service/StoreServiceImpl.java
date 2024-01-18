@@ -30,8 +30,14 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public List<Store> getStoresByCategory(StoreCategory category) {
+    public Store getByCategory(StoreCategory category) {
         return storeRepository.findByCategory(category);
+    }
+
+    @Override
+    public List<Store> getStoresByCategory(StoreCategory category) {
+        return storeRepository.findStoresByCategory(category);
+        //expects to retrieve a list of stores that match the given category
     }
 
     @Override
