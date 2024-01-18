@@ -1,12 +1,13 @@
 package backend_group_5.we_lead_bootcamp.controller;
 
-import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
-import backend_group_5.we_lead_bootcamp.mapper.OrderMapper;
+import backend_group_5.we_lead_bootcamp.mapper.*;
 import backend_group_5.we_lead_bootcamp.model.*;
-import backend_group_5.we_lead_bootcamp.service.BaseService;
-import backend_group_5.we_lead_bootcamp.service.OrderService;
+import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
+import backend_group_5.we_lead_bootcamp.transfer.resource.ProductResource;
+import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
+import backend_group_5.we_lead_bootcamp.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,16 @@ import java.util.List;
 public class OrderController extends BaseController<Order, OrderResource>{
     private final OrderService orderService;
     private final OrderMapper orderMapper;
+
+    private final ProductService productService;
+    private final ProductMapper productMapper;
+
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    private final StoreService storeService;
+    private final StoreMapper storeMapper;
+
 
     @Override
     protected BaseService<Order,Long> getBaseService(){return orderService;}
@@ -56,7 +67,9 @@ public class OrderController extends BaseController<Order, OrderResource>{
     //Initiate Order
     @PostMapping(params = {"user", "store"})
     @RequestMapping("create")
-    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestParam User user, @RequestParam Store store) {
+    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestParam UserResource userR, @RequestParam StoreResource storeR) {
+        var user = userMapper.toDomain(userR);
+        var store = storeMapper.toDomain(storeR);
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
                         .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
@@ -67,37 +80,51 @@ public class OrderController extends BaseController<Order, OrderResource>{
     @PostMapping(params = {"order","product","quantity"})
     @RequestMapping("additem")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addItem( @RequestParam Order order, @RequestParam Product product, @RequestParam int quantity){
-        orderService.addItem(order, product, quantity);
+    public void addItem(@RequestParam OrderResource orderR, @RequestParam ProductResource productR, @RequestParam int quantity){
+
+            var ord = orderMapper.toDomain(orderR);
+            var prod = productMapper.toDomain(productR);
+
+            orderService.addItem(ord, prod, quantity);
+
     }
 
     //Update item
     @PutMapping(params = {"order","product","quantity"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping("updateitem")
-    public void updateItem(@RequestParam Order order, @RequestParam Product product, @RequestParam int quantity){
-        orderService.updateItem(order,product,quantity);
+    public void updateItem(@RequestParam OrderResource orderR, @RequestParam ProductResource productR, @RequestParam int quantity){
+        //SHOULD I CONVERT OBJECTS TO RESOURCES?
+        var ord = orderMapper.toDomain(orderR);
+        var prod = productMapper.toDomain(productR);
+
+        orderService.updateItem(ord,prod,quantity);
     }
     //Delete item - NOT SURE
     @DeleteMapping(params = {"order","product"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping("removeitem")
-    public void removeItem(@RequestParam Order order, @RequestParam Product product){
-        //SHOULD I CONVERT OBJECTS TO RESOURCES?
-        orderService.removeItem(order,product);
+    public void removeItem(@RequestParam OrderResource orderR, @RequestParam ProductResource productR){
+        var ord = orderMapper.toDomain(orderR);
+        var prod = productMapper.toDomain(productR);
+
+        orderService.removeItem(ord,prod);
     }
 
     //Finalize Order
     @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
     @RequestMapping("create")
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
-            @RequestParam Order order,
+            @RequestParam OrderResource orderR,
             @RequestParam PaymentMethod paymentMethod,
             @RequestParam Address address,
             @RequestParam String orderNote) {
+
+        var ord = orderMapper.toDomain(orderR);
+
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.finalizeOrder(order,paymentMethod,address,orderNote)))
+                        .data(orderMapper.toResource(orderService.finalizeOrder(ord,paymentMethod,address,orderNote)))
                         .build());
     }
 
