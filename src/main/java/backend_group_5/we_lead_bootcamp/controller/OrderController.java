@@ -30,13 +30,10 @@ public class OrderController extends BaseController<Order, OrderResource>{
     private final OrderService orderService;
     private final OrderMapper orderMapper;
 
-    private final ProductService productService;
     private final ProductMapper productMapper;
 
-    private final UserService userService;
     private final UserMapper userMapper;
 
-    private final StoreService storeService;
     private final StoreMapper storeMapper;
 
 
@@ -46,14 +43,6 @@ public class OrderController extends BaseController<Order, OrderResource>{
     @Override
     protected BaseMapper<Order, OrderResource> getMapper(){return orderMapper;}
 
-    // Get order by order number
-    @GetMapping(params = {"orderNumber"})
-    public ResponseEntity<ApiResponse<OrderResource>> get(@RequestParam("orderNumber") final String ordNumber){
-        return ResponseEntity.ok(
-                ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.findByOrderNumber(ordNumber)))
-                        .build());
-    }
 
     //Get all orders
     @GetMapping
@@ -64,10 +53,19 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
+    // Get order by order number
+    @GetMapping("{orderNumber}")
+    public ResponseEntity<ApiResponse<OrderResource>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
+        return ResponseEntity.ok(
+                ApiResponse.<OrderResource>builder()
+                        .data(orderMapper.toResource(orderService.findByOrderNumber(ordNumber)))
+                        .build());
+    }
+
     //Initiate Order
-    @PostMapping(params = {"user", "store"})
-    @RequestMapping("create")
-    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestParam UserResource userR, @RequestParam StoreResource storeR) {
+    // @PostMapping(params = {"user", "store"}) // No need for params we will pass the data to the body
+    @RequestMapping("initialize")
+    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestBody final UserResource userR, @RequestBody final StoreResource storeR) {
         var user = userMapper.toDomain(userR);
         var store = storeMapper.toDomain(storeR);
         return ResponseEntity.ok(
@@ -77,34 +75,31 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Add item
-    @PostMapping(params = {"order","product","quantity"})
-    @RequestMapping("additem")
+    // @PostMapping(params = {"order","product","quantity"})
+    @RequestMapping("/items/add")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addItem(@RequestParam OrderResource orderR, @RequestParam ProductResource productR, @RequestParam int quantity){
+    public void addItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR, @RequestBody final int quantity){
 
             var ord = orderMapper.toDomain(orderR);
             var prod = productMapper.toDomain(productR);
 
             orderService.addItem(ord, prod, quantity);
-
     }
 
     //Update item
-    @PutMapping(params = {"order","product","quantity"})
+//    @PutMapping(params = {"order","product","quantity"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping("updateitem")
-    public void updateItem(@RequestParam OrderResource orderR, @RequestParam ProductResource productR, @RequestParam int quantity){
-        //SHOULD I CONVERT OBJECTS TO RESOURCES?
+    @RequestMapping("/items/update")
+    public void updateItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR, @RequestBody final int quantity){
         var ord = orderMapper.toDomain(orderR);
         var prod = productMapper.toDomain(productR);
 
         orderService.updateItem(ord,prod,quantity);
     }
-    //Delete item - NOT SURE
-    @DeleteMapping(params = {"order","product"})
+    //@DeleteMapping(params = {"order","product"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping("removeitem")
-    public void removeItem(@RequestParam OrderResource orderR, @RequestParam ProductResource productR){
+    @RequestMapping("/items/remove")
+    public void removeItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR){
         var ord = orderMapper.toDomain(orderR);
         var prod = productMapper.toDomain(productR);
 
@@ -112,13 +107,13 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Finalize Order
-    @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
-    @RequestMapping("create")
+//    @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
+    @RequestMapping("finalize")
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
-            @RequestParam OrderResource orderR,
-            @RequestParam PaymentMethod paymentMethod,
-            @RequestParam Address address,
-            @RequestParam String orderNote) {
+            @RequestBody final OrderResource orderR,
+            @RequestBody final PaymentMethod paymentMethod,
+            @RequestBody final Address address,
+            @RequestBody final String orderNote) {
 
         var ord = orderMapper.toDomain(orderR);
 
@@ -127,6 +122,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResource(orderService.finalizeOrder(ord,paymentMethod,address,orderNote)))
                         .build());
     }
+
+
 
 
 
