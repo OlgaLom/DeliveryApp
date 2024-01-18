@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -26,5 +28,7 @@ public class StoreResource extends BaseResource {
     private String phone;
     @NotNull
     private Integer vatNumber;
+    private BigDecimal minOrderAmount;
+
 }
 

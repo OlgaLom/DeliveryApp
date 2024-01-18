@@ -7,6 +7,7 @@ import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -52,9 +53,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public void deleteStoreCategory(Long storeId) {
-
-    }
+    public void deleteStoreCategory(Long storeId) {}
 
     @Override
     public void deleteStoreById(Long storeId) {
@@ -79,6 +78,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     @Override
     public long countStores() {
         return count();
+    }
+
+    @Override
+    public BigDecimal calculateTotalOrderAmount(Store store) {
+        return store.calculateTotalOrderAmount();
     }
 
     @Override
