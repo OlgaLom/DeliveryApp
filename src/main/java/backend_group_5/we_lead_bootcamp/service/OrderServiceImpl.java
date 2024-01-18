@@ -165,6 +165,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         // Generate a timestamp part
         ord_num.append(ZonedDateTime.now().format(DateTimeFormatter.ofPattern( "yyMMddhhmmss" )));
 
+        // EXAMPLE ADAC240118100056
         // Return the order number
         return ord_num.toString();
     }
