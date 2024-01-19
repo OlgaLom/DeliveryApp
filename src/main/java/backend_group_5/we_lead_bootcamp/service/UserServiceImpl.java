@@ -1,9 +1,9 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.User;
+import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
@@ -16,10 +16,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 
 
- /*   @Override
+    @Override
     protected BaseRepository<User, Long> getRepository() {
         return userRepository;
-    }*/
+    }
     @Override
     public User createAccount(final User new_user){
 
@@ -76,10 +76,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userRepository.updatePassword(password);
     }
 
-    @Override
+   /* @Override
     protected JpaRepository<User, Long> getRepository() {
         return userRepository;
-    }
+    }*/
 
     /*  @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,10 +1,9 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends BaseRepository<User,Long> {
     User createAccount(User user);
     void deleteAccount(User user);
     User findByEmail(String email);
