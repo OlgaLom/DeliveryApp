@@ -11,4 +11,5 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class ProductCategory extends BaseModel {
     private String description;
+    private String name;
 }
