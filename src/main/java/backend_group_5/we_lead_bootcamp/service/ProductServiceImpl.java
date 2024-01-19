@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductServiceImpl extends BaseServiceImpl<Product> implements ProductService{
     private final ProductRepository productRepository;
     private final ProductCategoryService productCategoryService;
-    private Variation.Size size;
+
     @Override
     public List<Product> createAll(Product... items) {
         return null;
