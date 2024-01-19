@@ -19,6 +19,7 @@ public class UserController extends BaseController<User, UserResource> {
     private final UserService userService;
     private final UserMapper userMapper;
 
+
     @Override
     protected BaseService<User, Long> getBaseService() {
         return userService;
@@ -28,30 +29,74 @@ public class UserController extends BaseController<User, UserResource> {
     protected BaseMapper<User, UserResource> getMapper() {
         return userMapper;
     }
-   /* @Override
-    protected BaseService<User, Long> getBaseService() {
-        return userService;
+
+
+    @ResponseBody
+    @RequestMapping(value = "hello", method = RequestMethod.GET)
+    public String hello() {
+        return "hello world";
     }
 
-    @Override
-    protected BaseMapper<User, UserResource> getMapper() {
-        return userMapper;
-    }*/
-   @ResponseBody
-   @RequestMapping(value = "hello",method = RequestMethod.GET)
-   public String hello(){
-       return "hello world";
-   }
-   @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody final UserResource  userResource){
-         var user = getBaseService().create(getMapper().toDomain(userResource));
-         return new ResponseEntity<>(ApiResponse.<UserResource>builder()
-                 .data(getMapper().toResource(userService.createAccount(user)))
-                 .build(),
+    @PostMapping("signup")
+    public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody final UserResource userResource) {
+        var user = userMapper.toDomain(userResource);
+
+        return new ResponseEntity<>(ApiResponse.<UserResource>builder()
+                .data(userMapper.toResource(userService.createAccount(user)))
+                .build(),
                 getNoCacheHeaders(),
-                 HttpStatus.CREATED);
-     }
+                HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserResource userResource) {
+        var loginRequest = userMapper.toDomain(userResource);
+        String username = loginRequest.getEmail();
+        return new ResponseEntity<>(ApiResponse.<UserResource>builder()
+                .data(userMapper.toResource(userService.logIn(username)))
+                .build(),
+                getNoCacheHeaders(),
+                HttpStatus.CREATED);
+
+    }
+
+
+
+ //   @PostMapping ( "/login")
+   // public ResponseEntity<?> createAuthenticationToken(@RequestBody UserResource authenticationRequest) throws Exception {
+      //  var user = getBaseService().create(getMapper().toDomain(authenticationRequest));
+     //   authenticate(user.getUsername(), user.getPassword());
+
+
+     //   final UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
+      //  Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+     //-   authenticationManager.authenticate(
+       //-         new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    //    final User userDetails = userService.logIn(user);
+      //  final String token = jwtUtil.generateToken(user);
+
+  //  }
+    @PutMapping("/update/phone{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updatePhone(@PathVariable("id") Long id,@RequestBody Integer phone){
+
+        userService.updatePhone(id,phone);
+    }
+    @PutMapping("/update/email{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateEmail(@PathVariable("id") Long id,@RequestBody String email){
+
+            userService.updateEmail(id,email);
+
+    }
+
+
 
 
 }
+
+
+
+
+
 

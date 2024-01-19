@@ -27,7 +27,8 @@ public class UserResource extends BaseResource{
     @NotNull(message = "Email cannot be null")
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "The email format is not correct")
     private String email;
-
+    @NotNull
+    private  String password;
     @NotNull(message = "Firstname cannot be null")
     private String firstname;
 

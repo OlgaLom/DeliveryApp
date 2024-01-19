@@ -1,33 +1,35 @@
 package backend_group_5.we_lead_bootcamp.service;
 
-import backend_group_5.we_lead_bootcamp.model.Role;
 import backend_group_5.we_lead_bootcamp.model.User;
-import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService  {
-    private final UserRepository userRepository;
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
-    @Override
+    private  UserRepository userRepository;
+
+
+
+
+
+
+ /*   @Override
     protected BaseRepository<User, Long> getRepository() {
         return userRepository;
-    }
+    }*/
     @Override
-    public User createAccount(final User userResource){
-        User user = new User();
-        user.setEmail(userResource.getEmail());
-        user.setFirstName(userResource.getFirstName());
-        user.setLastName(userResource.getLastName());
-        user.setAppUserRole(Role.USER);
-      //user.setPassword(passwordEncoder.encode(userResource.getPassword()));
-       userRepository.createAccount(user);
-       return user;
+    public User createAccount(final User new_user){
+
+     //   String encodedPassword = bCryptPasswordEncoder.encode(new_user.getPassword());
+        new_user.setEmail(new_user.getEmail());
+    //    new_user.setUsername(new_user.getEmail());
+     //  new_user.setPassword(encodedPassword);
+   userRepository.createAccount(new_user);
+
+       return new_user;
     }
     @Override
     public void deleteAccount(final User  user){
@@ -42,18 +44,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public boolean logIn(User user) {
+    public User logIn(String username) {
+
         //verify email and password
-     /*   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userResource.getUsername(),userResource.getPassword()));
-        var user = userRepository.findByEmail(userResource.getEmail());
-                //.orElseThrow(()-> new IllegalArgumentException("Invalid username or password"));
-        var jwt = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(new HashMap<>(),user);
-        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
-        jwtAuthenticationResponse.setToken(jwt);
-        jwtAuthenticationResponse.setRefreshToken((String) refreshToken);
-        return jwtAuthenticationResponse;*/
-        return true;
+
+       var user_login = userRepository.findByEmail(username);
+
+        return user_login;
     }
 
     @Override
@@ -62,34 +59,33 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User updatePhone(Integer phone) {
-        return null;
+    public void updatePhone(Long Id,Integer phone) {
+        var user = userRepository.getById(Id);
+        user.setPhone(phone);
+        userRepository.updatePhone(Id,phone);
+
     }
 
     @Override
-    public User updateEmail(String email) {
-        return null;
+    public void updateEmail(Long Id,String email) {
+        userRepository.updateEmail(Id,email);
     }
 
     @Override
-    public User updatePassword(String password) {
-        return null;
+    public void updatePassword(String password) {
+        userRepository.updatePassword(password);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userEmail) {
-        return null;
+    protected JpaRepository<User, Long> getRepository() {
+        return userRepository;
     }
 
-    @Override
-    public UserDetailsService userDetailsService(){
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return userRepository.findByEmail(username);
-            }
-        };
-    }
+    /*  @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username);
+    };*/
+
     /*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

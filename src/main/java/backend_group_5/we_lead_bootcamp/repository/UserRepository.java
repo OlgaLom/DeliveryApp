@@ -1,17 +1,19 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.User;
-import org.springframework.stereotype.Repository;
-@Repository
-public interface UserRepository extends BaseRepository<User,Long>{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface UserRepository extends JpaRepository<User, Long> {
     User createAccount(User user);
     void deleteAccount(User user);
     User findByEmail(String email);
-    void logIn(User user);
+    User logIn(User user);
     void logOut();
-    User updatePhone(Integer phone);
-    User updateEmail(String email);
-    User updatePassword(String password);
+    void updatePhone(Long Id,Integer phone);
+    void updateEmail(Long Id,String email);
+    void updatePassword(String password);
 
 
+ //   Optional<Object> findByUsername(String username);
 }
