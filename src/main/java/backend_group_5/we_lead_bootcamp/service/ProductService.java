@@ -17,8 +17,8 @@ public interface ProductService extends BaseService<Product,Long>{
     void deleteProductById(Long productId);
     long countProducts();
     boolean productExists(Product product);
-    Product getProduct(Product product);
-    Product getProductName(String name);
+    Product getProductById(Product product,Long id);
+    Product getProductName(String name,Long id);
     Product getProductPrice(BigDecimal price);
     Product getProductDescription(String description);
     Variation getVariationSize(Variation.Size size);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,8 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return null;
     }
 
+
+
     @Override
     protected BaseRepository<Product, Long> getRepository()    {
         return productRepository;
@@ -33,46 +36,58 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
     @Override
     public List<Product> createAllProducts(List<Product> products) {
-        return null;
+        return productRepository.createAll(products);
     }
     @Override
     public List<Product> listAllProducts() {
-        return null;
+        return findAll();
     }
 
     @Override
+    public Product createProduct(Product product, final Long categoryId) {
+        var category=productCategoryService.getById(categoryId);
+        product.setProductCategory(category);
+        return productRepository.create(product);
+    }
+    @Override
     public void updateProduct(Product product) {
-
+        getRepository().update(product);
     }
 
     @Override
     public void deleteProduct(Product product) {
-
+        getRepository().delete(product);
     }
 
     @Override
     public void deleteProductById(Long productId) {
-
+        getRepository().deleteById(productId);
     }
 
     @Override
     public long countProducts() {
-        return 0;
+        return getRepository().count();
     }
 
     @Override
-    public boolean productExists(Product product) {
-        return false;
+    public boolean productExists(Product productId) {
+        return productRepository.exists(productId);
     }
 
     @Override
-    public Product getProduct(Product product) {
-        return null;
+    public Product getProductById(Product product,Long id) {
+        if(getRepository().getById(id)==null){
+            throw new NoSuchElementException(String.format("Product with id [%d] not found",id));
+        }
+        return getRepository().getById(id);
     }
 
     @Override
-    public Product getProductName(String name) {
-        return null;
+    public Product getProductName(String name,Long id) {
+        if(getRepository().getById(id)==null){
+            throw new NoSuchElementException(String.format("",id));
+        }
+        return getRepository().getById(id);
     }
 
     @Override
@@ -106,10 +121,5 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     public Store getStore(Store store) {
         return store;
     }
-    @Override
-    public Product createProduct(Product product, final Long categoryId) {
-        var category=productCategoryService.getById(categoryId);
-        product.setProductCategory(category);
-        return productRepository.create(product);
-    }
+
 }

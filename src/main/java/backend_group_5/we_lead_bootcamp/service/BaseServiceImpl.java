@@ -35,6 +35,9 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
     @Override
     public T getById(final Long id) { return getRepository().getById(id); }
 
+//    @Override
+//    public T getByName(final String name){return getRepository().getByName(name);}
+
     @Override
     public boolean exists(final T item){return getRepository().exists(item);}
 
@@ -43,4 +46,5 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
     @Override
     public Long count() { return getRepository().count();  }
+
 }
