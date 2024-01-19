@@ -25,6 +25,11 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory>
     }
 
     @Override
+    public ProductCategory getProductCategoryName(String name) {
+        return null;
+    }
+
+    @Override
     public List<ProductCategory> createAll(ProductCategory... items) {
         return null;
     }

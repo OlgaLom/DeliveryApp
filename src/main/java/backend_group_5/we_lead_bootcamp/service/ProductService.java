@@ -1,12 +1,29 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Product;
+import backend_group_5.we_lead_bootcamp.model.Store;
+import backend_group_5.we_lead_bootcamp.model.Variation;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface ProductService extends BaseService<Product,Long>{
     Product findBySerial(String serial);
-
     Product createProduct(Product product,Long categoryId);
-    Product updateProduct(Product product,Long categoryId);
-    Product deleteProduct(Product product);
-    Product deleteProductById(Product product);
+    List<Product> createAllProducts(List<Product> products);
+    List<Product> listAllProducts();
+    void updateProduct(Product product);
+    void deleteProduct(Product product);
+    void deleteProductById(Long productId);
+    long countProducts();
+    boolean productExists(Product product);
+    Product getProduct(Product product);
+    Product getProductName(String name);
+    Product getProductPrice(BigDecimal price);
+    Product getProductDescription(String description);
+    Variation getVariationSize(Variation.Size size);
+    Variation getVariationFlavour(Variation.Flavours flavours);
+    Variation getVariationSauces(Variation.Sauces sauces);
+    Variation getVariationToppings(Variation.Toppings toppings);
+    Store getStore(Store store);
 }

@@ -12,7 +12,7 @@ public class Variation {
         CARAMEL, HAZELNUT
     }
 
-    public enum Sauce {
+    public enum Sauces {
         KETCHUP, MUSTARD, YELLOW_SAUCE, TZATZIKI, TYROKAFTERI
     }
 
