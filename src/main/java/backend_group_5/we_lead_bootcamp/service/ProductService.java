@@ -21,9 +21,9 @@ public interface ProductService extends BaseService<Product,Long>{
     Product getProductName(String name,Long id);
     Product getProductPrice(BigDecimal price);
     Product getProductDescription(String description);
-    Variation getVariationSize(Variation.Size size);
-    Variation getVariationFlavour(Variation.Flavours flavours);
-    Variation getVariationSauces(Variation.Sauces sauces);
-    Variation getVariationToppings(Variation.Toppings toppings);
+    List<Variation> getVariationSize(String productName, Variation.Size size);
+    List<Variation> getVariationFlavour(String productName, Variation.Flavours flavours);
+    List<Variation> getVariationSauces(String productName, Variation.Sauces sauces);
+    List<Variation> getVariationToppings(String productName, Variation.Toppings toppings);
     Store getStore(Store store);
 }

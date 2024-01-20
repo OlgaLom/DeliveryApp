@@ -35,6 +35,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.findBySerial(serial);
     }
     @Override
+    public Product getProductDescription(final String description) {
+        return productRepository.findByDescription(description);
+    }
+    @Override
     public List<Product> createAllProducts(List<Product> products) {
         return productRepository.createAll(products);
     }
@@ -84,38 +88,29 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Override
     public Product getProductName(String name,Long id) {
-        if(getRepository().getById(id)==null){
-            throw new NoSuchElementException(String.format("",id));
-        }
-        return getRepository().getById(id);
+        return productRepository.findByName(name);
     }
 
     @Override
     public Product getProductPrice(BigDecimal price) {
-        return null;
+        return productRepository.findByPrice(price);
+    }
+    @Override
+    public List<Variation> getVariationSize(String productName, Variation.Size size) {
+        return  productRepository.getVariationBySize(productName, size);
     }
 
     @Override
-    public Product getProductDescription(String description) {
-        return null;
-    }
-
-    @Override
-    public Variation getVariationSize(Variation.Size size) {
-        return null;
-    }
-
-    @Override
-    public Variation getVariationFlavour(Variation.Flavours flavours) {
-        return null;
+    public List<Variation> getVariationFlavour(String productName, Variation.Flavours flavours) {
+        return productRepository.getVariationByFlavours(productName, flavours);
     }
     @Override
-    public Variation getVariationSauces(Variation.Sauces sauces) {
-        return null;
+    public List<Variation> getVariationSauces(String productName, Variation.Sauces sauces) {
+        return productRepository.getVariationBySauces(productName,sauces);
     }
     @Override
-    public Variation getVariationToppings(Variation.Toppings toppings) {
-        return null;
+    public List<Variation> getVariationToppings(String productName, Variation.Toppings toppings) {
+        return productRepository.getVariationByToppings(productName,toppings);
     }
     @Override
     public Store getStore(Store store) {

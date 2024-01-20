@@ -4,6 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class Variation {
+    private Size size;
+    private Flavours flavours;
+    private Sauces sauces;
+    private Toppings toppings;
     public enum Size {
         SMALL, MEDIUM, LARGE
     }

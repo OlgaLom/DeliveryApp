@@ -20,7 +20,7 @@ public interface BaseService<T extends BaseModel, K> {
 
     T getById(K item);
 
-    //T getByName(K item);
+
 
     boolean exists(T item);
 
