@@ -28,7 +28,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
     protected BaseMapper<Store, StoreResource> getMapper() {
         return storeMapper;
     }
-    //...
 
     /*@ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

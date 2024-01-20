@@ -3,8 +3,10 @@ package backend_group_5.we_lead_bootcamp.repository;
 import backend_group_5.we_lead_bootcamp.model.ProductCategory;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProductCategoryRepositoryImpl extends BaseRepositoryImpl<ProductCategory> implements ProductCategoryRepository {
@@ -27,5 +29,21 @@ public class ProductCategoryRepositoryImpl extends BaseRepositoryImpl<ProductCat
                 .filter(c->description.equalsIgnoreCase(c.getDescription()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public ProductCategory findByName(ProductCategory name) {
+        return (ProductCategory) storage.values()
+                .stream()
+                .filter(c->name.equals(c.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductCategory> findProductByName(ProductCategory name) {
+        return storage.values()
+                .stream()
+                .filter(c->name.equals(c.getName()))
+                .collect(Collectors.toList());
     }
 }

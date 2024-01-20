@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +19,5 @@ public class Product extends BaseModel {
     private ProductCategory productCategory;
     private Store store;
     private String serial;
+    private List<Variation> variations;
 }
