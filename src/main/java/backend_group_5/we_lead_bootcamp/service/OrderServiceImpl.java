@@ -2,25 +2,34 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
+import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
     private final OrderRepository orderRepository;
+//    private final UserRepository userRepository;
 
     @Override
     protected JpaRepository<Order, Long> getRepository() {
         return orderRepository;
     }
+//    @Override
+//    protected JpaRepository<User, Long> getUserRepository() {
+//        return userRepository;
+//    }
 
     @Override
     public Order initiateOrder(final User user, final Store store) {
@@ -129,6 +138,15 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return orderRepository.findByOrderNumber(OrderNumber);
     }
 
+//    @Override
+//    public List<Order> findOrdersByUser(Long userId){
+//        Optional<User> userOpt = userRepository().findById(userId);
+//    }
+
+    @Override
+    public List<Order> findOrdersByDate(LocalDate orderDate){
+        return orderRepository.findByOrderDate(orderDate);
+    }
 
     private OrderItem newOrderItem(Product product, int qty){
         return OrderItem.builder().product(product).quantity(qty).price(product.getPrice()).build();
