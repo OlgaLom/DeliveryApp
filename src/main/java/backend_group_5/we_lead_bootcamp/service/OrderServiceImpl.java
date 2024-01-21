@@ -1,9 +1,9 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.*;
-import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,7 +18,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
     private final OrderRepository orderRepository;
 
     @Override
-    protected BaseRepository<Order, Long> getRepository() {
+    protected JpaRepository<Order, Long> getRepository() {
         return orderRepository;
     }
 
