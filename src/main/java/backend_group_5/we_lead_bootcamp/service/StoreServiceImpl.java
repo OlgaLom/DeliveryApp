@@ -2,9 +2,9 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
-import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +15,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     private final StoreRepository storeRepository;
 
+    @Override
+    protected JpaRepository<Store, Long> getRepository() {
+        return storeRepository;
+    }
+
     @Autowired
     public StoreServiceImpl(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
@@ -22,17 +27,17 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     @Override
     public Store createStore(Store store) {
-        return storeRepository.create(store);
+        return storeRepository.save(store);
     }
 
     @Override
     public List<Store> createAllStores(List<Store> stores) {
-        return storeRepository.createAll(stores);
+        return storeRepository.saveAll(stores);
     }
 
     @Override
     public Store getByCategory(StoreCategory category) {
-        return storeRepository.findByCategory(category);
+        return storeRepository.findFirstByCategory(category);
     }
 
     @Override
@@ -46,7 +51,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         Store existingStore = getById(storeId);
         if (existingStore != null) {
             existingStore.setCategory(newCategory);
-            return storeRepository.create(existingStore);
+            return storeRepository.save(existingStore);
             //isws prepei na valoume sto baseservice kai ena save method gia na ginetai save sto update oxi create (?)
         }
         return null; //gia handle to not found
@@ -67,7 +72,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     @Override
     public boolean doesStoreExist(Store storeId) {
-        return storeRepository.exists(storeId);
+        return storeRepository.existsById(storeId.getId());
     }
 
     @Override
@@ -82,18 +87,21 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     @Override
     public BigDecimal calculateTotalOrderAmount(Store store) {
-        return store.calculateTotalOrderAmount();
+        return null;
     }
+
+    /*ekana return null gia na min varaei, isws mas pei kati allo sto epomeno mathima 22/1
+    alternatively to implem htan auto
+    @Override
+    public BigDecimal calculateTotalOrderAmount(Store store) {
+        return store.calculateTotalOrderAmount();
+    } */
 
     @Override
     public List<Store> createAll(Store... items) {
         return null;
     }
 
-    @Override
-    protected BaseRepository<Store, Long> getRepository() {
-        return null;
-    }
 }
 
 

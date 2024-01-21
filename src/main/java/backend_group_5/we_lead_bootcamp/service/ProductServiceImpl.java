@@ -3,9 +3,9 @@ package backend_group_5.we_lead_bootcamp.service;
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.Variation;
-import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,7 +26,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
 
     @Override
-    protected BaseRepository<Product, Long> getRepository()    {
+    protected JpaRepository<Product, Long> getRepository()    {
         return productRepository;
     }
 
@@ -40,7 +40,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
     @Override
     public List<Product> createAllProducts(List<Product> products) {
-        return productRepository.createAll(products);
+        return productRepository.saveAll(products);
     }
     @Override
     public List<Product> listAllProducts() {
@@ -51,11 +51,11 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     public Product createProduct(Product product, final Long categoryId) {
         var category=productCategoryService.getById(categoryId);
         product.setProductCategory(category);
-        return productRepository.create(product);
+        return productRepository.save(product);
     }
     @Override
     public void updateProduct(Product product) {
-        getRepository().update(product);
+        getRepository().save(product);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Override
     public boolean productExists(Product productId) {
-        return productRepository.exists(productId);
+        return productRepository.existsById(productId.getId());
     }
 
     @Override
