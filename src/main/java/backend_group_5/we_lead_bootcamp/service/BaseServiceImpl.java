@@ -3,19 +3,21 @@ package backend_group_5.we_lead_bootcamp.service;
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.BaseModel;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent implements BaseService<T,Long>{
 //    T stands for Type
-    protected abstract BaseRepository<T, Long> getRepository();
+    protected abstract JpaRepository<T, Long> getRepository();
 
     @Override
-    public T create(final T item){ return getRepository().create(item);}
+    public T create(final T item){ return getRepository().save(item);}
 
     @Override
-    public List<T> createAll(final List<T> items){return getRepository().createAll(items);}
+    public List<T> createAll(final List<T> items){return getRepository().saveAll(items);}
 
     @Override
     public List<T> createAll(final T... items) {
@@ -24,7 +26,7 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
     @Override
     public void update(final T item){
-        getRepository().update(item);
+        getRepository().save(item);
     }
     @Override
     public void delete(final T item){ getRepository().delete(item);}
@@ -33,12 +35,14 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
     public void deleteById(final Long id){ getRepository().deleteById(id);}
 
     @Override
-    public T getById(final Long id) { return getRepository().getById(id); }
-
-
+    public T getById(final Long id) {
+//        T  item = getRepository().findById(id).orElseThrow();
+//        return item;
+        return getRepository().findById(id).orElseThrow();
+    }
 
     @Override
-    public boolean exists(final T item){return getRepository().exists(item);}
+    public boolean exists(final T item){return getRepository().existsById(item.getId());}
 
     @Override
     public List<T> findAll() { return getRepository().findAll(); }
