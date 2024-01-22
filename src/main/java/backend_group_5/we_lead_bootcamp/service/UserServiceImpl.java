@@ -17,15 +17,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return userRepository;
     }
     @Override
-    public User createAccount(final User user){
-        //User user = new User();
-        user.setEmail(user.getEmail());
-        user.setFirstName(user.getFirstName());
-        user.setLastName(user.getLastName());
-       // user.setAppUserRole(Role.USER);
-      //  user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.createAccount(user);
-        return user;
+    public User createAccount(final User new_user){
+        //   String encodedPassword = bCryptPasswordEncoder.encode(new_user.getPassword());
+        new_user.setEmail(new_user.getEmail());
+        //    new_user.setUsername(new_user.getEmail());
+        //  new_user.setPassword(encodedPassword);
+        userRepository.save(new_user);
+
+        return new_user;
     }
     @Override
     public void deleteAccount(final User  user){
@@ -34,12 +33,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public void logIn(User user) {
+    public User logIn(String user) {
+        var user_login = userRepository.findByEmail(user);
 
+        return user_login;
     }
 
     @Override
@@ -48,18 +49,21 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User updatePhone(Integer phone) {
-        return null;
+    public void updatePhone(Long Id,Integer phone) {
+        var user = userRepository.getById(Id);
+        user.setPhone(phone);
+        userRepository.updatePhone(Id,phone);
+
     }
 
     @Override
-    public User updateEmail(String email) {
-        return null;
+    public void updateEmail(Long Id,String email) {
+        userRepository.updateEmail(Id,email);
     }
 
     @Override
-    public User updatePassword(String password) {
-        return null;
+    public void updatePassword(String password) {
+        userRepository.updatePassword(password);
     }
 
     @Override

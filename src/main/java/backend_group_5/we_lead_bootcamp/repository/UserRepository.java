@@ -10,7 +10,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     User findByEmail(String email);
     void logIn(User user);
     void logOut();
-    User updatePhone(Integer phone);
-    User updateEmail(String email);
+    User updatePhone(Long id, Integer phone);
+    User updateEmail(Long id, String email);
     User updatePassword(String password);
 }
