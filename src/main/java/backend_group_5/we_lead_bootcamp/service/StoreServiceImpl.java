@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
+import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,12 +48,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public Store updateStoreCategory(Long storeId, StoreCategory newCategory) {
+    public Store updateStoreCategory(Long storeId, StoreCategoryVariation newCategory) {
         Store existingStore = getById(storeId);
         if (existingStore != null) {
             existingStore.setCategory(newCategory);
             return storeRepository.save(existingStore);
-            //isws prepei na valoume sto baseservice kai ena save method gia na ginetai save sto update oxi create (?)
         }
         return null; //gia handle to not found
     }

@@ -34,7 +34,7 @@ public class Store extends BaseModel {
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Category field is required")
-    private StoreCategory category;
+    private StoreCategoryVariation category;
 
     @OneToMany(mappedBy = "store")
     private List<Product> products;

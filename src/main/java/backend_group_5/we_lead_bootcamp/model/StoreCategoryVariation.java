@@ -3,7 +3,7 @@ package backend_group_5.we_lead_bootcamp.model;
 import lombok.Getter;
 
 @Getter
-public enum StoreCategoryVariations {
+public enum StoreCategoryVariation {
 
     CAFE("Cafe"),
     PIZZERIA("Pizzeria"),
@@ -37,7 +37,7 @@ public enum StoreCategoryVariations {
 
     private final String displayName;
 
-    StoreCategoryVariations(String displayName) {
+    StoreCategoryVariation(String displayName) {
         this.displayName = displayName;
     }
 }
