@@ -1,8 +1,7 @@
 package backend_group_5.we_lead_bootcamp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,13 +16,25 @@ import java.util.List;
 @ToString(callSuper = true)
 
 public class Product extends BaseModel {
+    @NotNull
+    @Column(length = 50,nullable = false)
     private String name;
+    @NotNull
+    @Column(precision = 10,scale = 2,nullable = false)
     private BigDecimal price;
+    @NotNull
+    @Column(length = 50,nullable = false)
     private String description;
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProductCategory productCategory;
     @ManyToOne
     @JoinColumn(name = "STORE_ID") //adjust column name based on DB schema
     private Store store;
+    @NotNull
+    @Column(length = 30,nullable = false,unique = true)
     private String serial;
+    @NotNull
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = Variation.class)
     private List<Variation> variations;
 }

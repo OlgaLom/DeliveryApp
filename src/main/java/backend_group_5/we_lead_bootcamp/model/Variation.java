@@ -1,9 +1,13 @@
 package backend_group_5.we_lead_bootcamp.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
-
+@Entity
 @Getter
 public class Variation {
+    @Id
+    private Long id;
     private Size size;
     private Flavours flavours;
     private Sauces sauces;
