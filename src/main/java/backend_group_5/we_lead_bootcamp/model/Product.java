@@ -22,7 +22,7 @@ public class Product extends BaseModel {
     private String description;
     private ProductCategory productCategory;
     @ManyToOne
-    @JoinColumn(name = "store") //adjust column name based on DB schema
+    @JoinColumn(name = "STORE_ID") //adjust column name based on DB schema
     private Store store;
     private String serial;
     private List<Variation> variations;

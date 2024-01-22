@@ -39,5 +39,14 @@ public class Store extends BaseModel {
     @OneToMany(mappedBy = "store")
     private List<Product> products;
 
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
+    @NotNull private Integer DeliveryTime; // in minutes
+    private double Rating;
+    @NotNull
+    public double AverageRating;
+    @NotBlank(message = "Opening Hours field is required")
+    private String openingHours;
 
 }

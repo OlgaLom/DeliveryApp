@@ -1,13 +1,16 @@
 package backend_group_5.we_lead_bootcamp.service;
 
+import backend_group_5.we_lead_bootcamp.model.Review;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,6 +40,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
+    public Store updateStore(Long storeId, Store store) {
+        return storeRepository.save(store);
+    }
+
+    @Override
     public Store getByCategory(StoreCategory category) {
         return storeRepository.findFirstByCategory(category);
     }
@@ -57,6 +65,14 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return null; //gia handle to not found
     }
 
+    @Override
+    public List<Store> getStoresByCategoryAndRating(StoreCategory category,int minRating){
+        return storeRepository.findStoresByCategoryAndRating(category,minRating);
+    }
+    @Override
+    public List<Store> getTopRatedStores(int limit){
+        return storeRepository.findTopRatedStores((Pageable) PageRequest.of(0,limit));
+    }
     @Override
     public void deleteStoreCategory(Long storeId) {}
 
@@ -86,22 +102,58 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public BigDecimal calculateTotalOrderAmount(Store store) {
-        return null;
-    }
-
-    /*ekana return null gia na min varaei, isws mas pei kati allo sto epomeno mathima 22/1
-    alternatively to implem htan auto
-    @Override
-    public BigDecimal calculateTotalOrderAmount(Store store) {
-        return store.calculateTotalOrderAmount();
-    } */
-
-    @Override
     public List<Store> createAll(Store... items) {
         return null;
     }
 
+    /*@Override
+    public List<Product> getAllProductsInStore(Long storeId) {
+        Store store = getById(storeId);
+        return store != null ? store.getProducts(): Collections.emptyList();
+    } */
+
+    public List<Store> getStoresWithMinOrderAmount(BigDecimal minOrderAmount){
+        return storeRepository.findByMinOrderAmountGreaterThanEqual(minOrderAmount);
+    }
+
+    public BigDecimal calculateAverageRating(Long storeId){
+        Store store = getById(storeId);
+        if (store != null) {
+            List<Review> reviews=store.getReviews();
+            if (!reviews.isEmpty()) {
+                double averageRating = reviews.stream()
+                        .mapToDouble(Review::getRating)
+                        .average()
+                        .orElse(0.0);
+                return BigDecimal.valueOf(averageRating);
+            }
+        }
+        return BigDecimal.ZERO;
+    }
+
+    @Override
+    public Integer getDeliveryTime(Long storeId) {
+        Store store =getById(storeId);
+        return store != null ? store.getDeliveryTime() : null;
+    }
+
+    @Override
+    public void updateDeliveryTime(Long storeId, Integer deliveryTime) {
+        Store store =getById(storeId);
+        if (store != null){
+            store.setDeliveryTime(deliveryTime);
+            storeRepository.save(store);
+        }
+    }
+
+    public List<Store> searchStoresByName(String keyword) {
+        return storeRepository.findByNameContainingIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Store> searchStoresByCategory(StoreCategory category) {
+        return storeRepository.findStoresByCategory(category);
+    }
 }
 
 

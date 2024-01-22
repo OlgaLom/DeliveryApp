@@ -72,5 +72,6 @@ public class StoreCategoryServiceImpl extends BaseServiceImpl<StoreCategory> imp
     public long countCategories() {
         return count();
     }
+
     // Additional methods for custom business logic related to store categories
 }
