@@ -23,7 +23,7 @@ public class StoreResource extends BaseResource {
     @NotNull
     private StoreCategory category;
     @NotNull
-    private String location; // *
+    private String location;
     @Pattern(regexp = "\\d{10}", message = "Phone number must be of 10 digits")
     private String phone;
     @NotNull
