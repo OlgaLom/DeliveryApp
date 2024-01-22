@@ -1,6 +1,10 @@
 package backend_group_5.we_lead_bootcamp.model;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,23 +12,38 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(callSuper = true)
+@Entity
+@Table(name = "USERS", indexes = {@Index(columnList = "email")})
+@SequenceGenerator(name = "idGenerator", sequenceName = "USER_SEQ", initialValue = 1, allocationSize = 1)
 public class User extends  BaseModel{
-    private Long id;
+    @Id
+    private Long Id;
+    @NotNull(message = "Email address cannot be null")
+    @Email
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
     private Integer phone;
-    private String username;
+
     private String password;
+
+    @Min(value = 18, message = "A customer cannot be under 18")
+    @Max(value = 120, message = "A customer cannot be above 18")
     private Integer age;
     private String address;
     //private Address addressObj; Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
+    @NotNull(message = "First name cannot be null")
+    @Column(length = 20, nullable = false)
     private String firstName;
+    @NotNull(message = "Last name cannot be null")
+    @Column(length = 30, nullable = false)
     private  String lastName;
     private  String city;
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-    //SetPaymentmethod
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10, nullable = false)
+    private Role role;
 
 }
