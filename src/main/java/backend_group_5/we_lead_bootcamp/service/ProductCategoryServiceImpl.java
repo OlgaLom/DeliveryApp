@@ -2,7 +2,6 @@ package backend_group_5.we_lead_bootcamp.service;
 
 
 import backend_group_5.we_lead_bootcamp.model.ProductCategory;
-import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.ProductCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

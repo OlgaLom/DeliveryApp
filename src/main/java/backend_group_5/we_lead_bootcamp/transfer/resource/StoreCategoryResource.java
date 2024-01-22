@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class StoreCategoryResource {
+public class StoreCategoryResource extends BaseResource{
     @NotNull(message = "Description is required")
     private String description;
 }
