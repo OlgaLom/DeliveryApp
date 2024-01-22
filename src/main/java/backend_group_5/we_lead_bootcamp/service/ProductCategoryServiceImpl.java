@@ -25,8 +25,8 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory>
     }
 
     @Override
-    public ProductCategory getProductCategoryName(String name) {
-        return null;
+    public ProductCategory getProductCategoryName(ProductCategory name) {
+        return productCategoryRepository.findByName(name);
     }
 
     @Override
