@@ -7,8 +7,10 @@ import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -20,7 +22,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Override
     public List<Product> createAll(Product... items) {
-        return null;
+        return createAll(Arrays.asList(items));
     }
 
 
@@ -74,8 +76,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean productExists(Product productId) {
-        return productRepository.existsById(productId.getId());
+        logger.trace("Checking whether {} exists!",productId);
+        return getRepository().existsById(productId.getId());
     }
 
     @Override
