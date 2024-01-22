@@ -24,6 +24,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
     private final ProductCategoryService categoryService;
     private final UserService customerService;
     @Override
+    ss
     public void run(String... args) throws Exception {
         ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Mobile Phones").build());
         logger.info("Created {}.", newCategory);

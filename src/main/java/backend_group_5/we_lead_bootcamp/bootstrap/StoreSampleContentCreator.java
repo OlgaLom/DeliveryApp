@@ -22,7 +22,7 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
                 .name("Store Name1")
                 .address("Address 1")
                 .phone(231012345)
-                .vatNumber("12563521468")
+                .vatNumber("")
                 .minOrderAmount(5)
                 .category(StoreCategory.BAKERY)
                 .product());
