@@ -6,6 +6,7 @@ import backend_group_5.we_lead_bootcamp.model.Variation;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
 
     @Override
-    protected BaseRepository<Product, Long> getRepository()    {
+    protected JpaRepository<Product, Long> getRepository()    {
         return productRepository;
     }
 
@@ -38,10 +39,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     public Product getProductDescription(final String description) {
         return productRepository.findByDescription(description);
     }
-    @Override
-    public List<Product> createAllProducts(List<Product> products) {
-        return productRepository.createAll(products);
-    }
+//    @Override
+//    public List<Product> createAllProducts(List<Product> products) {
+//        return productRepository.createAll(products);
+//    }
     @Override
     public List<Product> listAllProducts() {
         return findAll();

@@ -5,6 +5,7 @@ import backend_group_5.we_lead_bootcamp.model.ProductCategory;
 import backend_group_5.we_lead_bootcamp.repository.BaseRepository;
 import backend_group_5.we_lead_bootcamp.repository.ProductCategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory>
     private final ProductCategoryRepository productCategoryRepository;
 
     @Override
-    protected BaseRepository<ProductCategory,Long>getRepository(){
+    protected JpaRepository<ProductCategory,Long> getRepository(){
         return productCategoryRepository;
     }
 
