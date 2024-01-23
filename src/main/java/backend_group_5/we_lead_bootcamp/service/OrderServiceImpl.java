@@ -42,6 +42,12 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         if(checkNullability(order,product)){
             return;
         }
+        // Check if the store id of the current order is different of the store id of the product that we are trying to add to the order. If the store id is not the same that means that the user is adding a product from a different store. So we need to clear the order items of the order and also change the store.
+        if ( ! order.getStore().getId().equals(product.getStore().getId() )  ){
+            order.getOrderItems().clear();
+            order.setStore(product.getStore());
+        }
+
         boolean inc_quantity = false;
 
         // Check if item is already exist in the order object. If so don't add it again and just increase the quantity.
@@ -55,7 +61,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 
         // if quantity doesn't get increased then the product is not in the list, we must add it
         if (!inc_quantity){
-            order.getOrderItems().add( newOrderItem(product,qty) );
+            order.getOrderItems().add( newOrderItem(order,product,qty) );
         }
 
         logger.trace("Product[{}] added to Order[{}]",product,order);
@@ -69,7 +75,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         // With "removeif" method, we check if the product exists in the existing order collection
         order.getOrderItems().removeIf(oi_obj -> oi_obj.getProduct().getId().equals(product.getId()));
         // Then we added the product with a peace of mind
-        order.getOrderItems().add(newOrderItem(product, qty));
+        order.getOrderItems().add(newOrderItem(order, product, qty));
         // ~~~~~~~~~~
         // MAYBE A FUTURE FEATURE
         // ~~~~~~~~~~
@@ -148,8 +154,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return orderRepository.findByOrderDate(orderDate);
     }
 
-    private OrderItem newOrderItem(Product product, int qty){
-        return OrderItem.builder().product(product).quantity(qty).price(product.getPrice()).build();
+    private OrderItem newOrderItem(Order order, Product product, int qty){
+        return OrderItem.builder().order(order).product(product).quantity(qty).price(product.getPrice()).build();
     }
     private boolean checkNullability(Order orderObj, Product prod){
         if (orderObj == null ){
