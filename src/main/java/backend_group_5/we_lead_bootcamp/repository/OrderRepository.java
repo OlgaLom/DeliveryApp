@@ -3,6 +3,7 @@ package backend_group_5.we_lead_bootcamp.repository;
 import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -13,7 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
 // [ its primary purpose is to inform Spring to manage the bean lifecycle and provide additional features specific to data access. ]
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
+    @Query("select o from Order o where o.orderNumber = :orderNum")
     Order findByOrderNumber(final String orderNum);
+
+    @Query("select o from Order o where o.createDate = :orderDate")
     List<Order> findByOrderDate(LocalDate orderDate);
 
 }
