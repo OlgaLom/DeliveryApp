@@ -23,4 +23,6 @@ public interface OrderService extends BaseService<Order, Long>{
 
 //    List<Order> findOrdersByUser(Long userId);
     List<Order> findOrdersByDate(LocalDate orderDate);
+
+    List<Order> findOrdersByOrderStatus( OrderStatus orderStatus);
 }

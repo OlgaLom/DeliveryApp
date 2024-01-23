@@ -154,6 +154,11 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
         return orderRepository.findByOrderDate(orderDate);
     }
 
+    @Override
+    public List<Order> findOrdersByOrderStatus(OrderStatus orderStatus){
+        return orderRepository.findOrdersByOrderStatus(orderStatus);
+    }
+
     private OrderItem newOrderItem(Order order, Product product, int qty){
         return OrderItem.builder().order(order).product(product).quantity(qty).price(product.getPrice()).build();
     }
