@@ -113,7 +113,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Finalize Order
-//    @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
+    // @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
     @PostMapping
     @RequestMapping("finalize")
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
