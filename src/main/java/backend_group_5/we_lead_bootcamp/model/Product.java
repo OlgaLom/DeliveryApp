@@ -14,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-
+@Table(name="PRODUCTS",indexes = {@Index(columnList = "serial")})
+@SequenceGenerator(name = "idGenerator",sequenceName = "PRODUCTS_SEQ",initialValue = 1,allocationSize = 1)
 public class Product extends BaseModel {
     @NotNull
     @Column(length = 50,nullable = false)
@@ -35,6 +36,6 @@ public class Product extends BaseModel {
     @Column(length = 30,nullable = false,unique = true)
     private String serial;
     @NotNull
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = Variation.class)
-    private List<Variation> variations;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = ProductVariations.class)
+    private List<ProductVariations> variations;
 }

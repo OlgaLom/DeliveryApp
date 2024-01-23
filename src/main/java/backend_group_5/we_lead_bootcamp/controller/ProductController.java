@@ -5,10 +5,13 @@ import backend_group_5.we_lead_bootcamp.mapper.ProductMapper;
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
+import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.ProductResource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("product")
 @RequiredArgsConstructor
@@ -21,6 +24,24 @@ public class ProductController extends BaseController<Product, ProductResource>{
 
     @Override
     protected BaseMapper<Product, ProductResource> getMapper(){return productMapper;}
+
+    @PostMapping(params = "productCategoryId")
+    public ResponseEntity<ApiResponse<ProductResource>>create(@RequestBody final ProductResource productResource,
+                                                              @RequestParam Long productCategoryId){
+        var product=productMapper.toDomain(productResource);
+        return new ResponseEntity<>(
+            ApiResponse.<ProductResource>builder().
+                data(getMapper().toResource(productService.createProduct(product,productCategoryId)))
+                .build(),
+            getNoCacheHeaders(),
+            HttpStatus.CREATED
+     );
+    }
+    @GetMapping(params = "serial")
+    public ResponseEntity<ApiResponse<ProductResource>> findBySerial(@RequestParam String serial){
+        final ProductResource productResource= getMapper().toResource(productService.findBySerial(serial));
+        return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
+    }
 
 
 }

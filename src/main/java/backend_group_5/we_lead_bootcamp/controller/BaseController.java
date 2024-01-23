@@ -6,6 +6,7 @@ import backend_group_5.we_lead_bootcamp.model.BaseModel;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.BaseResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,16 @@ public abstract class BaseController<T extends BaseModel, R extends BaseResource
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody final R resource){
         getBaseService().update(getMapper().toDomain(resource));
+    }
+
+    protected HttpHeaders getNoCacheHeaders() {
+        final HttpHeaders headers = new HttpHeaders();
+        // HTTP 1.1 cache control header
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        // Http 1.0 cache control header
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        return headers;
     }
 
 }

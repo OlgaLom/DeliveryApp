@@ -1,11 +1,10 @@
 package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
-import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.ProductCategory;
-import backend_group_5.we_lead_bootcamp.model.User;
+import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.service.ProductCategoryService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
+import backend_group_5.we_lead_bootcamp.service.StoreService;
 import backend_group_5.we_lead_bootcamp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -23,15 +22,20 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
     private final ProductService productService;
     private final ProductCategoryService categoryService;
     private final UserService customerService;
+    private final StoreService storeService;
     @Override
-    ss
     public void run(String... args) throws Exception {
-        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Mobile Phones").build());
+        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
         logger.info("Created {}.", newCategory);
+        Store newStore= storeService.create(Store.builder().build());
+        logger.info("Created {}!",newStore);
+        //Variation variations= productService.getVariationSize();
+
 
         List<Product> products = List.of(
-                Product.builder().serial("SN1000-0001").name("Apple iPhone 12 Pro 5G 512GB")
-                        .price(BigDecimal.valueOf(1629)).productCategory(newCategory).build(),
+                Product.builder().serial("SN1000-0001").name("Fredo Espresso")
+                        .price(BigDecimal.valueOf(1629)).productCategory(newCategory)
+                        .description("Hot espresso shaken with ice cubes").store(newStore).variations().build(),
                 Product.builder().serial("SN1000-0002").name("Apple iPhone 12 Pro Max 5G 512GB")
                         .price(BigDecimal.valueOf(1749)).productCategory(newCategory).build(),
                 Product.builder().serial("SN1100-0001").name("Samsung Galaxy S21 Ultra")

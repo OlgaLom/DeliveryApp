@@ -15,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ProductCategory")
-@SequenceGenerator(name = "idGenerator", sequenceName = "PRODUCTCATEGORY_SEQ", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "idGenerator", sequenceName = "PRODUCT_CATEGORY_SEQ", initialValue = 1, allocationSize = 1)
 public class ProductCategory extends BaseModel {
     @NotNull
     @Column(length = 50,nullable = false)

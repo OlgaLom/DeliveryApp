@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 @Entity
 @Getter
-public class Variation extends BaseModel{
+public class ProductVariations extends BaseModel{
     private Size size;
     private Flavours flavours;
     private Sauces sauces;
@@ -17,7 +17,7 @@ public class Variation extends BaseModel{
         CARAMEL, HAZELNUT,SALTED_CARAMEL,COCONUT, PUMPKIN_SPICE,
         CINNAMON_DOLCE,STRAWBERRY, VANILLA
     }
-
+    //public static Flavours getDefault(){return Flavours.CARAMEL;}
     public enum Sauces {
         KETCHUP, MUSTARD, YELLOW_SAUCE, TZATZIKI, TERIYAKI,
     }

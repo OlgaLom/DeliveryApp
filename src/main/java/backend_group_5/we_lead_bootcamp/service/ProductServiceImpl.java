@@ -2,7 +2,7 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.Variation;
+import backend_group_5.we_lead_bootcamp.model.ProductVariations;
 import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -88,20 +86,20 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.findByPrice(price);
     }
     @Override
-    public List<Variation> getVariationSize(String productName, Variation.Size size) {
+    public List<ProductVariations> getVariationSize(String productName, ProductVariations.Size size) {
         return  productRepository.getVariationBySize(productName, size);
     }
 
     @Override
-    public List<Variation> getVariationFlavour(String productName, Variation.Flavours flavours) {
+    public List<ProductVariations> getVariationFlavour(String productName, ProductVariations.Flavours flavours) {
         return productRepository.getVariationByFlavours(productName, flavours);
     }
     @Override
-    public List<Variation> getVariationSauces(String productName, Variation.Sauces sauces) {
+    public List<ProductVariations> getVariationSauces(String productName, ProductVariations.Sauces sauces) {
         return productRepository.getVariationBySauces(productName,sauces);
     }
     @Override
-    public List<Variation> getVariationToppings(String productName, Variation.Toppings toppings) {
+    public List<ProductVariations> getVariationToppings(String productName, ProductVariations.Toppings toppings) {
         return productRepository.getVariationByToppings(productName,toppings);
     }
     @Override

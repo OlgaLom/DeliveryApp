@@ -1,7 +1,7 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.Variation;
+import backend_group_5.we_lead_bootcamp.model.ProductVariations;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +14,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByDescription(final String description);
     Product findByName(final String productName);
     Product findByPrice(final BigDecimal productPrice);
-    List<Variation> getVariationBySize(final String productName, Variation.Size size);
-    List<Variation> getVariationByFlavours(final String productName, Variation.Flavours flavours);
-    List<Variation> getVariationBySauces(final String productName, Variation.Sauces sauces);
-    List<Variation> getVariationByToppings(final String productName, Variation.Toppings toppings);
+    List<ProductVariations> getVariationBySize(final String productName, ProductVariations.Size size);
+    List<ProductVariations> getVariationByFlavours(final String productName, ProductVariations.Flavours flavours);
+    List<ProductVariations> getVariationBySauces(final String productName, ProductVariations.Sauces sauces);
+    List<ProductVariations> getVariationByToppings(final String productName, ProductVariations.Toppings toppings);
 }
