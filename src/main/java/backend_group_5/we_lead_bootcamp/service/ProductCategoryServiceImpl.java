@@ -29,8 +29,4 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory>
         return productCategoryRepository.findByName(name);
     }
 
-    @Override
-    public List<ProductCategory> createAll(ProductCategory... items) {
-        return null;
-    }
 }

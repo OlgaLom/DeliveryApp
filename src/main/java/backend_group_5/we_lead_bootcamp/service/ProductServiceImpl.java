@@ -19,14 +19,6 @@ import java.util.NoSuchElementException;
 public class ProductServiceImpl extends BaseServiceImpl<Product> implements ProductService{
     private final ProductRepository productRepository;
     private final ProductCategoryService productCategoryService;
-
-    @Override
-    public List<Product> createAll(Product... items) {
-        return createAll(Arrays.asList(items));
-    }
-
-
-
     @Override
     protected JpaRepository<Product, Long> getRepository()    {
         return productRepository;
@@ -39,10 +31,6 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     @Override
     public Product getProductDescription(final String description) {
         return productRepository.findByDescription(description);
-    }
-    @Override
-    public List<Product> createAllProducts(List<Product> products) {
-        return productRepository.saveAll(products);
     }
     @Override
     public List<Product> listAllProducts() {
@@ -84,10 +72,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Override
     public Product getProductById(Product product,Long id) {
-        if(getRepository().getById(id)==null){
-            throw new NoSuchElementException(String.format("Product with id [%d] not found",id));
-        }
-        return getRepository().getById(id);
+//        if(getRepository().getReferenceById(id)==null){
+//            throw new NoSuchElementException(String.format("Product with id [%d] not found",id));
+//        }
+        return getRepository().getReferenceById(id);
     }
 
     @Override

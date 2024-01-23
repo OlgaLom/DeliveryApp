@@ -10,7 +10,6 @@ import java.util.List;
 public interface ProductService extends BaseService<Product,Long>{
     Product findBySerial(String serial);
     Product createProduct(Product product,Long categoryId);
-    List<Product> createAllProducts(List<Product> products);
     List<Product> listAllProducts();
     void updateProduct(Product product);
     void deleteProduct(Product product);
