@@ -39,7 +39,7 @@ public class Order extends BaseModel{
     private final Set<OrderItem> orderItems = new HashSet<>();
     // HashSet → No duplicate items, there is no order between items.
 
-    // Enumerated → Specify that this field is persistent and it will be saved in our database as string. [EnumType.ORDINAL is for integers ]
+    // Enumerated → Specify that this field is persistent, and it will be saved in our database as string. [EnumType.ORDINAL is for integers ]
     @Enumerated(EnumType.STRING)
     @Column(length = 11, nullable = false)
     private OrderStatus orderStatus;

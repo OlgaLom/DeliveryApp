@@ -3,10 +3,7 @@ package backend_group_5.we_lead_bootcamp.model;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -14,7 +11,8 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @ToString(callSuper = true)
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="ORDERITEMS")
 @SequenceGenerator(name = "idGenerator", sequenceName = "ORDER_ITEMS_SEQ", initialValue = 1, allocationSize = 1)

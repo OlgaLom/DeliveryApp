@@ -113,7 +113,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Finalize Order
-//    @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
+    // @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
     @PostMapping
     @RequestMapping("finalize")
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
@@ -143,7 +143,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 //                        .build());
 //    }
 
-    //Get order by date
+    //Get orders by date
     @GetMapping("date/{orderDate}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByDate(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate) {
@@ -152,6 +152,17 @@ public class OrderController extends BaseController<Order, OrderResource>{
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
                         .data(orderMapper.toResourceList(ordersByDate))
+                        .build());
+    }
+    //Get orders by status
+    @GetMapping("status/{orderStatus}")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderStatus(
+            @PathVariable OrderStatus orderStatus) {
+        List<Order> ordersByStatus = orderService.findOrdersByOrderStatus(orderStatus);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResourceList(ordersByStatus))
                         .build());
     }
 
