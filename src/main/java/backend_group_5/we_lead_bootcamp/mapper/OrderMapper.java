@@ -11,5 +11,4 @@ import java.util.List;
 @Mapper(componentModel = "spring", config = IgnoreUnmappedMapperConfig.class)
 public interface OrderMapper extends BaseMapper<Order, OrderResource>{
 
-    List<OrderResource> toResourceList(List<Order> userOrders);
 }
