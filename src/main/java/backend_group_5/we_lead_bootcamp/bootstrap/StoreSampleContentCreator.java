@@ -31,28 +31,27 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
                 .category(StoreCategoryVariation.BAKERY)
                 .build());
         logger.info("Created {}.", newstore);
-        createSampleStores();
+
+        List<Store> stores = List.of(
+                Store.builder().name("Store1").address("Address 1").phone(231012345)
+                        .vatNumber("VAT123").minOrderAmount(BigDecimal.valueOf(5.0)).build(),
+                Store.builder().name("Store2").address("Address 2").phone(987654321)
+                        .vatNumber("VAT456").minOrderAmount(BigDecimal.valueOf(5.5)).build(),
+                Store.builder().name("Store3").address("Address 3").phone(231012345)
+                        .vatNumber("VAT001").minOrderAmount(BigDecimal.valueOf(7.5)).build(),
+                Store.builder().name("Store4").address("Address 4").phone(12345679)
+                        .vatNumber("VAT002").minOrderAmount(BigDecimal.valueOf(15.0)).build()
+                // Add more stores as needed
+        );
+
+        List<Store> createdStores = storeService.createAllStores(stores);
+
+        logger.info("Created {} stores.", createdStores.size());
+        createdStores.forEach(store -> logger.debug("{}. {}", store.getId(), store));
 
 
     }
-        private void createSampleStores() {
-            List<Store> stores = List.of(
-                    Store.builder().name("Store1").address("Address 1").phone(231012345)
-                            .vatNumber("VAT123").minOrderAmount(BigDecimal.valueOf(5.0)).build(),
-                    Store.builder().name("Store2").address("Address 2").phone(987654321)
-                            .vatNumber("VAT456").minOrderAmount(BigDecimal.valueOf(5.5)).build(),
-                    Store.builder().name("Store3").address("Address 3").phone(231012345)
-                            .vatNumber("VAT001").minOrderAmount(BigDecimal.valueOf(7.5)).build(),
-                    Store.builder().name("Store4").address("Address 4").phone(12345679)
-                            .vatNumber("VAT002").minOrderAmount(BigDecimal.valueOf(15.0)).build()
-                    // Add more stores as needed
-            );
 
-            List<Store> createdStores = storeService.createAllStores(stores);
-
-            logger.info("Created {} stores.", createdStores.size());
-            createdStores.forEach(store -> logger.debug("{}. {}", store.getId(), store));
-        }
 
 }
 
