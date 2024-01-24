@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService {
@@ -30,80 +31,35 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public Store createStore(Store store) {
-        return storeRepository.save(store);
+    public Store getStoreByName(String name) {
+        return storeRepository.getStoreByName(name);
     }
 
+    public List<Store> findStoresByName(String keyword) {
+        return storeRepository.findByNameContainingIgnoreCase(keyword);
+    }
     @Override
-    public List<Store> createAllStores(List<Store> stores) {
-        return storeRepository.saveAll(stores);
+    public List<Store> findStoresByCategory(StoreCategory category) {
+        return storeRepository.findStoresByCategory(category.getDisplayName());
     }
-
-    @Override
-    public Store updateStore(Long storeId, Store store) {
-        return storeRepository.save(store);
-    }
-
     @Override
     public Store getByCategory(StoreCategory category) {
-        return storeRepository.findFirstByCategory(category);
+        return storeRepository.findFirstByCategory(category.getDisplayName());
     }
 
     @Override
     public List<Store> getStoresByCategory(StoreCategory category) {
-        return storeRepository.findStoresByCategory(category);
+        return storeRepository.findStoresByCategory(category.getDisplayName());
         //expects to retrieve a list of stores that match the given category
     }
 
     @Override
-    public Store updateStoreCategory(Long storeId, StoreCategoryVariation newCategory) {
-        Store existingStore = getById(storeId);
-        if (existingStore != null) {
-            existingStore.setCategory(newCategory);
-            return storeRepository.save(existingStore);
-        }
-        return null; //gia handle to not found
-    }
-
-    @Override
     public List<Store> getStoresByCategoryAndRating(StoreCategory category,int minRating){
-        return storeRepository.findStoresByCategoryAndRating(category,minRating);
+        return storeRepository.findStoresByCategoryAndRating(category.getDisplayName(),minRating);
     }
     @Override
     public List<Store> getTopRatedStores(int limit){
         return storeRepository.findTopRatedStores((Pageable) PageRequest.of(0,limit));
-    }
-    @Override
-    public void deleteStoreCategory(Long storeId) {}
-
-    @Override
-    public void deleteStoreById(Long storeId) {
-        storeRepository.deleteById(storeId);
-    }
-
-    @Override
-    public Store getStoreById(Long storeId) {
-        return getById(storeId);
-    }
-
-    @Override
-    public boolean doesStoreExist(Store storeId) {
-        return storeRepository.existsById(storeId.getId());
-    }
-
-    @Override
-    public List<Store> findAllStores() {
-        return findAll();
-    }
-
-    @Override
-    public long countStores() {
-        return count();
-    }
-
-    @Override
-    public List<Store> createAll(Store... items) {
-        return null;
     }
 
     /*@Override
@@ -146,14 +102,6 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         }
     }
 
-    public List<Store> searchStoresByName(String keyword) {
-        return storeRepository.findByNameContainingIgnoreCase(keyword);
-    }
-
-    @Override
-    public List<Store> searchStoresByCategory(StoreCategory category) {
-        return storeRepository.findStoresByCategory(category);
-    }
 }
 
 

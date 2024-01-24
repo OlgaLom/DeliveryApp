@@ -15,8 +15,6 @@ import java.math.BigDecimal;
 public class StoreResource extends BaseResource {
 
     @NotNull
-    private Long id;
-    @NotNull
     private String name;
     @NotNull
     private String address;

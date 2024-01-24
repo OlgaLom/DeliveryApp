@@ -11,4 +11,5 @@ import lombok.ToString;
 public class StoreCategoryResource extends BaseResource{
     @NotNull(message = "Description is required")
     private String description;
+
 }

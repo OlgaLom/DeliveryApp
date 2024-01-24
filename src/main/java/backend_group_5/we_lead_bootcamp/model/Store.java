@@ -18,17 +18,14 @@ import java.util.List;
 @AllArgsConstructor
 public class Store extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @NotBlank(message = "Name field is required")
     private String name;
     @NotBlank(message = "Address field is required")
     private String address;
     @NotNull(message = "Phone number is required")
     private Integer phone;
-    @NotNull(message = "VAT Number is required")
-    private Integer vatNumber;
+    @NotBlank(message = "VAT Number is required")
+    private String vatNumber;
     @DecimalMin(value = "0.0", inclusive = false, message = "The minimum order amount must be greater than zero")
     private BigDecimal minOrderAmount;
 

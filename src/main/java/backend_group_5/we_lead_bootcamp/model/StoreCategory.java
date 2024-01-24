@@ -13,13 +13,9 @@ import lombok.*;
 @ToString(callSuper = true)
 public class StoreCategory extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String description;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Name field is required")
-    private StoreCategoryVariation name;
+    private StoreCategoryVariation displayName;
 }

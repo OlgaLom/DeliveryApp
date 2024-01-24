@@ -6,45 +6,24 @@ import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface StoreService extends BaseService<Store, Long> {
 
+    Store getStoreByName(String name);
+
+    List<Store> findStoresByName(String name);
     List<Store> getStoresByCategory(StoreCategory category);
-
-    Store createStore(Store store);
-
-    List<Store> createAllStores(List<Store> stores);
-
-    Store updateStore(Long storeId, Store store);
-    Store updateStoreCategory(Long storeId, StoreCategoryVariation newCategory);
-
-    void deleteStoreCategory(Long storeId);
-
-    void deleteStoreById(Long storeId);
-
-    Store getStoreById(Long storeId);
 
     Store getByCategory(StoreCategory category);
 
-    boolean doesStoreExist(Store store);
-
-    List<Store> findAllStores();
-
-    long countStores();
-
-    List<Store> searchStoresByName(String name);
-    List<Store> searchStoresByCategory(StoreCategory category);
-
+    List<Store> findStoresByCategory(StoreCategory category);
     List<Store> getStoresByCategoryAndRating(StoreCategory category, int minRating);
     List<Store> getTopRatedStores(int limit);
-
     //List<Product> getAllProductsInStore(Long storeId);
-
     BigDecimal calculateAverageRating(Long storeId);
-
     Integer getDeliveryTime(Long storeId);
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
-
     List<Store> getStoresWithMinOrderAmount(BigDecimal minOrderAmount);
 
 

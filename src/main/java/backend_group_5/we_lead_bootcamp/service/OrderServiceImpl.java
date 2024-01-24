@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
+public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
     private final OrderRepository orderRepository;
 //    private final UserRepository userRepository;
 
