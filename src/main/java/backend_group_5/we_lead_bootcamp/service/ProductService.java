@@ -20,7 +20,7 @@ public interface ProductService extends BaseService<Product,Long>{
     Product getProductName(String name,Long id);
     Product getProductPrice(BigDecimal price);
     Product getProductDescription(String description);
-    List<ProductVariations> getVariationSize(String productName, ProductVariations.Size size);
+    List<ProductVariations> getVariationSize(String productName, ProductVariations.Sizes size);
     List<ProductVariations> getVariationFlavour(String productName, ProductVariations.Flavours flavours);
     List<ProductVariations> getVariationSauces(String productName, ProductVariations.Sauces sauces);
     List<ProductVariations> getVariationToppings(String productName, ProductVariations.Toppings toppings);

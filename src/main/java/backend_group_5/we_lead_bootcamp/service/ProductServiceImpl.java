@@ -86,8 +86,8 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.findByPrice(price);
     }
     @Override
-    public List<ProductVariations> getVariationSize(String productName, ProductVariations.Size size) {
-        return  productRepository.getVariationBySize(productName, size);
+    public List<ProductVariations> getVariationSize(String productName, ProductVariations.Sizes size) {
+        return  productRepository.getVariationBySizes(productName, size);
     }
 
     @Override

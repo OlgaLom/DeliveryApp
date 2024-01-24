@@ -35,7 +35,13 @@ public class Product extends BaseModel {
     @NotNull
     @Column(length = 30,nullable = false,unique = true)
     private String serial;
-    @NotNull
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = ProductVariations.class)
-    private List<ProductVariations> variations;
+//    @NotNull
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, targetEntity = ProductVariations.class)
+//    private List<ProductVariations> variations;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50, nullable = false)
+    private ProductVariations.Sizes sizes;
+
+
 }

@@ -2,14 +2,16 @@ package backend_group_5.we_lead_bootcamp.model;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Getter
 public class ProductVariations extends BaseModel{
-    private Size size;
+    private Sizes sizes;
     private Flavours flavours;
     private Sauces sauces;
     private Toppings toppings;
-    public enum Size {
+    public enum Sizes {
         SMALL, MEDIUM, LARGE
     }
 

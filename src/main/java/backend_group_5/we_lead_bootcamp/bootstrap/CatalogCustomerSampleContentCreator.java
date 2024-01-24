@@ -31,11 +31,14 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
         logger.info("Created {}!",newStore);
         //Variation variations= productService.getVariationSize();
 
+//        ProductVariations.Sizes size = ProductVariations.Sizes.SMALL;
+//        ProductVariations.Flavours flavour = ProductVariations.Flavours.CARAMEL;
 
         List<Product> products = List.of(
                 Product.builder().serial("SN1000-0001").name("Fredo Espresso")
                         .price(BigDecimal.valueOf(1629)).productCategory(newCategory)
-                        .description("Hot espresso shaken with ice cubes").store(newStore).variations().build(),
+                        .description("Hot espresso shaken with ice cubes").store(newStore)
+                        .sizes(ProductVariations.Sizes.SMALL).build(),
                 Product.builder().serial("SN1000-0002").name("Apple iPhone 12 Pro Max 5G 512GB")
                         .price(BigDecimal.valueOf(1749)).productCategory(newCategory).build(),
                 Product.builder().serial("SN1100-0001").name("Samsung Galaxy S21 Ultra")
@@ -71,7 +74,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .firstName("Constantinos")
                         .lastName("Giannacoulis")
                         .city("SomeCity")
-                        .paymentMethod(PaymentMethod.CREDIT_CART)
+                        .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
                         .build(),
                 User.builder().email("john.doe@example.com")
@@ -106,7 +109,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .firstName("Alice")
                         .lastName("Jones")
                         .city("CityX")
-                        .paymentMethod(PaymentMethod.CREDIT_CART)
+                        .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
                         .build());
               /*  User.builder().email("peter.mercury@outlookx.com")

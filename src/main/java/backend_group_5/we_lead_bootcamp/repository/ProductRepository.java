@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByDescription(final String description);
     Product findByName(final String productName);
     Product findByPrice(final BigDecimal productPrice);
-    List<ProductVariations> getVariationBySize(final String productName, ProductVariations.Size size);
+    List<ProductVariations> getVariationBySizes(final String productName, ProductVariations.Sizes size);
     List<ProductVariations> getVariationByFlavours(final String productName, ProductVariations.Flavours flavours);
     List<ProductVariations> getVariationBySauces(final String productName, ProductVariations.Sauces sauces);
     List<ProductVariations> getVariationByToppings(final String productName, ProductVariations.Toppings toppings);
