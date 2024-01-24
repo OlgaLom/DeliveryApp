@@ -62,23 +62,54 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 .forEach(p -> logger.debug("{}. {}", p.getId(), p));
 
         List<User> customersCreated = customerService.createAll(
-                User.builder().email("c.giannacoulis@codehub.gr")
-                        .firstName("Constantinos").lastName("Giannacoulis")
+                User.builder()
+                        .email("c.giannacoulis@codehub.gr")
+                        .phone(1234567890)
+                        .password("securePassword123")
+                        .age(47)
                         .address("3583 Tennessee Avenue")
-                        .age(47).build(),
-                User.builder().email("john.porter@gmailx.com")
-                        .firstName("John").lastName("Porter")
-                        .address("2955 Blackwell Street")
-                        .age(40).build(),
-                User.builder().email("malcolm.paker@gmailx.com")
-                        .firstName("Malcolm").lastName("Parker")
-                        .address("4071 Kelly Drive")
-                        .age(32).build(),
-                User.builder().email("terry.jones@gmailx.com")
-                        .firstName("Terry").lastName("Jones")
-                        .address("3849 Hinkle Lake Road")
-                        .age(57).build(),
-                User.builder().email("peter.mercury@outlookx.com")
+                        .firstName("Constantinos")
+                        .lastName("Giannacoulis")
+                        .city("SomeCity")
+                        .paymentMethod(PaymentMethod.CREDIT_CART)
+                        .role(Role.USER)
+                        .build(),
+                User.builder().email("john.doe@example.com")
+                .phone(987654321)
+                .password("strongPass456")
+                .age(30)
+                .address("123 Main Street")
+                .firstName("John")
+                .lastName("Doe")
+                .city("AnotherCity")
+                .paymentMethod(PaymentMethod.PAYPAL)
+                .role(Role.ADMIN)
+                .build(),
+                User.builder()
+                        .email("jane.smith@example.com")
+                        .phone(555555555)
+                        .password("securePass789")
+                        .age(25)
+                        .address("456 Oak Avenue")
+                        .firstName("Jane")
+                        .lastName("Smith")
+                        .city("YetAnotherCity")
+                        .paymentMethod(PaymentMethod.COD)
+                        .role(Role.USER)
+                        .build(),
+                User.builder()
+                        .email("alice.jones@example.com")
+                        .phone(111223344)
+                        .password("password123")
+                        .age(28)
+                        .address("789 Elm Street")
+                        .firstName("Alice")
+                        .lastName("Jones")
+                        .city("CityX")
+                        .paymentMethod(PaymentMethod.CREDIT_CART)
+                        .role(Role.USER)
+                        .build());
+              /*  User.builder().email("peter.mercury@outlookx.com")
                         .firstName("Peter").lastName("Mercury")
                         .address("Freddie Street 28th")
                         .age(32).build(),
@@ -101,7 +132,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 User.builder().email("mary.ferry@windowslivex.com")
                         .firstName("Mary").lastName("Ferry")
                         .address("Downtown 17, California")
-                        .age(32).build());
+                        .age(32).build());*/
 
         logger.info("Created {} customers.", customersCreated.size());
         customersCreated.stream()
