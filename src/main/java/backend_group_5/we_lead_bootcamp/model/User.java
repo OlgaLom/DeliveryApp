@@ -5,45 +5,50 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Entity
+//add colums to all
 @Table(name = "USERS", indexes = {@Index(columnList = "email")})
 @SequenceGenerator(name = "idGenerator", sequenceName = "USER_SEQ", initialValue = 1, allocationSize = 1)
 public class User extends  BaseModel{
-    @Id
-    private Long Id;
+
     @NotNull(message = "Email address cannot be null")
     @Email
     @Column(length = 50, nullable = false, unique = true)
     private String email;
-    private Integer phone;
 
+    @Column
     private String password;
 
+    //@NotNull(message = "First name cannot be null")
+    @Column
+    private String firstName;
+    //@NotNull(message = "Last name cannot be null")
+    @Column
+    private  String lastName;
     @Min(value = 18, message = "A customer cannot be under 18")
     @Max(value = 120, message = "A customer cannot be above 18")
+    @Column
     private Integer age;
+    @Column
     private String address;
+    @Column
+    private Integer phone;
     //private Address addressObj; Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
-    @NotNull(message = "First name cannot be null")
-    @Column(length = 20, nullable = false)
-    private String firstName;
-    @NotNull(message = "Last name cannot be null")
-    @Column(length = 30, nullable = false)
-    private  String lastName;
+    @Column
     private  String city;
     @Enumerated(EnumType.STRING)
+    @Column
     private PaymentMethod paymentMethod;
-    @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    @Column
     private Role role;
 
 }
