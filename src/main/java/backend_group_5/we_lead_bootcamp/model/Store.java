@@ -16,6 +16,8 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name ="STORES")
+@SequenceGenerator(name = "idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1)
 public class Store extends BaseModel {
 
     @NotBlank(message = "Name field is required")
@@ -33,9 +35,8 @@ public class Store extends BaseModel {
     @NotNull(message = "Category field is required")
     private StoreCategoryVariation category;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
     private List<Product> products;
-
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> reviews;
 

@@ -10,8 +10,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "STORE_CATEGORIES")
+@SequenceGenerator(name = "idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1)
 @ToString(callSuper = true)
 public class StoreCategory extends BaseModel {
+
 
     private String description;
 
