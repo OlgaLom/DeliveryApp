@@ -151,7 +151,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResourceList(ordersByDate))
+                        .data(orderMapper.toResources(ordersByDate))
                         .build());
     }
     //Get orders by status
@@ -162,7 +162,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResourceList(ordersByStatus))
+                        .data(orderMapper.toResources(ordersByStatus))
                         .build());
     }
 
