@@ -33,19 +33,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
         return storeMapper;
     }
 
-
-    /*@ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse<Void> handleNoSuchElementException(NoSuchElementException ex) {
-        return ApiResponse.<Void>builder()
-                .apiError(ApiError.builder()
-                        .status(HttpStatus.NOT_FOUND.value())
-                        .message("Resource not found")
-                        .build())
-                .build();
-    } vgazei ApiError
-    */
-
     //Get all stores
     @GetMapping
     public ResponseEntity<ApiResponse<List<StoreResource>>> findAllStores() {
@@ -63,6 +50,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .data(storeMapper.toResource(storeService.getById(storeId)))
                         .build());
     }
+
     @PostMapping
     public ResponseEntity<StoreResource> createStore(@RequestBody StoreResource storeResource) {
         Store store = storeMapper.toDomain(storeResource);
@@ -84,5 +72,17 @@ public class StoreController extends BaseController<Store, StoreResource> {
         storeService.deleteStoreById(storeId);
         return ResponseEntity.noContent().build();
     }
+
+    /*@ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<Void> handleNoSuchElementException(NoSuchElementException ex) {
+        return ApiResponse.<Void>builder()
+                .apiError(ApiError.builder()
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .message("Resource not found")
+                        .build())
+                .build();
+    } vgazei ApiError
+    */
 
 }

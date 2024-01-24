@@ -3,6 +3,7 @@ package backend_group_5.we_lead_bootcamp.bootstrap;
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
+import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
     @Override
     public void run(String... args) throws Exception {
         Store newstore = storeService.createStore(Store.builder()
-                .name("Store Name1")
+                .name("Store1")
                 .address("Address 1")
                 .phone(231012345)
                 .vatNumber("")
                 .minOrderAmount(BigDecimal.valueOf(5))
-                .category(StoreCategory.BAKERY)
-                .product());
+                .category(StoreCategoryVariation.BAKERY)
+                .build());
         logger.info("Created {}.", newstore);
         createSampleStores();
 
@@ -52,22 +53,6 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
             logger.info("Created {} stores.", createdStores.size());
             createdStores.forEach(store -> logger.debug("{}. {}", store.getId(), store));
         }
-
-    private void createSampleStoresForCategory(StoreCategory storeCategory) {
-        List<Store> stores = List.of(
-                Store.builder().name(storeCategory.getDisplayName() + " One").address("Tsimiski 1").phone(123456789)
-                        .vatNumber("VAT123").minOrderAmount(BigDecimal.valueOf(10.0)).category(storeCategory).build(),
-                Store.builder().name(storeCategory.getDisplayName() + " Two").address("Filippou 2").phone(987654321)
-                        .vatNumber("VAT456").minOrderAmount(BigDecimal.valueOf(15.0)).category(storeCategory).build(),
-                // more and more and more
-        );
-
-        //ta methods telika prepei na ta grapsw or no?
-        List<Store> createdStores = storeService.createAllStores(stores);
-
-        logger.info("Created {} {} stores.", createdStores.size(), storeCategory.getDisplayName());
-        createdStores.forEach(store -> logger.debug("{}. {}", store.getId(), store));
-    }
 
 }
 

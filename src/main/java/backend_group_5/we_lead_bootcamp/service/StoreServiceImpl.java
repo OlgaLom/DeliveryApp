@@ -54,6 +54,27 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     public List<Store> getStoresWithMinOrderAmount(BigDecimal minOrderAmount){
         return storeRepository.findByMinOrderAmountGreaterThanEqual(minOrderAmount);
     }
+
+    @Override
+    public Store createStore(Store store) {
+        return null;
+    }
+
+    @Override
+    public List<Store> createAllStores(List<Store> stores) {
+        return null;
+    }
+
+    @Override
+    public Store updateStore(Long storeId, Store store) {
+        return null;
+    }
+
+    @Override
+    public void deleteStoreById(Long storeId) {
+
+    }
+
     public BigDecimal calculateAverageRating(Long storeId){
         Store store = getById(storeId);
         if (store != null) {

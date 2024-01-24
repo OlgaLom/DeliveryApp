@@ -59,7 +59,7 @@ public class StoreCategoryController extends BaseController<StoreCategory, Store
     @PutMapping("/{categoryId}")
     public ResponseEntity<StoreCategoryResource> updateStoreCategory(@PathVariable Long categoryId, @RequestBody StoreCategoryResource categoryResource) {
         StoreCategory category = storeCategoryMapper.toDomain(categoryResource);
-        StoreCategory updatedCategory = storeCategoryService.updateCategory(categoryId, category);
+        StoreCategory updatedCategory = storeCategoryService.updateCategory(categoryId, category.getDisplayName());
         StoreCategoryResource updatedCategoryResource = storeCategoryMapper.toResource(updatedCategory);
         return ResponseEntity.ok(updatedCategoryResource);
     }

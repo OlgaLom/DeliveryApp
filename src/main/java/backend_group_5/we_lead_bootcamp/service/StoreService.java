@@ -24,6 +24,14 @@ public interface StoreService extends BaseService<Store, Long> {
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
     List<Store> getStoresWithMinOrderAmount(BigDecimal minOrderAmount);
 
+    Store createStore(Store store);
+
+    List<Store> createAllStores(List<Store> stores);
+
+    Store updateStore(Long storeId, Store store);
+
+    void deleteStoreById(Long storeId);
+
 
     //optional feature giati thelei douleia me DataBase extension (?)
     // List<Store> getStoresWithinDistance(BigDecimal latitude, BigDecimal longitude, double maxDistance);
