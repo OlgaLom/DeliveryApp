@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("product")
 @RequiredArgsConstructor
@@ -25,8 +27,10 @@ public class ProductController extends BaseController<Product, ProductResource>{
     @Override
     protected BaseMapper<Product, ProductResource> getMapper(){return productMapper;}
 
-    @PostMapping(params = "productCategoryId")
-    public ResponseEntity<ApiResponse<ProductResource>>create(@RequestBody final ProductResource productResource,
+    //createProduct
+    @RequestMapping("create")
+    @PostMapping
+    public ResponseEntity<ApiResponse<ProductResource>>createProduct(@RequestBody final ProductResource productResource,
                                                               @RequestParam Long productCategoryId){
         var product=productMapper.toDomain(productResource);
         return new ResponseEntity<>(
@@ -37,11 +41,47 @@ public class ProductController extends BaseController<Product, ProductResource>{
             HttpStatus.CREATED
      );
     }
+    //findBySerial
     @GetMapping(params = "serial")
     public ResponseEntity<ApiResponse<ProductResource>> findBySerial(@RequestParam String serial){
         final ProductResource productResource= getMapper().toResource(productService.findBySerial(serial));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
+    //updateProduct
+    @RequestMapping("update")
+    @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateProduct(@RequestBody final ProductResource productResource){
+        var product=productMapper.toDomain(productResource);
+        productService.updateProduct(product);
+    }
+
+    //deleteProduct
+    @RequestMapping("delete")
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@RequestBody final ProductResource productResource){
+        var product=productMapper.toDomain(productResource);
+        productService.deleteProduct(product);
+    }
+    //deleteProductById
+    @RequestMapping("deleteById")
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProductById(@RequestBody final ProductResource productResource) {
+        var productId = productMapper.toDomain(productResource);
+        productService.deleteProductById(productId.getId());
+    }
+    //countProduct
+    @RequestMapping("count")
+    @PostMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void countProduct(@RequestBody final ProductResource productResource){
+        var product=productMapper.toDomain(productResource);
+        productService.countProducts();
+    }
+
+
 
 
 }
