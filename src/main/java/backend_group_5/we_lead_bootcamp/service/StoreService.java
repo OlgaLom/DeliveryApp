@@ -9,17 +9,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StoreService extends BaseService<Store, Long> {
-
     Store getStoreByName(String name);
-
+    //gia single fetch store
     List<Store> findStoresByName(String name);
-    List<Store> getStoresByCategory(StoreCategory category);
-
-    Store getByCategory(StoreCategory category);
-
+    //specified keyword polla stores (px ksekinane me idia grammata)
     List<Store> findStoresByCategory(StoreCategory category);
-    List<Store> getStoresByCategoryAndRating(StoreCategory category, int minRating);
-    List<Store> getTopRatedStores(int limit);
+    //stores ana kathgoria
+    List<Store> findStoresByCategoryAndRating(StoreCategory category, int minRating);
+    //dinei ta top stores me limit px top10
+    List<Store> findTopRatedStores(int limit);
     //List<Product> getAllProductsInStore(Long storeId);
     BigDecimal calculateAverageRating(Long storeId);
     Integer getDeliveryTime(Long storeId);

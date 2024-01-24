@@ -43,7 +43,7 @@ public class StoreCategoryServiceImpl extends BaseServiceImpl<StoreCategory> imp
     public StoreCategory updateCategory(Long categoryId,StoreCategoryVariation newName) {
         StoreCategory existingCategory=getById(categoryId);
         if(existingCategory !=null) {
-            existingCategory.setName(newName);
+            existingCategory.setDisplayName(newName);
             return storeCategoryRepository.save(existingCategory);
         }
         return null;
@@ -73,5 +73,4 @@ public class StoreCategoryServiceImpl extends BaseServiceImpl<StoreCategory> imp
         return count();
     }
 
-    // Additional methods for custom business logic related to store categories
 }

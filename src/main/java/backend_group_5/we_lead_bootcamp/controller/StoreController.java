@@ -63,7 +63,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .data(storeMapper.toResource(storeService.getById(storeId)))
                         .build());
     }
-
     @PostMapping
     public ResponseEntity<StoreResource> createStore(@RequestBody StoreResource storeResource) {
         Store store = storeMapper.toDomain(storeResource);

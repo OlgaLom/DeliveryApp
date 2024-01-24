@@ -14,19 +14,12 @@ import java.util.Optional;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long> {
-    List<Store> findStoresByCategory(@NotNull(message = "Category field is required") StoreCategoryVariation category);
-
     Store getStoreByName(String name);
+    List<Store> findStoresByCategory(@NotNull(message = "Category field is required") StoreCategoryVariation category);
     List<Store> findByNameContainingIgnoreCase(String keyword);
-
-    Store findFirstByCategory(@NotNull(message = "Category field is required") StoreCategoryVariation category);
-
     List<Store> findStoresByCategoryAndRating(@NotNull(message = "Category field is required") StoreCategoryVariation category, double rating);
-
     List<Store> findTopRatedStores(Pageable pageable);
-
     List<Store> findByMinOrderAmountGreaterThanEqual(BigDecimal minOrderAmount);
-
     //List<Review> findReviewsByStore(Store store);
 
 

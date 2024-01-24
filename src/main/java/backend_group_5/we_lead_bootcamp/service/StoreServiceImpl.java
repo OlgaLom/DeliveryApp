@@ -5,6 +5,7 @@ import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,14 +18,11 @@ import java.util.Optional;
 
 @Service
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService {
-
     private final StoreRepository storeRepository;
-
     @Override
     protected JpaRepository<Store, Long> getRepository() {
         return storeRepository;
     }
-
     @Autowired
     public StoreServiceImpl(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
@@ -38,40 +36,24 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     public List<Store> findStoresByName(String keyword) {
         return storeRepository.findByNameContainingIgnoreCase(keyword);
     }
+
     @Override
     public List<Store> findStoresByCategory(StoreCategory category) {
         return storeRepository.findStoresByCategory(category.getDisplayName());
     }
-    @Override
-    public Store getByCategory(StoreCategory category) {
-        return storeRepository.findFirstByCategory(category.getDisplayName());
-    }
 
     @Override
-    public List<Store> getStoresByCategory(StoreCategory category) {
-        return storeRepository.findStoresByCategory(category.getDisplayName());
-        //expects to retrieve a list of stores that match the given category
-    }
-
-    @Override
-    public List<Store> getStoresByCategoryAndRating(StoreCategory category,int minRating){
+    public List<Store> findStoresByCategoryAndRating(StoreCategory category,int minRating){
         return storeRepository.findStoresByCategoryAndRating(category.getDisplayName(),minRating);
     }
+
     @Override
-    public List<Store> getTopRatedStores(int limit){
+    public List<Store> findTopRatedStores(int limit){
         return storeRepository.findTopRatedStores((Pageable) PageRequest.of(0,limit));
     }
-
-    /*@Override
-    public List<Product> getAllProductsInStore(Long storeId) {
-        Store store = getById(storeId);
-        return store != null ? store.getProducts(): Collections.emptyList();
-    } */
-
     public List<Store> getStoresWithMinOrderAmount(BigDecimal minOrderAmount){
         return storeRepository.findByMinOrderAmountGreaterThanEqual(minOrderAmount);
     }
-
     public BigDecimal calculateAverageRating(Long storeId){
         Store store = getById(storeId);
         if (store != null) {
@@ -101,7 +83,11 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
             storeRepository.save(store);
         }
     }
-
+    /*@Override
+    public List<Product> getAllProductsInStore(Long storeId) {
+        Store store = getById(storeId);
+        return store != null ? store.getProducts(): Collections.emptyList();
+    } */
 }
 
 
