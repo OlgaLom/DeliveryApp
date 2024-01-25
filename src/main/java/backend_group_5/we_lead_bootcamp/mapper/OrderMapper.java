@@ -10,5 +10,5 @@ import java.util.List;
 // → Generates implementation code for mapping between Java beans, eliminating the need for boilerplate code.
 @Mapper(componentModel = "spring", config = IgnoreUnmappedMapperConfig.class)
 public interface OrderMapper extends BaseMapper<Order, OrderResource>{
-
+    List<OrderResource> toResourceList(List<Order> userOrders);
 }

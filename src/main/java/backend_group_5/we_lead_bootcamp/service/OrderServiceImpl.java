@@ -107,6 +107,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
             logger.warn("Order should have a user, at least one order item, and payment type defined before being able to finalize the order.");
             return null;
         }
+
         // Set creation date for order
         order.setCreateDate(new Date());
         // Create a temp obj for total price of order. Initialize it as zero
@@ -114,6 +115,10 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
         // loop though the order items and calculate the order total
         for (OrderItem oi_obj : order.getOrderItems()) {
             temp_total = temp_total.add(oi_obj.getPrice());
+        }
+        if (temp_total.compareTo(order.getStore().getMinOrderAmount()) >= 0 ){
+            logger.warn("Order can not be finalize. Store has minimal order amount of {}",order.getStore().getMinOrderAmount());
+            return null;
         }
         // Set the final order total
         order.setOrderTotal(temp_total);
@@ -156,6 +161,59 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     @Override
     public List<Order> findOrdersByOrderStatus(OrderStatus orderStatus){
         return orderRepository.findOrdersByOrderStatus(orderStatus);
+    }
+    @Override
+    public List<Order> findOrdersByUser(Long userId){
+        return orderRepository.findOrdersByUser(userId);
+    }
+
+    @Override
+    public List<Order> findOrdersByStore(Long storeId){
+        return orderRepository.findOrdersByStore(storeId);
+    }
+
+    @Override
+    public List<Order> findOrdersDateRange(LocalDate fromDate, LocalDate untilDate) {
+        return orderRepository.findOrdersRangedDate(fromDate,untilDate);
+    }
+    @Override
+    public List<Order> findOrdersByDateRangeAndAboveTotal(LocalDate fromDate,LocalDate UntilDate, BigDecimal total){
+        return orderRepository.findOrdersByRangedDateAndAboveTotal(fromDate,UntilDate,total);
+    }
+
+    @Override
+    public List<Order> findOrdersByDateRangeAndBelowTotal(LocalDate fromDate, LocalDate UntilDate, BigDecimal total) {
+        return orderRepository.findOrdersByRangedDateAndBelowTotal(fromDate,UntilDate,total);
+    }
+
+    @Override
+    public List<Order> findOrdersByAboveTotal(BigDecimal total) {
+        return  orderRepository.findOrdersByAboveTotal(total);
+    }
+
+    @Override
+    public List<Order> findOrdersByBelowTotal(BigDecimal total) {
+        return  orderRepository.findOrdersByBelowTotal(total);
+    }
+
+
+
+    @Override
+    public List<Order> findOrdersByOrderItem(String orderItemName) {
+        return orderRepository.findOrdersByOrderItem(orderItemName);
+    }
+
+    @Override
+    public List<Object[]> findOrdersByStoresRevenues() {
+        return orderRepository.findOrdersByStoresRevenues();
+    }
+    @Override
+    public List<Order> findOrdersByAddress(OrderAddress orderAddress){
+        String ordAddress = orderAddress.getAddress();
+        Integer ordStreetNum = orderAddress.getStreetNumber();
+        String ordCity = orderAddress.getCity();
+
+        return orderRepository.findOrdersByAddress(ordAddress,ordStreetNum,ordCity);
     }
 
     private OrderItem newOrderItem(Order order, Product product, int qty){

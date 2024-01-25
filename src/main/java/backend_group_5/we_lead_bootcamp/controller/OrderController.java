@@ -15,8 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // @RestController:
 // → With this annotation we define this class responsibly for handling incoming request and returning responses
@@ -133,16 +135,24 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
 
     //Get All orders of a user
-//    @GetMapping("user/{userId}")
-//    public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByUser(@PathVariable("userId") final Long userId) {
-//        // Assuming orderService has a method to find orders by user
-//        List<Order> userOrders = orderService.findOrdersByUser(userId);
-//
-//        return ResponseEntity.ok(
-//                ApiResponse.<List<OrderResource>>builder()
-//                        .data(orderMapper.toResourceList(userOrders))
-//                        .build());
-//    }
+    @GetMapping("user/{userId}")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByUser(@PathVariable("userId") final Long userId) {
+        List<Order> userOrders = orderService.findOrdersByUser(userId);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(userOrders))
+                        .build());
+    }
+    @GetMapping("store/{storeId}")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByStore(@PathVariable("storeId") final Long storeId) {
+        List<Order> storeOrders = orderService.findOrdersByStore(storeId);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(storeOrders))
+                        .build());
+    }
 
     //Get orders by date
     @GetMapping("date/{orderDate}")
@@ -166,6 +176,105 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResources(ordersByStatus))
                         .build());
     }
+
+    //Get orders by a range of dates
+    @GetMapping("date-range")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersDateRange(
+            @RequestBody final LocalDate fromDate,
+            @RequestBody final LocalDate untilDate) {
+        List<Order> ordersByDateRange = orderService.findOrdersDateRange(fromDate,untilDate);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByDateRange))
+                        .build());
+    }
+
+    //Get orders by a range of dates
+    @GetMapping("date-range-above-total")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndAboveTotal(
+            @RequestBody final LocalDate fromDate,
+            @RequestBody final LocalDate untilDate,
+            @RequestBody final BigDecimal orderTotal) {
+        List<Order> ordersByDateRangeAboveTotal = orderService.findOrdersByDateRangeAndAboveTotal(fromDate,untilDate,orderTotal);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByDateRangeAboveTotal))
+                        .build());
+    }
+
+    @GetMapping("date-range-below-total")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndBelowTotal(
+            @RequestBody final LocalDate fromDate,
+            @RequestBody final LocalDate untilDate,
+            @RequestBody final BigDecimal orderTotal) {
+        List<Order> ordersByDateRangeBelowTotal = orderService.findOrdersByDateRangeAndBelowTotal(fromDate,untilDate,orderTotal);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByDateRangeBelowTotal))
+                        .build());
+    }
+
+    @GetMapping("above-total/{orderTotal}")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAboveTotal(
+            @PathVariable final BigDecimal orderTotal) {
+        List<Order> ordersByAboveTotal = orderService.findOrdersByAboveTotal(orderTotal);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByAboveTotal))
+                        .build());
+    }
+
+    @GetMapping("below-total/{orderTotal}")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByBelowTotal(
+            @PathVariable final BigDecimal orderTotal) {
+        List<Order> ordersByBelowTotal = orderService.findOrdersByBelowTotal(orderTotal);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByBelowTotal))
+                        .build());
+    }
+
+    @GetMapping("item/{itemName}")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderItem(
+            @PathVariable final String itemName) {
+        List<Order> ordersByItemsName = orderService.findOrdersByOrderItem(itemName);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByItemsName))
+                        .build());
+    }
+    @GetMapping("address")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAddress(
+            @RequestBody final OrderAddress orderAddress) {
+        List<Order> ordersByAddress = orderService.findOrdersByAddress(orderAddress);
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderMapper.toResources(ordersByAddress))
+                        .build());
+    }
+
+//    @GetMapping("stores-revenues")
+//    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByStoresRevenues() {
+//        // call findOrdersByStoresRevenues
+//        List<Object[]> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
+//        // Map each object to an orderResource
+//        List<OrderResource> orderResources = ordersByStoresRevenues.stream()
+//                .map(orderArray -> (Order) orderArray[0])  // Explicitly cast Object[] to Order
+//                .map(orderMapper::toResource)
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(
+//                ApiResponse.<List<OrderResource>>builder()
+//                        .data(orderResources)
+//                        .build());
+//    }
 
 
 
