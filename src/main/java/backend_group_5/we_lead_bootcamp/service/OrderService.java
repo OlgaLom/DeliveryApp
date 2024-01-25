@@ -17,7 +17,7 @@ public interface OrderService extends BaseService<Order, Long>{
 
     void removeItem(Order order, Product product);
 
-    Order finalizeOrder(Order order, PaymentMethod paymentMethod, Address address, String orderNote);
+    Order finalizeOrder(Order order, PaymentMethod paymentMethod, OrderAddress address, String orderNote);
 
     Order findByOrderNumber(String OrderNumber);
 

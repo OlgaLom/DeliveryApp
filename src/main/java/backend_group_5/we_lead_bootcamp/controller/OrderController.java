@@ -120,7 +120,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
             @RequestBody final OrderResource orderR,
             @RequestBody final PaymentMethod paymentMethod,
-            @RequestBody final Address address,
+            @RequestBody final OrderAddress address,
             @RequestBody final String orderNote) {
 
         var ord = orderMapper.toDomain(orderR);
@@ -166,6 +166,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResources(ordersByStatus))
                         .build());
     }
+
 
 
 

@@ -8,6 +8,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -48,10 +49,10 @@ public class Order extends BaseModel{
     @Column(length = 11, nullable = false)
     private PaymentMethod paymentMethod;
 
-    @ToString.Exclude
-    @Builder.Default
-    // REVISIT
-    private Address address;
+    @NotNull
+    @OneToOne( orphanRemoval = true)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private OrderAddress orderAddressList;
 
     @NotNull
     // precision → How many digits the number can have.

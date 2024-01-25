@@ -101,7 +101,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     }
 
     @Override
-    public Order finalizeOrder(final Order order, final PaymentMethod paymentMethod, final Address address, final String orderNote){
+    public Order finalizeOrder(final Order order, final PaymentMethod paymentMethod, final OrderAddress address, final String orderNote){
         //Check order object if it is empty
         if (!isOrderEmpty(order)){
             logger.warn("Order should have a user, at least one order item, and payment type defined before being able to finalize the order.");
@@ -122,7 +122,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
         order.setPaymentMethod(paymentMethod);
 
         // Set Address
-        order.setAddress(address);
+        order.setOrderAddressList(address);
         // Set order note if any
         if ( !orderNote.isEmpty() )
             order.setOrderNote(orderNote);
