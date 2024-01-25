@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @Entity
-@Table(name="ORDERADDRESS")
+@Table(name="ORDER_ADDRESS")
 @SequenceGenerator(name = "idGenerator", sequenceName = "ADDRESS_SEQ", initialValue = 1, allocationSize = 20)
 public class OrderAddress extends BaseModel{
     @Column(length = 30 , nullable = false)

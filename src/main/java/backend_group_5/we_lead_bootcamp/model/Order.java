@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name="ORDERS")
-@SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1 )
+@SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 20 )
 public class Order extends BaseModel{
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

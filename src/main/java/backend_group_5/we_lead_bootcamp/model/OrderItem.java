@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="ORDERITEMS")
+@Table(name="ORDER_ITEMS")
 @SequenceGenerator(name = "idGenerator", sequenceName = "ORDER_ITEMS_SEQ", initialValue = 1, allocationSize = 20)
 public class OrderItem extends BaseModel {
     @ToString.Exclude
