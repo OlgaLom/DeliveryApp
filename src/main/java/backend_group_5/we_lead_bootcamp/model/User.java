@@ -39,8 +39,8 @@ public class User extends  BaseModel{
     @Max(value = 120, message = "A customer cannot be above 18")
     @Column
     private Integer age;
-   @Column
-   @OneToMany(mappedBy =  "user", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn  // Define the foreign key column
     private List<Address> addressList;
 
     @Column

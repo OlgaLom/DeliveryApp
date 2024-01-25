@@ -11,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -22,8 +21,9 @@ import java.util.List;
 public class CatalogCustomerSampleContentCreator extends BaseComponent implements CommandLineRunner {
     private final ProductService productService;
     private final ProductCategoryService categoryService;
-   private final UserService customerService;
+
     private final StoreService storeService;
+   private final UserService customerService;
     @Override
     public void run(String... args) throws Exception {
        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
@@ -35,7 +35,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
      // ProductVariations.Sizes size = ProductVariations.Sizes.SMALL;
      // ProductVariations.Flavours flavour = ProductVariations.Flavours.CARAMEL;
 
-       List<Product> products = List.of(
+  /*     List<Product> products = List.of(
                 Product.builder().serial("SN1000-0001").name("Fredo Espresso")
                         .price(BigDecimal.valueOf(1629)).productCategory(newCategory)
                         .description("Hot espresso shaken with ice cubes").store(newStore)
@@ -63,7 +63,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
         logger.info("Created {} products.", productsCreated.size());
         productsCreated.stream()
                 .sorted(Comparator.comparing(Product::getId))
-                .forEach(p -> logger.debug("{}. {}", p.getId(), p));
+                .forEach(p -> logger.debug("{}. {}", p.getId(), p));*/
 
         List<User> customersCreated = customerService.createAll(
                 User.builder()
@@ -71,9 +71,9 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(1234567890)
                         .password("securePassword123")
                         .age(47)
-                       // .address("3583 Tennessee Avenue")
-                        .addressList(Arrays.asList(
-                                Address.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build()))
+                      //  .addressList("3583 Tennessee Avenue")
+                       .addressList(Arrays.asList(
+                               Address.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build()))
                         .firstName("Constantinos")
                         .lastName("Giannacoulis")
                        // .city("SomeCity")

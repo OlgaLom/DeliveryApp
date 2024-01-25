@@ -13,9 +13,7 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +74,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public User createAccount(User new_user){
         User user = new User();
+
+
        String salt = generateSalt(KEY_LENGTH);
         String password = new_user.getPassword();
        String encodedPassword = hashPassword(password,salt);
@@ -87,6 +87,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setFirstName(new_user.getFirstName());
         user.setLastName(new_user.getLastName());
         user.setAge(new_user.getAge());
+        user.setAddressList(new_user.getAddressList());
+
         user.setRole(Role.USER);
         userRepository.save(user);
 //h create method yparxei hdh sto base service alla emeis theloyme na ginettai encryption sto password
@@ -94,8 +96,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return user;
     }
     @Override
-    public void deleteAccount(final User  user){
-
+    public Long deleteAccount(final User  user){
+        String email = user.getEmail();
+        Long Id = userRepository.findByEmail(email).getId();
+        return  Id;
     }
 
     @Override
@@ -114,6 +118,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public void logOut() {
 
     }
+
 
     @Override
     public void updatePhone(Long Id,Integer phone) {
@@ -140,7 +145,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public void updateAddress(Long Id, Address address){
         var user = userRepository.getReferenceById(Id);
         List<Address> addressList = user.getAddressList();
-        addressList.add(address);
+       addressList.add(address);
+        //user.setAddressList(address);
         userRepository.save(user);
     }
 

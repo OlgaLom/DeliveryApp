@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -63,7 +65,7 @@ public class UserResource extends BaseResource{
 
     private Integer age;
 
-    private String address;
+    private List<AddressResource> addressList;
 
     private Integer phone;
     //private Address addressObj;se List Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
