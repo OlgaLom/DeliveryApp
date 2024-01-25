@@ -1,6 +1,6 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
-import backend_group_5.we_lead_bootcamp.model.PaymentMethod;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.model.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

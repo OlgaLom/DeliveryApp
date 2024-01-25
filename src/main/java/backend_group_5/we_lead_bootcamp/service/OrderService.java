@@ -1,9 +1,9 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface OrderService extends BaseService<Order, Long>{
@@ -17,7 +17,7 @@ public interface OrderService extends BaseService<Order, Long>{
 
     void removeItem(Order order, Product product);
 
-    Order finalizeOrder(Order order, PaymentMethod paymentMethod, Address address,String orderNote);
+    Order finalizeOrder(Order order, PaymentMethod paymentMethod, Address address, String orderNote);
 
     Order findByOrderNumber(String OrderNumber);
 

@@ -1,8 +1,8 @@
 package backend_group_5.we_lead_bootcamp.model;
 
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jdk.jfr.Enabled;
 import lombok.*;
 
 import java.math.BigDecimal;

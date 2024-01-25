@@ -1,8 +1,8 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
-import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -102,7 +101,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     }
 
     @Override
-    public Order finalizeOrder(final Order order,final PaymentMethod paymentMethod,final Address address, final String orderNote){
+    public Order finalizeOrder(final Order order, final PaymentMethod paymentMethod, final Address address, final String orderNote){
         //Check order object if it is empty
         if (!isOrderEmpty(order)){
             logger.warn("Order should have a user, at least one order item, and payment type defined before being able to finalize the order.");

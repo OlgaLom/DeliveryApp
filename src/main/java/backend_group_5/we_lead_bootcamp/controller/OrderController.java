@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.controller;
 
 import backend_group_5.we_lead_bootcamp.mapper.*;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;

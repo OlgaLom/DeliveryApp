@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.OrderService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
