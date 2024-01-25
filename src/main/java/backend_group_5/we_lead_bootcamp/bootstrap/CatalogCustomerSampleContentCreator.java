@@ -20,49 +20,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CatalogCustomerSampleContentCreator extends BaseComponent implements CommandLineRunner {
     private final ProductService productService;
-    private final ProductCategoryService categoryService;
+    private final ProductCategoryService productCategoryService;
     private final UserService customerService;
     private final StoreService storeService;
     @Override
     public void run(String... args) throws Exception {
-        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
+        ProductCategory newCategory = productCategoryService.create(ProductCategory.builder().description("Coffee").build());
         logger.info("Created {}.", newCategory);
         Store newStore= storeService.create(Store.builder().build());
         logger.info("Created {}!",newStore);
-        //Variation variations= productService.getVariationSize();
 
-//        ProductVariations.Sizes size = ProductVariations.Sizes.SMALL;
-//        ProductVariations.Flavours flavour = ProductVariations.Flavours.CARAMEL;
+
+
 
         List<Product> products = List.of(
                 Product.builder().serial("SN1000-0001").name("Fredo Espresso")
-                        .price(BigDecimal.valueOf(1629)).productCategory(newCategory)
+                        .price(BigDecimal.valueOf(2.50)).productCategory(newCategory)
                         .description("Hot espresso shaken with ice cubes").store(newStore)
                         .sizes(ProductVariations.Sizes.SMALL).build(),
-                Product.builder().serial("SN1000-0002").name("Apple iPhone 12 Pro Max 5G 512GB")
-                        .price(BigDecimal.valueOf(1749)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1100-0001").name("Samsung Galaxy S21 Ultra")
-                        .price(BigDecimal.valueOf(1479.99)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1100-0002").name("Samsung Galaxy S20 Ultra")
-                        .price(BigDecimal.valueOf(1199)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1200-0001").name("Huawei P40 Pro")
-                        .price(BigDecimal.valueOf(899.49)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1300-0001").name("Xiaomi Redmi 9A")
-                        .price(BigDecimal.valueOf(199.75)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1400-0001").name("RealMe C11")
-                        .price(BigDecimal.valueOf(129)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1500-0001").name("Honor 10 Lite")
-                        .price(BigDecimal.valueOf(179)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1000-0003").name("Apple iPhone 12 Pro Max 5G 128GB")
-                        .price(BigDecimal.valueOf(1339)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1000-0004").name("Apple iPhone 11 Pro 256GB")
-                        .price(BigDecimal.valueOf(1299.99)).productCategory(newCategory).build());
+                Product.builder().serial("SN1000-0002").name("Hot Chocolate")
+                        .price(BigDecimal.valueOf(3.00)).productCategory(newCategory)
+                        .description("Hot strawberry chocolate with whipped cream").store(newStore)
+                        .sizes(ProductVariations.Sizes.MEDIUM)
+                        .flavours(ProductVariations.Flavours.STRAWBERRY)
+                        .toppings(ProductVariations.Toppings.WHIPPED_CREAM).build(),
+                Product.builder().serial("SN1100-0001").name("Waffle")
+                        .price(BigDecimal.valueOf(5.40)).productCategory(newCategory)
+                        .store(newStore).description("Waffle with Nutella")
+                        .toppings(ProductVariations.Toppings.BISCUIT)
+                        .toppings(ProductVariations.Toppings.WHIPPED_CREAM).build(),
+                Product.builder().serial("SN1100-0002").name("Greek Giros")
+                        .price(BigDecimal.valueOf(3.00)).productCategory(newCategory)
+                        .store(newStore).description("Greek Giros with fries")
+                        .sizes(ProductVariations.Sizes.LARGE).sauces(ProductVariations.Sauces.TZATZIKI)
+                        .sauces(ProductVariations.Sauces.KETCHUP)
+                        .sauces(ProductVariations.Sauces.MUSTARD).build());
+        //You can add more products as needed
 
+        //create all products
         var productsCreated = productService.createAll(products);
+
         logger.info("Created {} products.", productsCreated.size());
         productsCreated.stream()
                 .sorted(Comparator.comparing(Product::getId))
                 .forEach(p -> logger.debug("{}. {}", p.getId(), p));
+
+
 
         List<User> customersCreated = customerService.createAll(
                 User.builder()
@@ -74,7 +77,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .firstName("Constantinos")
                         .lastName("Giannacoulis")
                         .city("SomeCity")
-                        .paymentMethod(PaymentMethod.CREDIT_CARD)
+                        .paymentMethod(PaymentMethod.CREDIT_CART)
                         .role(Role.USER)
                         .build(),
                 User.builder().email("john.doe@example.com")
@@ -109,7 +112,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .firstName("Alice")
                         .lastName("Jones")
                         .city("CityX")
-                        .paymentMethod(PaymentMethod.CREDIT_CARD)
+                        .paymentMethod(PaymentMethod.CREDIT_CART)
                         .role(Role.USER)
                         .build());
               /*  User.builder().email("peter.mercury@outlookx.com")
