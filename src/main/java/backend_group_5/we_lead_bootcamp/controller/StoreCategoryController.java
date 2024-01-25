@@ -5,7 +5,6 @@ import backend_group_5.we_lead_bootcamp.mapper.StoreCategoryMapper;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.StoreCategoryService;
-import backend_group_5.we_lead_bootcamp.transfer.ApiError;
 import backend_group_5.we_lead_bootcamp.transfer.resource.StoreCategoryResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

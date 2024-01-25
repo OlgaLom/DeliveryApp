@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name ="STORES")
-@SequenceGenerator(name = "idGenerator", sequenceName = "STORES_SEQ", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "idGenerator", sequenceName = "STORES_SEQ", allocationSize = 1)
 public class Store extends BaseModel {
 
     @NotBlank(message = "Name field is required")
@@ -27,8 +27,8 @@ public class Store extends BaseModel {
     private String address;
     @NotNull(message = "Phone number is required")
     @Column(unique = true)
-    private Integer phone; // evgaze error sta 10digits sto Bootstrap, kai me String(value.of())
-    @NotBlank(message = "VAT Number is required") //string in case kapoia VAT einai alphanumeric
+    private Integer phone; // error for 10digits @Bootstrap, also with String(value.of())
+    @NotBlank(message = "VAT Number is required") //string - VAT can be alphanumeric
     @Column(unique = true)
     private String vatNumber;
     @DecimalMin(value = "0.0", inclusive = false, message = "The minimum order amount must be greater than zero")

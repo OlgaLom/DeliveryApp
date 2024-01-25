@@ -2,9 +2,7 @@ package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
-import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;

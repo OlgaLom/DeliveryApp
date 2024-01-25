@@ -77,6 +77,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
         return ResponseEntity.noContent().build();
     }
 
+
     @GetMapping("/search/{keyword}")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findAllStoresByNameIgnoreCase(@PathVariable String keyword) {
         return ResponseEntity.ok(
@@ -160,7 +161,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .message("Resource not found")
                         .build())
                 .build();
-    } vgazei ApiError
+    } gets ApiError
     */
 
 }

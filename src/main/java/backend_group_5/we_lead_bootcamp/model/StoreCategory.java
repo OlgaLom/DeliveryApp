@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "STORE_CATEGORIES")
-@SequenceGenerator(name = "idGenerator", sequenceName = "STORE_CATEGORIES_SEQ", initialValue = 1, allocationSize = 40)
+@SequenceGenerator(name = "idGenerator", sequenceName = "STORE_CATEGORIES_SEQ", allocationSize = 40)
 @ToString(callSuper = true)
 public class StoreCategory extends BaseModel {
 

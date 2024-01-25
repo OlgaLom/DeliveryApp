@@ -5,7 +5,6 @@ import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreService {
@@ -113,7 +111,8 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
 
-    /*@Override
+    /*show all products in store (?)
+    @Override
     public List<Product> getAllProductsInStore(Long storeId) {
         Store store = getById(storeId);
         return store != null ? store.getProducts(): Collections.emptyList();

@@ -7,7 +7,6 @@ import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface StoreService extends BaseService<Store, Long> {
     Store createStore(Store store);
@@ -16,11 +15,11 @@ public interface StoreService extends BaseService<Store, Long> {
     Store updateStore(Long storeId, Store store);
     void deleteStoreById(Long storeId);
     List<Store> findAllStoresByNameIgnoreCase(String name);
-    //specified keyword polla stores (px ksekinane me idia grammata)
+    //specified keyword many stores - for the lowercase (e.g. CafeShop and cafeShop)
     List<Store> findAllStoresByCategory(StoreCategoryVariation category);
-    //stores ana kathgoria
+    //stores per Category
     List<Store> findStoresByCategoryAndRating(StoreCategory category, int minRating);
-    //dinei ta top stores me limit px top10
+    //gives top stores with limit e.g. top10
     List<Store> findTopRatedStores(int limit);
     List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount);
     //List<Product> getAllProductsInStore(Long storeId);
@@ -29,10 +28,8 @@ public interface StoreService extends BaseService<Store, Long> {
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
     List<Review> findReviewsByStore(Store store);
 
-    //optional feature giati thelei douleia me DataBase extension (?)
+    //this is an optional additional feature because it needs specific PostalCodes perhaps
     // List<Store> getStoresWithinDistance(BigDecimal latitude, BigDecimal longitude, double maxDistance);
 
-    // this is optional depending on the structure of the Order-related method gia elaxisti paraggelia
-    // BigDecimal calculateTotalOrderAmount(Store store);
 }
 
