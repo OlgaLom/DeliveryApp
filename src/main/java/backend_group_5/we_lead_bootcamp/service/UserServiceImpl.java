@@ -1,5 +1,7 @@
 package backend_group_5.we_lead_bootcamp.service;
 
+import backend_group_5.we_lead_bootcamp.model.Address;
+import backend_group_5.we_lead_bootcamp.model.Role;
 import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,8 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
@@ -70,18 +74,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return optEncrypted.equals(key);
     }
     @Override
-    public User createAccount(final User new_user){
+    public User createAccount(User new_user){
         User user = new User();
        String salt = generateSalt(KEY_LENGTH);
-       String password = new_user.getPassword();
+        String password = new_user.getPassword();
        String encodedPassword = hashPassword(password,salt);
 
         user.setEmail(new_user.getEmail());
 
         user.setPassword(encodedPassword);
+        System.out.println(encodedPassword);
         user.setFirstName(new_user.getFirstName());
         user.setLastName(new_user.getLastName());
-
+        user.setAge(new_user.getAge());
+        user.setRole(Role.USER);
         userRepository.save(user);
 //h create method yparxei hdh sto base service alla emeis theloyme na ginettai encryption sto password
         // otan dhmioyrgeitai o xristis opote isos gi ayto na voleyei na einai seperate method
@@ -129,6 +135,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public void updatePassword(String password) {
 
 
+    }
+    @Override
+    public void updateAddress(Long Id, Address address){
+        var user = userRepository.getReferenceById(Id);
+        List<Address> addressList = user.getAddressList();
+        addressList.add(address);
+        userRepository.save(user);
     }
 
 

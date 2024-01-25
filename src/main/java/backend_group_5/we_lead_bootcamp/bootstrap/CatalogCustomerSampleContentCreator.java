@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,20 +22,20 @@ import java.util.List;
 public class CatalogCustomerSampleContentCreator extends BaseComponent implements CommandLineRunner {
     private final ProductService productService;
     private final ProductCategoryService categoryService;
-    private final UserService customerService;
+   private final UserService customerService;
     private final StoreService storeService;
     @Override
     public void run(String... args) throws Exception {
-        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
+       ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
         logger.info("Created {}.", newCategory);
         Store newStore= storeService.create(Store.builder().build());
         logger.info("Created {}!",newStore);
-        //Variation variations= productService.getVariationSize();
+       // Variation variations= productService.getVariationSize();
 
-//        ProductVariations.Sizes size = ProductVariations.Sizes.SMALL;
-//        ProductVariations.Flavours flavour = ProductVariations.Flavours.CARAMEL;
+     // ProductVariations.Sizes size = ProductVariations.Sizes.SMALL;
+     // ProductVariations.Flavours flavour = ProductVariations.Flavours.CARAMEL;
 
-        List<Product> products = List.of(
+       List<Product> products = List.of(
                 Product.builder().serial("SN1000-0001").name("Fredo Espresso")
                         .price(BigDecimal.valueOf(1629)).productCategory(newCategory)
                         .description("Hot espresso shaken with ice cubes").store(newStore)
@@ -70,10 +71,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(1234567890)
                         .password("securePassword123")
                         .age(47)
-                        .address("3583 Tennessee Avenue")
+                       // .address("3583 Tennessee Avenue")
+                        .addressList(Arrays.asList(
+                                Address.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build()))
                         .firstName("Constantinos")
                         .lastName("Giannacoulis")
-                        .city("SomeCity")
+                       // .city("SomeCity")
                         .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
                         .build(),
@@ -81,10 +84,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 .phone(987654321)
                 .password("strongPass456")
                 .age(30)
-                .address("123 Main Street")
+                //.address("123 Main Street")
+                .addressList(Arrays.asList(
+                        Address.builder().address("Main Street").streetNumber(123).city("AnotherCity").build()))
                 .firstName("John")
                 .lastName("Doe")
-                .city("AnotherCity")
+               // .city("AnotherCity")
                 .paymentMethod(PaymentMethod.PAYPAL)
                 .role(Role.ADMIN)
                 .build(),
@@ -93,10 +98,11 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(555555555)
                         .password("securePass789")
                         .age(25)
-                        .address("456 Oak Avenue")
+                        .addressList(Arrays.asList(
+                                Address.builder().address("Oak Avenue").streetNumber(456).city("YetAnotherCity").build()))
                         .firstName("Jane")
                         .lastName("Smith")
-                        .city("YetAnotherCity")
+                     //   .city("YetAnotherCity")
                         .paymentMethod(PaymentMethod.COD)
                         .role(Role.USER)
                         .build(),
@@ -105,10 +111,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(111223344)
                         .password("password123")
                         .age(28)
-                        .address("789 Elm Street")
+                    //    .address("789 Elm Street")
+                        .addressList(Arrays.asList(
+                                Address.builder().address("Elm Street").streetNumber(789).city("CityX").build()))
                         .firstName("Alice")
                         .lastName("Jones")
-                        .city("CityX")
+                       // .city("CityX")
                         .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
                         .build());

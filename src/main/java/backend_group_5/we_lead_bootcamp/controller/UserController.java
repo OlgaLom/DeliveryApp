@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController extends BaseController<User, UserResource> {
     private final UserService userService;
-
     private  final UserMapper userMapper;
+
+
 
 
     @Override
@@ -40,14 +41,13 @@ public class UserController extends BaseController<User, UserResource> {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody UserResource userResource) {
-        var user = userMapper.toDomain(userResource);
-        System.out.println(user);
-        System.out.println("THIS IS THE ROLE");
-        System.out.println(user.getRole());
+        //ksexorista tis parametroys ena ena
+        var user = getMapper().toDomain(userResource);
+        System.out.println(user.toString());
         return new ResponseEntity<>(ApiResponse.<UserResource>builder()
                 .data(userMapper.toResource(userService.createAccount(user)))
                 .build(),
-                //getNoCacheHeaders(),
+                getNoCacheHeaders(),
                 HttpStatus.CREATED);
     }
 
