@@ -1,10 +1,7 @@
 package backend_group_5.we_lead_bootcamp.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -27,6 +24,7 @@ public class Store extends BaseModel {
     private String address;
     @NotNull(message = "Phone number is required")
     @Column(unique = true)
+    @Pattern(regexp = "\\d{10}", message = "Phone number must be of 10 digits")
     private Integer phone; // error for 10digits @Bootstrap, also with String(value.of())
     @NotBlank(message = "VAT Number is required") //string - VAT can be alphanumeric
     @Column(unique = true)
@@ -34,19 +32,14 @@ public class Store extends BaseModel {
     @DecimalMin(value = "0.0", inclusive = false, message = "The minimum order amount must be greater than zero")
     @DecimalMax(value = "20.0", message = "The minimum order amount must not exceed 20.0")
     private BigDecimal minOrderAmount;
-
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Category field is required")
     private StoreCategoryVariation category;
-
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
     private List<Product> products;
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviews;
-
-    @NotNull private Integer DeliveryTime; // in minutes
-    private double Rating;
     @NotNull
-    public double AverageRating;
+    private Integer DeliveryTime; // in minutes
 
 }

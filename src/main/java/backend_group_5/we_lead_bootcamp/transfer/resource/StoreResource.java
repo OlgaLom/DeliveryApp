@@ -1,6 +1,7 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
-import backend_group_5.we_lead_bootcamp.model.StoreCategory;
+import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -14,16 +15,16 @@ import java.math.BigDecimal;
 @ToString(callSuper = true)
 public class StoreResource extends BaseResource {
 
-    @NotNull
+    @NotBlank
     private String name;
-    @NotNull
+    @NotBlank
     private String address;
     @NotNull
-    private StoreCategory category;
+    private StoreCategoryVariation category;
     @NotNull
     private String location;
     @Pattern(regexp = "\\d{10}", message = "Phone number must be of 10 digits")
-    private String phone;
+    private Integer phone;
     @NotNull
     private Integer vatNumber;
     private BigDecimal minOrderAmount;
