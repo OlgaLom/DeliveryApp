@@ -21,7 +21,7 @@ public class Review extends BaseModel{
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "STORE_ID")
+    @JoinColumn(name ="STORE_ID")
     private Store store;
 
 

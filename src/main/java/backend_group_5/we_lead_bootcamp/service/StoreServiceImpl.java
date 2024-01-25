@@ -29,17 +29,35 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
+    public Store createStore(Store store) {
+        return storeRepository.createStore(store);
+    }
+    @Override
     public Store getStoreByName(String name) {
         return storeRepository.getStoreByName(name);
     }
 
-    public List<Store> findStoresByName(String keyword) {
-        return storeRepository.findByNameContainingIgnoreCase(keyword);
+    @Override
+    public List<Store> createAllStores(List<Store> stores) {
+        return storeRepository.createAllStores(stores);
     }
 
     @Override
-    public List<Store> findStoresByCategory(StoreCategory category) {
-        return storeRepository.findStoresByCategory(category.getDisplayName());
+    public Store updateStore(Long storeId, Store store) {
+        return storeRepository.updateStore(storeId, store);
+    }
+
+    @Override
+    public void deleteStoreById(Long storeId) {
+    }
+
+    public List<Store> findAllStoresByNameIgnoreCase(String keyword) {
+        return storeRepository.findAllStoresByNameIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Store> findAllStoresByCategory(StoreCategoryVariation category) {
+        return storeRepository.findAllStoresByCategory(category);
     }
 
     @Override
@@ -47,32 +65,16 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.findStoresByCategoryAndRating(category.getDisplayName(),minRating);
     }
 
+    //Pageable - PageReq (JPA) Pagination is a technique used to limit the number of results returned from a query
+    // and to provide the client with the ability to request more results as needed.
+    // Pageable - info about the page
+    //PageRequest - Request for the (e.g) 1st page, with number limit in items per page
     @Override
     public List<Store> findTopRatedStores(int limit){
         return storeRepository.findTopRatedStores((Pageable) PageRequest.of(0,limit));
     }
-    public List<Store> getStoresWithMinOrderAmount(BigDecimal minOrderAmount){
-        return storeRepository.findByMinOrderAmountGreaterThanEqual(minOrderAmount);
-    }
-
-    @Override
-    public Store createStore(Store store) {
-        return null;
-    }
-
-    @Override
-    public List<Store> createAllStores(List<Store> stores) {
-        return null;
-    }
-
-    @Override
-    public Store updateStore(Long storeId, Store store) {
-        return null;
-    }
-
-    @Override
-    public void deleteStoreById(Long storeId) {
-
+    public List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount){
+        return storeRepository.findStoresByMinOrderAmount(minOrderAmount);
     }
 
     public BigDecimal calculateAverageRating(Long storeId){
@@ -104,6 +106,13 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
             storeRepository.save(store);
         }
     }
+
+    @Override
+    public List<Review> findReviewsByStore(Store store) {
+        return storeRepository.findReviewsByStore(store);
+    }
+
+
     /*@Override
     public List<Product> getAllProductsInStore(Long storeId) {
         Store store = getById(storeId);
