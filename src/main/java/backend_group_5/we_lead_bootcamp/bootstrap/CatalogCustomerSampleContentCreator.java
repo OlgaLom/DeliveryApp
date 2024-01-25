@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,42 +22,40 @@ import java.util.List;
 public class CatalogCustomerSampleContentCreator extends BaseComponent implements CommandLineRunner {
     private final ProductService productService;
     private final ProductCategoryService categoryService;
-    private final UserService customerService;
+
     private final StoreService storeService;
+   private final UserService customerService;
     @Override
     public void run(String... args) throws Exception {
-        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
+       ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());
         logger.info("Created {}.", newCategory);
         Store newStore= storeService.create(Store.builder().build());
         logger.info("Created {}!",newStore);
-        //Variation variations= productService.getVariationSize();
 
-//        ProductVariations.Sizes size = ProductVariations.Sizes.SMALL;
-//        ProductVariations.Flavours flavour = ProductVariations.Flavours.CARAMEL;
 
-        List<Product> products = List.of(
-                Product.builder().serial("SN1000-0001").name("Fredo Espresso")
-                        .price(BigDecimal.valueOf(1629)).productCategory(newCategory)
+       List<Product> products = List.of(
+                Product.builder().serial("SN1000-0001").name("FREDO ESPRESSO")
+                        .price(BigDecimal.valueOf(2.50)).productCategory(newCategory)
                         .description("Hot espresso shaken with ice cubes").store(newStore)
                         .sizes(ProductVariations.Sizes.SMALL).build(),
-                Product.builder().serial("SN1000-0002").name("Apple iPhone 12 Pro Max 5G 512GB")
-                        .price(BigDecimal.valueOf(1749)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1100-0001").name("Samsung Galaxy S21 Ultra")
-                        .price(BigDecimal.valueOf(1479.99)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1100-0002").name("Samsung Galaxy S20 Ultra")
-                        .price(BigDecimal.valueOf(1199)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1200-0001").name("Huawei P40 Pro")
-                        .price(BigDecimal.valueOf(899.49)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1300-0001").name("Xiaomi Redmi 9A")
-                        .price(BigDecimal.valueOf(199.75)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1400-0001").name("RealMe C11")
-                        .price(BigDecimal.valueOf(129)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1500-0001").name("Honor 10 Lite")
-                        .price(BigDecimal.valueOf(179)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1000-0003").name("Apple iPhone 12 Pro Max 5G 128GB")
-                        .price(BigDecimal.valueOf(1339)).productCategory(newCategory).build(),
-                Product.builder().serial("SN1000-0004").name("Apple iPhone 11 Pro 256GB")
-                        .price(BigDecimal.valueOf(1299.99)).productCategory(newCategory).build());
+                Product.builder().serial("SN1000-0002").name("HOT CHOCOLATE")
+                        .price(BigDecimal.valueOf(3.00)).productCategory(newCategory)
+                        .description("Classic Chocolate").store(newStore)
+                        .sizes(ProductVariations.Sizes.MEDIUM)
+                        .flavours(ProductVariations.Flavours.STRAWBERRY)
+                        .toppings(ProductVariations.Toppings.WHIPPED_CREAM).build(),
+                Product.builder().serial("SN1100-0001").name("WAFFLE")
+                        .price(BigDecimal.valueOf(6.50)).productCategory(newCategory)
+                        .description("Waffle with Nutella").store(newStore)
+                        .toppings(ProductVariations.Toppings.BISCUIT)
+                        .toppings(ProductVariations.Toppings.WHIPPED_CREAM).build(),
+                Product.builder().serial("SN1100-0002").name("GREEK GIROS")
+                        .price(BigDecimal.valueOf(1199)).productCategory(newCategory)
+                        .description("Hot espresso shaken with ice cubes").store(newStore)
+                        .sizes(ProductVariations.Sizes.LARGE).sauces(ProductVariations.Sauces.TZATZIKI)
+                        .sauces(ProductVariations.Sauces.KETCHUP).sauces(ProductVariations.Sauces.MUSTARD).build());
+
+                //ADD MORE PRODUCTS AS NEEDED
 
         var productsCreated = productService.createAll(products);
         logger.info("Created {} products.", productsCreated.size());
@@ -70,10 +69,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(1234567890)
                         .password("securePassword123")
                         .age(47)
-                        .address("3583 Tennessee Avenue")
+                      //  .addressList("3583 Tennessee Avenue")
+                       .addressList(Arrays.asList(
+                               Address.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build()))
                         .firstName("Constantinos")
                         .lastName("Giannacoulis")
-                        .city("SomeCity")
+                       // .city("SomeCity")
                         .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
                         .build(),
@@ -81,10 +82,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 .phone(987654321)
                 .password("strongPass456")
                 .age(30)
-                .address("123 Main Street")
+                //.address("123 Main Street")
+                .addressList(Arrays.asList(
+                        Address.builder().address("Main Street").streetNumber(123).city("AnotherCity").build()))
                 .firstName("John")
                 .lastName("Doe")
-                .city("AnotherCity")
+               // .city("AnotherCity")
                 .paymentMethod(PaymentMethod.PAYPAL)
                 .role(Role.ADMIN)
                 .build(),
@@ -93,10 +96,11 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(555555555)
                         .password("securePass789")
                         .age(25)
-                        .address("456 Oak Avenue")
+                        .addressList(Arrays.asList(
+                                Address.builder().address("Oak Avenue").streetNumber(456).city("YetAnotherCity").build()))
                         .firstName("Jane")
                         .lastName("Smith")
-                        .city("YetAnotherCity")
+                     //   .city("YetAnotherCity")
                         .paymentMethod(PaymentMethod.COD)
                         .role(Role.USER)
                         .build(),
@@ -105,10 +109,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .phone(111223344)
                         .password("password123")
                         .age(28)
-                        .address("789 Elm Street")
+                    //    .address("789 Elm Street")
+                        .addressList(Arrays.asList(
+                                Address.builder().address("Elm Street").streetNumber(789).city("CityX").build()))
                         .firstName("Alice")
                         .lastName("Jones")
-                        .city("CityX")
+                       // .city("CityX")
                         .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
                         .build());

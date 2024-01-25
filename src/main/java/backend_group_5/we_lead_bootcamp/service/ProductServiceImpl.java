@@ -24,14 +24,14 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
 
     @Override
     public Product findBySerial(final String serial) {
-        return productRepository.findBySerial(serial);
+        return productRepository.getProductBySerial(serial);
     }
     @Override
     public Product getProductDescription(final String description) {
-        return productRepository.findByDescription(description);
+        return productRepository.getProductByDescription(description);
     }
     @Override
-    public List<Product> listAllProducts() {
+    public List<Product> findAll() {
         return findAll();
     }
 
@@ -42,64 +42,61 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.save(product);
     }
     @Override
-    public void updateProduct(Product product) {
+    public void update(Product product) {
         getRepository().save(product);
     }
 
     @Override
-    public void deleteProduct(Product product) {
+    public void delete(Product product) {
         getRepository().delete(product);
     }
 
     @Override
-    public void deleteProductById(Long productId) {
+    public void deleteById(Long productId) {
         getRepository().deleteById(productId);
     }
 
     @Override
-    public long countProducts() {
+    public Long count() {
         return getRepository().count();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public boolean productExists(Product productId) {
+    public boolean exists(Product productId) {
         logger.trace("Checking whether {} exists!",productId);
         return getRepository().existsById(productId.getId());
     }
 
     @Override
-    public Product getProductById(Product product,Long id) {
-//        if(getRepository().getReferenceById(id)==null){
-//            throw new NoSuchElementException(String.format("Product with id [%d] not found",id));
-//        }
+    public Product getById(Long id) {
         return getRepository().getReferenceById(id);
     }
 
     @Override
-    public Product getProductName(String name,Long id) {
-        return productRepository.findByName(name);
+    public Product getProductName(String name) {
+        return productRepository.getProductByName(name);
     }
 
     @Override
     public Product getProductPrice(BigDecimal price) {
-        return productRepository.findByPrice(price);
+        return productRepository.getProductByPrice(price);
     }
     @Override
-    public List<ProductVariations> getVariationSize(String productName, ProductVariations.Sizes size) {
+    public ProductVariations getVariationSize(String productName, ProductVariations.Sizes size) {
         return  productRepository.getVariationBySizes(productName, size);
     }
 
     @Override
-    public List<ProductVariations> getVariationFlavour(String productName, ProductVariations.Flavours flavours) {
+    public ProductVariations getVariationFlavour(String productName, ProductVariations.Flavours flavours) {
         return productRepository.getVariationByFlavours(productName, flavours);
     }
     @Override
-    public List<ProductVariations> getVariationSauces(String productName, ProductVariations.Sauces sauces) {
+    public ProductVariations getVariationSauces(String productName, ProductVariations.Sauces sauces) {
         return productRepository.getVariationBySauces(productName,sauces);
     }
     @Override
-    public List<ProductVariations> getVariationToppings(String productName, ProductVariations.Toppings toppings) {
+    public ProductVariations getVariationToppings(String productName, ProductVariations.Toppings toppings) {
         return productRepository.getVariationByToppings(productName,toppings);
     }
     @Override

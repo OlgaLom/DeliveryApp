@@ -2,13 +2,11 @@ package backend_group_5.we_lead_bootcamp.transfer.resource;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
 import backend_group_5.we_lead_bootcamp.model.OrderStatus;
-import backend_group_5.we_lead_bootcamp.model.PaymentMethod;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.nio.sctp.PeerAddressChangeNotification;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Value;
 
 import java.math.BigDecimal;
 import java.util.Date;

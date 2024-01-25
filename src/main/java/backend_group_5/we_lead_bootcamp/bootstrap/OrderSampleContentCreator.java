@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.OrderService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
@@ -52,7 +53,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         orderService.addItem(firstOrder, productService.findBySerial("SN1300-0001"), 2);
 
 //      Address addr1 = firstCustomer.getAddress();
-        Address addr1 = new Address("Triandria spiti",21,"Salonika");
+        OrderAddress addr1 = new OrderAddress("Triandria spiti",21,"Salonika");
 
         // Checkout order
         orderService.finalizeOrder(firstOrder, PaymentMethod.PAYPAL,addr1,null);
@@ -62,7 +63,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         Store secondStore = storeService.getStoreByName("Store2");
 
         //      Address addr1 = firstCustomer.getAddress();
-        Address addr2 = new Address("Triandria spiti",21,"Salonika");
+        OrderAddress addr2 = new OrderAddress("Triandria spiti",21,"Salonika");
 
 
         Order secondOrder = orderService.initiateOrder(secondCustomer,secondStore);
@@ -81,7 +82,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         Store thirdStore = storeService.getStoreByName("Store3");
 
         //      Address addr1 = firstCustomer.getAddress();
-        Address addr3 = new Address("Triandria spiti",21,"Salonika");
+        OrderAddress addr3 = new OrderAddress("Triandria spiti",21,"Salonika");
 
         Order thirdOrder = orderService.initiateOrder(thirdCustomer,thirdStore);
         orderService.addItem(thirdOrder, productService.findBySerial("SN1000-0001"), 3);
@@ -96,7 +97,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         Store fourthStore = storeService.getStoreByName("Store4");
 
         //      Address addr1 = firstCustomer.getAddress();
-        Address addr4 = new Address("Triandria spiti",21,"Salonika");
+        OrderAddress addr4 = new OrderAddress("Triandria spiti",21,"Salonika");
 
         Order fourthOrder = orderService.initiateOrder(fourthCustomer,fourthStore);
         orderService.addItem(fourthOrder, productService.findBySerial("SN1300-0001"), 1);

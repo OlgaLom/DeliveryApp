@@ -32,7 +32,7 @@ public class ProductCategoryController extends BaseController<ProductCategory, P
     @GetMapping(params = {"description"})
     public ResponseEntity<ApiResponse<ProductCategoryResource>> findByDescription(@RequestParam final String description){
         return ResponseEntity.ok(ApiResponse.<ProductCategoryResource>builder()
-                .data(getMapper().toResource(productCategoryService.findByDescription(description)))
+                .data(getMapper().toResource(productCategoryService.getByDescription(description)))
                 .build());
     }
 

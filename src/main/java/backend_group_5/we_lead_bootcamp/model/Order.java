@@ -1,13 +1,14 @@
 package backend_group_5.we_lead_bootcamp.model;
 
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jdk.jfr.Enabled;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name="ORDERS")
-@SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1 )
+@SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 20 )
 public class Order extends BaseModel{
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -48,10 +49,10 @@ public class Order extends BaseModel{
     @Column(length = 11, nullable = false)
     private PaymentMethod paymentMethod;
 
-    @ToString.Exclude
-    @Builder.Default
-    // REVISIT
-    private Address address;
+    @NotNull
+    @OneToOne( orphanRemoval = true)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private OrderAddress orderAddressList;
 
     @NotNull
     // precision → How many digits the number can have.

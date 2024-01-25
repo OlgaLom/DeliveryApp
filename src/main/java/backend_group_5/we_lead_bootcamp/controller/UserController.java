@@ -1,5 +1,6 @@
 package backend_group_5.we_lead_bootcamp.controller;
 
+import backend_group_5.we_lead_bootcamp.mapper.AddressMapper;
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
 import backend_group_5.we_lead_bootcamp.mapper.UserMapper;
 import backend_group_5.we_lead_bootcamp.model.User;
@@ -12,13 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController extends BaseController<User, UserResource> {
     private final UserService userService;
-
     private  final UserMapper userMapper;
+    private final AddressMapper addressMapper;
+
 
 
     @Override
@@ -40,14 +43,36 @@ public class UserController extends BaseController<User, UserResource> {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody UserResource userResource) {
-        var user = userMapper.toDomain(userResource);
-        System.out.println(user);
-        System.out.println("THIS IS THE ROLE");
-        System.out.println(user.getRole());
+        //ksexorista tis parametroys ena ena
+        var user = getMapper().toDomain(userResource);
+        user.setAddressList(userMapper.toDomainAddressList(userResource.getAddressList()));
+        System.out.println(user.getAddressList());
+        /*example request
+        {
+  "email": "user@example.com",
+  "password": "secretpassword",
+  "firstName": "John",
+  "lastName": "Doe",
+  "age": 25,
+  "addressList": [
+    {
+        "address": "123 Main St",
+        "streetNumber": 124,
+        "city": "City1"
+
+    }
+  ],
+  "phone": 1234567890,
+  "city": "UserCity",
+  "paymentMethod": "CREDIT_CARD",
+  "role": "USER"
+}
+         */
+
         return new ResponseEntity<>(ApiResponse.<UserResource>builder()
                 .data(userMapper.toResource(userService.createAccount(user)))
                 .build(),
-                //getNoCacheHeaders(),
+                getNoCacheHeaders(),
                 HttpStatus.CREATED);
     }
 
@@ -93,6 +118,14 @@ public class UserController extends BaseController<User, UserResource> {
 
     }
 
+    @DeleteMapping("/deleteAccount")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@RequestBody UserResource userResource) {
+        User user = userMapper.toDomain(userResource);
+        String email = user.getEmail();
+        Long id = userService.deleteAccount(user);
+        getBaseService().deleteById(id);
+    }
 
 
 

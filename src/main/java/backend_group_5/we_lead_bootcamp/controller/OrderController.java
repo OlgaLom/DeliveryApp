@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.controller;
 
 import backend_group_5.we_lead_bootcamp.mapper.*;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
@@ -119,7 +120,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
             @RequestBody final OrderResource orderR,
             @RequestBody final PaymentMethod paymentMethod,
-            @RequestBody final Address address,
+            @RequestBody final OrderAddress address,
             @RequestBody final String orderNote) {
 
         var ord = orderMapper.toDomain(orderR);
@@ -165,6 +166,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResources(ordersByStatus))
                         .build());
     }
+
 
 
 

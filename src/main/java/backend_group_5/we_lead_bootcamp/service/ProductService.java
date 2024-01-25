@@ -8,21 +8,34 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService extends BaseService<Product,Long>{
+
+    //find By Serial
     Product findBySerial(String serial);
+
+    //create Product
     Product createProduct(Product product,Long categoryId);
-    List<Product> listAllProducts();
-    void updateProduct(Product product);
-    void deleteProduct(Product product);
-    void deleteProductById(Long productId);
-    long countProducts();
-    boolean productExists(Product product);
-    Product getProductById(Product product,Long id);
-    Product getProductName(String name,Long id);
+
+    //get product by name
+    Product getProductName(String name);
+
+    //get product by price
     Product getProductPrice(BigDecimal price);
+
+    //get product by description
     Product getProductDescription(String description);
-    List<ProductVariations> getVariationSize(String productName, ProductVariations.Sizes size);
-    List<ProductVariations> getVariationFlavour(String productName, ProductVariations.Flavours flavours);
-    List<ProductVariations> getVariationSauces(String productName, ProductVariations.Sauces sauces);
-    List<ProductVariations> getVariationToppings(String productName, ProductVariations.Toppings toppings);
+
+    //get variation size
+    ProductVariations getVariationSize(String productName, ProductVariations.Sizes size);
+
+    //get Variation flavours
+    ProductVariations getVariationFlavour(String productName, ProductVariations.Flavours flavours);
+
+    //get variation sauces
+    ProductVariations getVariationSauces(String productName, ProductVariations.Sauces sauces);
+
+    //get variation toppings
+    ProductVariations getVariationToppings(String productName, ProductVariations.Toppings toppings);
+
+    //get store
     Store getStore(Store store);
 }

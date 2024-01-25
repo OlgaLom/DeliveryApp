@@ -20,7 +20,7 @@ public class ProductCategoryServiceImpl extends BaseServiceImpl<ProductCategory>
     }
 
     @Override
-    public ProductCategory findByDescription(final String description){
+    public ProductCategory getByDescription(final String description){
         return productCategoryRepository.findByDescription(description);
     }
 
