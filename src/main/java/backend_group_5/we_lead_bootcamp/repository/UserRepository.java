@@ -5,12 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-    User createAccount(User user);
-    void deleteAccount(User user);
+  //  User createAccount(User user);
+   // void deleteAccount(User user);
     User findByEmail(String email);
-    void logIn(User user);
-    void logOut();
-    User updatePhone(Long id, Integer phone);
-    User updateEmail(Long id, String email);
-    User updatePassword(String password);
+//    void logIn(User user);
+  //  void logOut();
+   // User updatePhone(Long id, Integer phone);
+    //User updateEmail(Long id, String email);
+    //User updatePassword(String password);
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum PaymentMethod {
-    COD, CREDIT_CART, PAYPAL;
+    COD, CREDIT_CARD, PAYPAL;
 
     public static PaymentMethod getDefault(){ return COD;}
 

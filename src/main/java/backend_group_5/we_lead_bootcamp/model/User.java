@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -37,11 +39,13 @@ public class User extends  BaseModel{
     @Max(value = 120, message = "A customer cannot be above 18")
     @Column
     private Integer age;
-    @Column
-    private String address;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn  // Define the foreign key column
+    private List<Address> addressList;
+
     @Column
     private Integer phone;
-    //private Address addressObj; Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
+    //private Address addressObj;se List Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
     @Column
     private  String city;
     @Enumerated(EnumType.STRING)

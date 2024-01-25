@@ -26,21 +26,21 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
                 .name("Store1")
                 .address("Address 1")
                 .phone(231012345)
-                .vatNumber("")
+                .vatNumber("VAT123")
                 .minOrderAmount(BigDecimal.valueOf(5))
                 .category(StoreCategoryVariation.BAKERY)
                 .build());
         logger.info("Created {}.", newstore);
 
         List<Store> stores = List.of(
-                Store.builder().name("Store1").address("Address 1").phone(231012345)
-                        .vatNumber("VAT123").minOrderAmount(BigDecimal.valueOf(5.0)).build(),
-                Store.builder().name("Store2").address("Address 2").phone(987654321)
-                        .vatNumber("VAT456").minOrderAmount(BigDecimal.valueOf(5.5)).build(),
-                Store.builder().name("Store3").address("Address 3").phone(231012345)
-                        .vatNumber("VAT001").minOrderAmount(BigDecimal.valueOf(7.5)).build(),
-                Store.builder().name("Store4").address("Address 4").phone(12345679)
-                        .vatNumber("VAT002").minOrderAmount(BigDecimal.valueOf(15.0)).build()
+                Store.builder().name("Store2").address("Address 2").phone(698765432)
+                        .vatNumber("VAT456").minOrderAmount(BigDecimal.valueOf(5.0)).category(StoreCategoryVariation.ASIAN_FOOD).build(),
+                Store.builder().name("Store3").address("Address 3").phone(698761111)
+                        .vatNumber("VAT789").minOrderAmount(BigDecimal.valueOf(5.5)).category(StoreCategoryVariation.GRILL).build(),
+                Store.builder().name("Store4").address("Address 4").phone(698761222)
+                        .vatNumber("VAT001").minOrderAmount(BigDecimal.valueOf(7.5)).category(StoreCategoryVariation.CAFE).build(),
+                Store.builder().name("Store5").address("Address 5").phone(698761333)
+                        .vatNumber("VAT002").minOrderAmount(BigDecimal.valueOf(15.0)).category(StoreCategoryVariation.BURGER).build()
                 // Add more stores as needed
         );
 
@@ -51,6 +51,8 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
 
 
     }
+
+    //examples for normal cases, edge cases, data validation cases, and negative testing cases.
 
 
 }

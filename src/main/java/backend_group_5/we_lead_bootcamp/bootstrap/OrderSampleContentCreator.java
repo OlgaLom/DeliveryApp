@@ -72,7 +72,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         orderService.addItem(secondOrder, productService.findBySerial("SN1200-0001"), 1);
         orderService.addItem(secondOrder, productService.findBySerial("SN1299-0001"), 1);
         // Checkout 2nd order
-        orderService.finalizeOrder(secondOrder, PaymentMethod.CREDIT_CART,addr2,"The ring bell is not working, Just yell my name and i will open up");
+        orderService.finalizeOrder(secondOrder, PaymentMethod.CREDIT_CARD,addr2,"The ring bell is not working, Just yell my name and i will open up");
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         // Third customer and order
@@ -88,7 +88,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         orderService.addItem(thirdOrder, productService.findBySerial("SN1000-0002"), 2);
         orderService.addItem(thirdOrder, productService.findBySerial("SN1000-0003"), 1);
         // Checkout 3rd order
-        orderService.finalizeOrder(thirdOrder, PaymentMethod.CREDIT_CART,addr3,null);
+        orderService.finalizeOrder(thirdOrder, PaymentMethod.CREDIT_CARD,addr3,null);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         // Fourth customer and order
