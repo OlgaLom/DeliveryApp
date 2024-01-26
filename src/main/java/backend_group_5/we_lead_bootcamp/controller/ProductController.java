@@ -116,28 +116,28 @@ public class ProductController extends BaseController<Product, ProductResource>{
     @GetMapping(params = {"sizes"})
     public ResponseEntity<ApiResponse<Sizes>> getVariationBySize
     (@RequestParam String productName,@RequestParam Sizes sizes){
-        final Sizes variationSize= productService.getVariationSize(productName,sizes);
+        final Sizes variationSize= productService.getVariationSize(sizes, productName);
         return ResponseEntity.ok(ApiResponse.<Sizes>builder().data(variationSize).build());
     }
     //getVariationByFlavour
     @GetMapping(params = {"flavours"})
     public ResponseEntity<ApiResponse<Flavours>> getVariationByFlavours
     (@RequestParam String productName,@RequestParam Flavours flavours){
-        final Flavours variationFlavours= productService.getVariationFlavour(productName,flavours);
+        final Flavours variationFlavours= productService.getVariationFlavour(flavours,productName);
         return ResponseEntity.ok(ApiResponse.<Flavours>builder().data(variationFlavours).build());
     }
     //getVariationBySauces
     @GetMapping(params = {"sauces"})
     public ResponseEntity<ApiResponse<Sauces>> getVariationBySauces
     (@RequestParam String productName,@RequestParam Sauces sauces){
-        final Sauces variationSauces= productService.getVariationSauces(productName,sauces);
+        final Sauces variationSauces= productService.getVariationSauces(sauces,productName);
         return ResponseEntity.ok(ApiResponse.<Sauces>builder().data(variationSauces).build());
     }
     //getVariationByToppings
     @GetMapping(params = {"toppings"})
     public ResponseEntity<ApiResponse<Toppings>> getVariationByToppings
     (@RequestParam String productName,@RequestParam Toppings toppings){
-        final Toppings variationToppings= productService.getVariationToppings(productName,toppings);
+        final Toppings variationToppings= productService.getVariationToppings(toppings,productName);
         return ResponseEntity.ok(ApiResponse.<Toppings>builder().data(variationToppings).build());
     }
     //getStore
@@ -147,12 +147,12 @@ public class ProductController extends BaseController<Product, ProductResource>{
         return ResponseEntity.ok(ApiResponse.<Store>builder().data(stores).build());
     }
     //find all products
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<Product>>> findAll(@RequestParam Product products){
-        final ProductResource productResource= getMapper().toResource((Product) productService.findAll());
-        return ResponseEntity.ok(ApiResponse.<List<Product>>builder()
-                .data((List<Product>) productResource).build());
-    }
+//    @GetMapping
+//    public ResponseEntity<ApiResponse<List<Product>>> findAll(@RequestParam Product products){
+//        final ProductResource productResource= getMapper().toResource((Product) productService.findAll());
+//        return ResponseEntity.ok(ApiResponse.<List<Product>>builder()
+//                .data((List<Product>) productResource).build());
+//    }
 
 
 
