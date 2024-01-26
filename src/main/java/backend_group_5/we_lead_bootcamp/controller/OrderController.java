@@ -260,21 +260,21 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-//    @GetMapping("stores-revenues")
-//    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByStoresRevenues() {
-//        // call findOrdersByStoresRevenues
-//        List<Object[]> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
-//        // Map each object to an orderResource
-//        List<OrderResource> orderResources = ordersByStoresRevenues.stream()
-//                .map(orderArray -> (Order) orderArray[0])  // Explicitly cast Object[] to Order
-//                .map(orderMapper::toResource)
-//                .collect(Collectors.toList());
-//
-//        return ResponseEntity.ok(
-//                ApiResponse.<List<OrderResource>>builder()
-//                        .data(orderResources)
-//                        .build());
-//    }
+   @GetMapping("stores-revenues")
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByStoresRevenues() {
+        // call findOrdersByStoresRevenues
+        List<Object[]> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
+        // Map each object to an orderResource
+        List<OrderResource> orderResources = ordersByStoresRevenues.stream()
+                .map(orderArray -> (Order) orderArray[0])  // Explicitly cast Object[] to Order
+                .map(orderMapper::toResource)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data(orderResources)
+                        .build());
+    }
 
 
 
