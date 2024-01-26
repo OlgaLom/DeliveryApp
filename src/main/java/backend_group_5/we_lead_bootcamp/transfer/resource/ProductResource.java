@@ -1,5 +1,9 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +23,9 @@ public class ProductResource extends BaseResource {
     private BigDecimal price;
     @NotNull
     private ProductCategoryResource category;
+    private Sizes size;
+    private Flavours flavours;
+    private Sauces sauces;
+    private Toppings toppings;
+
 }
