@@ -2,13 +2,11 @@ package backend_group_5.we_lead_bootcamp.controller;
 
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
 import backend_group_5.we_lead_bootcamp.mapper.StoreMapper;
-import backend_group_5.we_lead_bootcamp.model.Review;
-import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.StoreCategory;
-import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
+import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
 import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/stores")
@@ -38,13 +37,13 @@ public class StoreController extends BaseController<Store, StoreResource> {
     }
 
     //Get all stores
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<StoreResource>>> findAllStores() {
-        return ResponseEntity.ok(
-                ApiResponse.<List<StoreResource>>builder()
-                        .data(storeMapper.toResources(storeService.findAll()))
-                        .build());
-    }
+//    @GetMapping
+//    public ResponseEntity<ApiResponse<List<StoreResource>>> findAllStores() {
+//        return ResponseEntity.ok(
+//                ApiResponse.<List<StoreResource>>builder()
+//                        .data(storeMapper.toResources(storeService.findAll()))
+//                        .build());
+//    }
 
     // Get store by ID
     @GetMapping("/{storeId}")
@@ -55,18 +54,18 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @PostMapping
-    public ResponseEntity<StoreResource> createStore(@RequestBody StoreResource storeResource) {
-        Store store = storeMapper.toDomain(storeResource);
-        Store createdStore = storeService.createStore(store);
-        StoreResource createdStoreResource = storeMapper.toResource(createdStore);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdStoreResource);
-    }
+//    @PostMapping
+//    public ResponseEntity<StoreResource> createStore(@RequestBody StoreResource storeResource) {
+//        Store store = storeMapper.toDomain(storeResource);
+//        Store createdStore = storeService.createStore(store);
+//        StoreResource createdStoreResource = storeMapper.toResource(createdStore);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createdStoreResource);
+//    }
 
-    @PutMapping("/{storeId}")
-    public ResponseEntity<StoreResource> updateStore(@PathVariable Long storeId, @RequestBody StoreResource storeResource) {
+    @PutMapping("update")
+    public ResponseEntity<StoreResource> updateStore( @RequestBody StoreResource storeResource) {
         Store store = storeMapper.toDomain(storeResource);
-        Store updatedStore = storeService.updateStore(storeId, store);
+        Store updatedStore = storeService.updateStore( store);
         StoreResource updatedStoreResource = storeMapper.toResource(updatedStore);
         return ResponseEntity.ok(updatedStoreResource);
     }
@@ -106,9 +105,20 @@ public class StoreController extends BaseController<Store, StoreResource> {
 
     @GetMapping("/top-rated")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findTopRatedStores(@RequestParam int limit) {
+//        return ResponseEntity.ok(
+//                ApiResponse.<List<StoreResource>>builder()
+//                        .data(storeMapper.toResources(storeService.findTopRatedStores(limit)))
+//                        .build());
+        List<Object[]> findTopRatedStores = storeService.findTopRatedStores(limit);
+
+        List<StoreResource> stResources = findTopRatedStores.stream()
+                .map(orderArray -> (Store) orderArray[0])  // Explicitly cast Object[] to Order
+                .map(storeMapper::toResource)
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(
                 ApiResponse.<List<StoreResource>>builder()
-                        .data(storeMapper.toResources(storeService.findTopRatedStores(limit)))
+                        .data(stResources)
                         .build());
     }
 
