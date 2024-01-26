@@ -2,10 +2,12 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.ProductVariations;
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public interface ProductService extends BaseService<Product,Long>{
 
@@ -25,17 +27,17 @@ public interface ProductService extends BaseService<Product,Long>{
     Product getProductDescription(String description);
 
     //get variation size
-    ProductVariations getVariationSize(String productName, ProductVariations.Sizes size);
+    Product getVariationSize(String productName, Sizes size);
 
     //get Variation flavours
-    ProductVariations getVariationFlavour(String productName, ProductVariations.Flavours flavours);
+    Product getVariationFlavour(String productName, Flavours flavours);
 
     //get variation sauces
-    ProductVariations getVariationSauces(String productName, ProductVariations.Sauces sauces);
+    Product getVariationSauces(String productName, Sauces sauces);
 
     //get variation toppings
-    ProductVariations getVariationToppings(String productName, ProductVariations.Toppings toppings);
+    Product getVariationToppings(String productName, Toppings toppings);
 
     //get store
-    Store getStore(Store store);
+    Product getStore(Store store);
 }

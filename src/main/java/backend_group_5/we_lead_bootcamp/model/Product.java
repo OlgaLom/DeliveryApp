@@ -1,5 +1,9 @@
 package backend_group_5.we_lead_bootcamp.model;
 
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -53,20 +57,20 @@ public class Product extends BaseModel {
     //Variation sizes
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private ProductVariations.Sizes sizes;
+    private Sizes sizes;
 
     //Variation flavours
     @Enumerated(EnumType.STRING)
     @Column(length = 20,nullable = false)
-    private ProductVariations.Flavours flavours;
+    private Flavours flavours;
 
     //Variation sauces
     @Enumerated(EnumType.STRING)
     @Column(length = 20,nullable = false)
-    private ProductVariations.Sauces sauces;
+    private Sauces sauces;
 
     //Variation toppings
     @Enumerated(EnumType.STRING)
     @Column(length = 20,nullable = false)
-    private ProductVariations.Toppings toppings;
+    private Toppings toppings;
 }

@@ -3,8 +3,11 @@ package backend_group_5.we_lead_bootcamp.controller;
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
 import backend_group_5.we_lead_bootcamp.mapper.ProductMapper;
 import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.ProductVariations;
 import backend_group_5.we_lead_bootcamp.model.Store;
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
@@ -112,28 +115,28 @@ public class ProductController extends BaseController<Product, ProductResource>{
     //getVariationBySize
     @GetMapping(params = {"sizes"})
     public ResponseEntity<ApiResponse<ProductResource>> getVariationBySize
-    (@RequestParam String productName,@RequestParam ProductVariations.Sizes size){
+    (@RequestParam String productName,@RequestParam Sizes size){
         final ProductResource productResource= getMapper().toResource(productService.getVariationSize(productName,size));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
     //getVariationByFlavour
     @GetMapping(params = {"flavours"})
     public ResponseEntity<ApiResponse<ProductResource>> getVariationByFlavours
-    (@RequestParam String productName,@RequestParam ProductVariations.Flavours flavours){
+    (@RequestParam String productName,@RequestParam Flavours flavours){
         final ProductResource productResource= getMapper().toResource(productService.getVariationFlavour(productName,flavours));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
     //getVariationBySauces
     @GetMapping(params = {"sauces"})
     public ResponseEntity<ApiResponse<ProductResource>> getVariationBySauces
-    (@RequestParam String productName,@RequestParam ProductVariations.Sauces sauces){
+    (@RequestParam String productName,@RequestParam Sauces sauces){
         final ProductResource productResource= getMapper().toResource(productService.getVariationSauces(productName,sauces));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
     //getVariationByToppings
     @GetMapping(params = {"toppings"})
     public ResponseEntity<ApiResponse<ProductResource>> getVariationByToppings
-    (@RequestParam String productName,@RequestParam ProductVariations.Toppings toppings){
+    (@RequestParam String productName,@RequestParam Toppings toppings){
         final ProductResource productResource= getMapper().toResource(productService.getVariationToppings(productName,toppings));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
