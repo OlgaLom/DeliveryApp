@@ -86,20 +86,20 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getProductByPrice(price);
     }
     @Override
-    public Product getVariationSize(String productName, Sizes size) {
+    public Sizes getVariationSize(String productName, Sizes size) {
         return  productRepository.getVariationBySizes(productName, size);
     }
 
     @Override
-    public Product getVariationFlavour(String productName, Flavours flavours) {
+    public Flavours getVariationFlavour(String productName, Flavours flavours) {
         return productRepository.getVariationByFlavours(productName, flavours);
     }
     @Override
-    public Product getVariationSauces(String productName, Sauces sauces) {
+    public Sauces getVariationSauces(String productName, Sauces sauces) {
         return productRepository.getVariationBySauces(productName,sauces);
     }
     @Override
-    public Product getVariationToppings(String productName, Toppings toppings) {
+    public Toppings getVariationToppings(String productName, Toppings toppings) {
         return productRepository.getVariationByToppings(productName,toppings);
     }
     @Override
