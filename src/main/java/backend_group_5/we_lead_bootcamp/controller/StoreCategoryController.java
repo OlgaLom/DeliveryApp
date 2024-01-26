@@ -32,14 +32,14 @@ public class StoreCategoryController extends BaseController<StoreCategory, Store
         return storeCategoryMapper;
     }
 
-    @GetMapping
-    public ResponseEntity<List<StoreCategoryResource>> getAllStoreCategories() {
-        List<StoreCategoryResource> categoryResources = storeCategoryService.findAllCategories()
-                .stream()
-                .map(storeCategoryMapper::toResource)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(categoryResources);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<StoreCategoryResource>> getAllStoreCategories() {
+//        List<StoreCategoryResource> categoryResources = storeCategoryService.findAll()
+//                .stream()
+//                .map(storeCategoryMapper::toResource)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(categoryResources);
+//    }
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<StoreCategoryResource> getStoreCategoryById(@PathVariable Long categoryId) {
@@ -47,7 +47,7 @@ public class StoreCategoryController extends BaseController<StoreCategory, Store
         return ResponseEntity.ok(categoryResource);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<StoreCategoryResource> createStoreCategory(@RequestBody StoreCategoryResource categoryResource) {
         StoreCategory category = storeCategoryMapper.toDomain(categoryResource);
         StoreCategory createdCategory = storeCategoryService.createCategory(category);
