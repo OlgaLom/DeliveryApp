@@ -177,13 +177,13 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
         return orderRepository.findOrdersRangedDate(fromDate,untilDate);
     }
     @Override
-    public List<Order> findOrdersByDateRangeAndAboveTotal(LocalDate fromDate,LocalDate UntilDate, BigDecimal total){
-        return orderRepository.findOrdersByRangedDateAndAboveTotal(fromDate,UntilDate,total);
+    public List<Order> findOrdersByDateRangeAndAboveTotal(LocalDate fromDate,LocalDate untilDate, BigDecimal total){
+        return orderRepository.findOrdersByRangedDateAndAboveTotal(fromDate,untilDate,total);
     }
 
     @Override
-    public List<Order> findOrdersByDateRangeAndBelowTotal(LocalDate fromDate, LocalDate UntilDate, BigDecimal total) {
-        return orderRepository.findOrdersByRangedDateAndBelowTotal(fromDate,UntilDate,total);
+    public List<Order> findOrdersByDateRangeAndBelowTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total) {
+        return orderRepository.findOrdersByRangedDateAndBelowTotal(fromDate,untilDate,total);
     }
 
     @Override

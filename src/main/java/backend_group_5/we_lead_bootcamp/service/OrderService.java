@@ -31,9 +31,9 @@ public interface OrderService extends BaseService<Order, Long>{
     List<Order> findOrdersByStore(Long storeId);
     List<Order> findOrdersDateRange(LocalDate fromDate,LocalDate untilDate);
 
-    List<Order> findOrdersByDateRangeAndAboveTotal(LocalDate fromDate,LocalDate UntilDate, BigDecimal total);
+    List<Order> findOrdersByDateRangeAndAboveTotal(LocalDate fromDate,LocalDate untilDate, BigDecimal total);
 
-    List<Order> findOrdersByDateRangeAndBelowTotal(LocalDate fromDate,LocalDate UntilDate, BigDecimal total);
+    List<Order> findOrdersByDateRangeAndBelowTotal(LocalDate fromDate,LocalDate untilDate, BigDecimal total);
 
     List<Order> findOrdersByAboveTotal(BigDecimal total);
     List<Order> findOrdersByBelowTotal(BigDecimal total);

@@ -30,11 +30,11 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord FROM Order ord JOIN FETCH ord.store WHERE ord.id = :storeId")
     List<Order> findOrdersByStore(Long storeId);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :unitDate AND ord.orderTotal > :total")
-    List<Order> findOrdersByRangedDateAndAboveTotal(LocalDate fromDate, LocalDate unitDate, BigDecimal total);
+    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :untilDate AND ord.orderTotal > :total")
+    List<Order> findOrdersByRangedDateAndAboveTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :unitDate AND ord.orderTotal < :total")
-    List<Order> findOrdersByRangedDateAndBelowTotal(LocalDate fromDate, LocalDate UntilDate, BigDecimal total);
+    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :untilDate AND ord.orderTotal < :total")
+    List<Order> findOrdersByRangedDateAndBelowTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total);
 
     @Query("SELECT ord FROM Order ord WHERE ord.orderTotal > :total")
     List<Order> findOrdersByAboveTotal(BigDecimal total);
@@ -42,7 +42,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord FROM Order ord WHERE ord.orderTotal < :total")
     List<Order> findOrdersByBelowTotal(BigDecimal total);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :unitDate ")
+    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :UntilDate ")
     List<Order> findOrdersRangedDate(LocalDate fromDate, LocalDate UntilDate);
 
     @Query("SELECT ord FROM Order ord JOIN FETCH ord.orderItems oi WHERE oi.product.name = :orderItemName")
@@ -58,7 +58,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord " +
             "FROM Order ord "+
             "JOIN FETCH ord.orderAddressList addr " +
-            "WHERE addr.address = :orderAddress AND addr.streetNumber = :ordStreetNum AND addr.city = :ordCity")
+            "WHERE addr.address = :ordAddress AND addr.streetNumber = :ordStreetNum AND addr.city = :ordCity")
     List<Order> findOrdersByAddress(String ordAddress, Integer ordStreetNum, String ordCity);
 
 }
