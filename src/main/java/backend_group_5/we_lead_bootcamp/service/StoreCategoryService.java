@@ -22,7 +22,7 @@ public interface StoreCategoryService extends BaseService<StoreCategory, Long> {
 
     List<StoreCategory> createAllCategories(List<StoreCategory> categories);
 
-    List<StoreCategory> findAllCategories();
+//    List<StoreCategory> findAllCategories();
     long countCategories();
 
 
