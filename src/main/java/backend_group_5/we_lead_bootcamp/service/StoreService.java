@@ -12,7 +12,7 @@ public interface StoreService extends BaseService<Store, Long> {
     Store createStore(Store store);
     Store getStoreByName(String name);
     List<Store> createAllStores(List<Store> stores);
-    Store updateStore(Long storeId, Store store);
+    Store updateStore( Store store);
     void deleteStoreById(Long storeId);
     List<Store> findAllStoresByNameIgnoreCase(String name);
     //specified keyword many stores - for the lowercase (e.g. CafeShop and cafeShop)
@@ -20,7 +20,7 @@ public interface StoreService extends BaseService<Store, Long> {
     //stores per Category
     List<Store> findStoresByCategoryAndRating(StoreCategory category, int minRating);
     //gives top stores with limit e.g. top10
-    List<Store> findTopRatedStores(int limit);
+    List<Object[]> findTopRatedStores(int limit);
     List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount);
     //List<Product> getAllProductsInStore(Long storeId);
     BigDecimal calculateAverageRating(Long storeId);
