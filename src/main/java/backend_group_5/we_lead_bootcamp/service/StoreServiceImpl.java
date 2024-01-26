@@ -28,7 +28,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     @Override
     public Store createStore(Store store) {
-        return storeRepository.createStore(store);
+        return storeRepository.save(store);
     }
     @Override
     public Store getStoreByName(String name) {
@@ -37,12 +37,12 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     @Override
     public List<Store> createAllStores(List<Store> stores) {
-        return storeRepository.createAllStores(stores);
+        return storeRepository.saveAll(stores);
     }
 
     @Override
-    public Store updateStore(Long storeId, Store store) {
-        return storeRepository.updateStore(storeId, store);
+    public Store updateStore( Store store){
+        return storeRepository.save(store);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     // Pageable - info about the page
     //PageRequest - Request for the (e.g) 1st page, with number limit in items per page
     @Override
-    public List<Store> findTopRatedStores(int limit){
-        return storeRepository.findTopRatedStores((Pageable) PageRequest.of(0,limit));
+    public List<Object[]> findTopRatedStores(int limit){
+        return storeRepository.findTopRatedStores(); //(Pageable) PageRequest.of(0,limit)
     }
     public List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount){
         return storeRepository.findStoresByMinOrderAmount(minOrderAmount);
@@ -107,7 +107,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
 
     @Override
     public List<Review> findReviewsByStore(Store store) {
-        return storeRepository.findReviewsByStore(store);
+        return storeRepository.findReviewsByStore(store.getId());
     }
 
 
