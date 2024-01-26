@@ -2,6 +2,10 @@ package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import backend_group_5.we_lead_bootcamp.service.ProductCategoryService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
@@ -37,23 +41,23 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 Product.builder().serial("SN1000-0001").name("FREDO ESPRESSO")
                         .price(BigDecimal.valueOf(2.50)).productCategory(newCategory)
                         .description("Hot espresso shaken with ice cubes").store(newStore)
-                        .sizes(ProductVariations.Sizes.SMALL).build(),
+                        .sizes(Sizes.SMALL).build(),
                 Product.builder().serial("SN1000-0002").name("HOT CHOCOLATE")
                         .price(BigDecimal.valueOf(3.00)).productCategory(newCategory)
                         .description("Classic Chocolate").store(newStore)
-                        .sizes(ProductVariations.Sizes.MEDIUM)
-                        .flavours(ProductVariations.Flavours.STRAWBERRY)
-                        .toppings(ProductVariations.Toppings.WHIPPED_CREAM).build(),
+                        .sizes(Sizes.MEDIUM)
+                        .flavours(Flavours.STRAWBERRY)
+                        .toppings(Toppings.WHIPPED_CREAM).build(),
                 Product.builder().serial("SN1100-0001").name("WAFFLE")
                         .price(BigDecimal.valueOf(6.50)).productCategory(newCategory)
                         .description("Waffle with Nutella").store(newStore)
-                        .toppings(ProductVariations.Toppings.BISCUIT)
-                        .toppings(ProductVariations.Toppings.WHIPPED_CREAM).build(),
+                        .toppings(Toppings.BISCUIT)
+                        .toppings(Toppings.WHIPPED_CREAM).build(),
                 Product.builder().serial("SN1100-0002").name("GREEK GIROS")
                         .price(BigDecimal.valueOf(1199)).productCategory(newCategory)
                         .description("Hot espresso shaken with ice cubes").store(newStore)
-                        .sizes(ProductVariations.Sizes.LARGE).sauces(ProductVariations.Sauces.TZATZIKI)
-                        .sauces(ProductVariations.Sauces.KETCHUP).sauces(ProductVariations.Sauces.MUSTARD).build());
+                        .sizes(Sizes.LARGE).sauces(Sauces.TZATZIKI)
+                        .sauces(Sauces.KETCHUP).sauces(Sauces.MUSTARD).build());
 
                 //ADD MORE PRODUCTS AS NEEDED
 

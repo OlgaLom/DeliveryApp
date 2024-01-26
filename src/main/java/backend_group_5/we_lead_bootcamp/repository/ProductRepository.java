@@ -1,7 +1,10 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.ProductVariations;
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product getProductByDescription(final String description);
     Product getProductByName(final String productName);
     Product getProductByPrice(final BigDecimal productPrice);
-    ProductVariations getVariationBySizes(final String productName, ProductVariations.Sizes size);
-    ProductVariations getVariationByFlavours(final String productName, ProductVariations.Flavours flavours);
-    ProductVariations getVariationBySauces(final String productName, ProductVariations.Sauces sauces);
-    ProductVariations getVariationByToppings(final String productName, ProductVariations.Toppings toppings);
+    Sizes getVariationBySizes(final String productName,Sizes size);
+    Flavours getVariationByFlavours(final String productName,Flavours flavours);
+    Sauces getVariationBySauces(final String productName,Sauces sauces);
+    Toppings getVariationByToppings(final String productName,Toppings toppings);
 }

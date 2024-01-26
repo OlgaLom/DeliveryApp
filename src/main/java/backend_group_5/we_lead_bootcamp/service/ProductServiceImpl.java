@@ -2,7 +2,10 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.ProductVariations;
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -83,20 +86,20 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getProductByPrice(price);
     }
     @Override
-    public ProductVariations getVariationSize(String productName, ProductVariations.Sizes size) {
+    public Sizes getVariationSize(String productName, Sizes size) {
         return  productRepository.getVariationBySizes(productName, size);
     }
 
     @Override
-    public ProductVariations getVariationFlavour(String productName, ProductVariations.Flavours flavours) {
+    public Flavours getVariationFlavour(String productName, Flavours flavours) {
         return productRepository.getVariationByFlavours(productName, flavours);
     }
     @Override
-    public ProductVariations getVariationSauces(String productName, ProductVariations.Sauces sauces) {
+    public Sauces getVariationSauces(String productName, Sauces sauces) {
         return productRepository.getVariationBySauces(productName,sauces);
     }
     @Override
-    public ProductVariations getVariationToppings(String productName, ProductVariations.Toppings toppings) {
+    public Toppings getVariationToppings(String productName, Toppings toppings) {
         return productRepository.getVariationByToppings(productName,toppings);
     }
     @Override
