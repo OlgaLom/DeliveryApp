@@ -8,5 +8,4 @@ import java.util.List;
 
 @Mapper(componentModel="spring",config=IgnoreUnmappedMapperConfig.class)
 public interface ProductMapper extends BaseMapper<Product, ProductResource>{
-    List<ProductResource> toResourceList(List<Product> products);
 }

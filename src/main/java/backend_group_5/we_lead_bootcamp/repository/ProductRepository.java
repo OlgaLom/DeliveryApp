@@ -19,8 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product getProductByDescription(final String description);
     Product getProductByName(final String productName);
     Product getProductByPrice(final BigDecimal productPrice);
-    @Query("SELECT pr FROM Product pr WHERE pr.sizes = :size AND pr.name = :productName")
-    Sizes getVariationBySizes(Sizes size, final String productName);
+    @Query("SELECT pr FROM Product pr WHERE pr.sizes = :sizes AND pr.name = :productName")
+    Sizes getVariationBySizes(Sizes sizes, final String productName);
     @Query("SELECT pr FROM Product pr WHERE pr.flavours = :flavours AND pr.name = :productName")
     Flavours getVariationByFlavours(Flavours flavours, final String productName);
     @Query("SELECT pr FROM Product pr WHERE pr.sauces = :sauces AND pr.name = :productName")

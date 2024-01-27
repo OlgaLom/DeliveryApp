@@ -2,10 +2,7 @@ package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.model.*;
-import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
-import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
-import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
-import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
+import backend_group_5.we_lead_bootcamp.model.enums.*;
 import backend_group_5.we_lead_bootcamp.service.ProductCategoryService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
@@ -28,7 +25,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
     private final ProductCategoryService categoryService;
 
     private final StoreService storeService;
-   private final UserService customerService;
+    private final UserService customerService;
     @Override
     public void run(String... args) throws Exception {
        ProductCategory newCategory = categoryService.create(ProductCategory.builder().description("Coffee").build());

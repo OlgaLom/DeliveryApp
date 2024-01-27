@@ -23,7 +23,7 @@ public class ProductResource extends BaseResource {
     private BigDecimal price;
     @NotNull
     private ProductCategoryResource category;
-    private Sizes size;
+    private Sizes sizes;
     private Flavours flavours;
     private Sauces sauces;
     private Toppings toppings;

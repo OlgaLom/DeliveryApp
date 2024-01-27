@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("products")
 @RequiredArgsConstructor
 public class ProductController extends BaseController<Product, ProductResource>{
     private final ProductService productService;
@@ -54,7 +54,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
     //updateProduct
-    @RequestMapping("update")
+    @RequestMapping("/products/update")
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody final ProductResource productResource){
@@ -63,7 +63,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
     }
 
     //deleteProduct
-    @RequestMapping("delete")
+    @RequestMapping("/products/delete")
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@RequestBody final ProductResource productResource){
@@ -71,7 +71,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         productService.delete(product);
     }
     //deleteProductById
-    @RequestMapping("deleteById")
+    @RequestMapping("/products/deleteById")
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProductById(@RequestBody final ProductResource productResource) {
@@ -79,7 +79,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         productService.deleteById(productId.getId());
     }
     //countProduct
-    @RequestMapping("count")
+    @RequestMapping("/products/count")
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void countProduct(@RequestBody final ProductResource productResource){
@@ -146,13 +146,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         final Store stores= productService.getStore(store);
         return ResponseEntity.ok(ApiResponse.<Store>builder().data(stores).build());
     }
-    //find all products
-//    @GetMapping
-//    public ResponseEntity<ApiResponse<List<Product>>> findAll(@RequestParam Product products){
-//        final ProductResource productResource= getMapper().toResource((Product) productService.findAll());
-//        return ResponseEntity.ok(ApiResponse.<List<Product>>builder()
-//                .data((List<Product>) productResource).build());
-//    }
+
 
 
 

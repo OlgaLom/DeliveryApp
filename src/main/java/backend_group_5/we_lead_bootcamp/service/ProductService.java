@@ -27,7 +27,7 @@ public interface ProductService extends BaseService<Product,Long>{
     Product getProductDescription(String description);
 
     //get variation size
-    Sizes getVariationSize(Sizes size, String productName);
+    Sizes getVariationSize(Sizes sizes, String productName);
 
     //get Variation flavours
     Flavours getVariationFlavour( Flavours flavours, String productName);

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +32,6 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     @Override
     public Product getProductDescription(final String description) {
         return productRepository.getProductByDescription(description);
-    }
-    @Override
-    public List<Product> findAll() {
-        return findAll();
     }
 
     @Override
@@ -86,8 +82,8 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getProductByPrice(price);
     }
     @Override
-    public Sizes getVariationSize(Sizes size,String productName) {
-        return  productRepository.getVariationBySizes(size, productName);
+    public Sizes getVariationSize(Sizes sizes,String productName) {
+        return  productRepository.getVariationBySizes(sizes, productName);
     }
 
     @Override
