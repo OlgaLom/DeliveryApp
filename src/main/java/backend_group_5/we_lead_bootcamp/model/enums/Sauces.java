@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum Sauces {
-    KETCHUP, MUSTARD, YELLOW_SAUCE, TZATZIKI, TERIYAKI
+    NONE,KETCHUP, MUSTARD, YELLOW_SAUCE, TZATZIKI, TERIYAKI
 }

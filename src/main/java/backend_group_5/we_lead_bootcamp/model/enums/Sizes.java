@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum Sizes {
-    SMALL,MEDIUM,LARGE
+    NONE,SMALL,MEDIUM,LARGE
 }
