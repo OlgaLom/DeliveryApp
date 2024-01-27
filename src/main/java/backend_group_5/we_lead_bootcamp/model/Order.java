@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="ORDERS")
+@Table(name="ORDERS" ,indexes = {@Index(columnList = "orderNumber")})
 @SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 20 )
 public class Order extends BaseModel{
     @ToString.Exclude
@@ -50,7 +50,7 @@ public class Order extends BaseModel{
     private PaymentMethod paymentMethod;
 
     @NotNull
-    @OneToOne( orphanRemoval = true)
+    @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private OrderAddress orderAddressList;
 
