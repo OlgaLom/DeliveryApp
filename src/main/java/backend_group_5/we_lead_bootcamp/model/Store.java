@@ -25,7 +25,7 @@ public class Store extends BaseModel {
     @NotNull(message = "Phone number is required")
     @Column(unique = true)
     @Pattern(regexp = "\\d{10}", message = "Phone number must be of 10 digits")
-    private Integer phone; // error for 10digits @Bootstrap, also with String(value.of())
+    private String phone; // error for 10digits @Bootstrap, also with String(value.of())
     @NotBlank(message = "VAT Number is required") //string - VAT can be alphanumeric
     @Column(unique = true)
     private String vatNumber;
