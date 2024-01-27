@@ -102,32 +102,46 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
 
     @Override
     public Order finalizeOrder(final Order order, final PaymentMethod paymentMethod, final OrderAddress address, final String orderNote){
-        //Check order object if it is empty
         if (!isOrderEmpty(order)){
-            logger.warn("Order should have a user, at least one order item, and payment type defined before being able to finalize the order.");
+            logger.warn("Order should have a user, at least one order item before being able to finalize the order.");
             return null;
         }
 
         // Set creation date for order
         order.setCreateDate(new Date());
+        order.setUpdateDate(new Date());
+
         // Create a temp obj for total price of order. Initialize it as zero
         BigDecimal temp_total = BigDecimal.ZERO;
         // loop though the order items and calculate the order total
         for (OrderItem oi_obj : order.getOrderItems()) {
             temp_total = temp_total.add(oi_obj.getPrice());
         }
-        if (temp_total.compareTo(order.getStore().getMinOrderAmount()) >= 0 ){
-            logger.warn("Order can not be finalize. Store has minimal order amount of {}",order.getStore().getMinOrderAmount());
+        if (temp_total.compareTo(order.getStore().getMinOrderAmount()) < 0 ){
+             logger.warn("Order can not be finalize. Store has minimal order amount of {}. Your order has total of {}",order.getStore().getMinOrderAmount(), temp_total);
             return null;
         }
         // Set the final order total
         order.setOrderTotal(temp_total);
 
         // Set Payment Method
-        order.setPaymentMethod(paymentMethod);
+        if ( paymentMethod != null){
+            order.setPaymentMethod(paymentMethod);
+        }else{
+            logger.warn("Order doesnt have a payment method. ");
+            return null;
+        }
+
 
         // Set Address
-        order.setOrderAddressList(address);
+        if ( address != null){
+            order.setOrderAddressList(address);
+        }else{
+            logger.warn("Order doesnt have a defined address. ");
+            return null;
+        }
+
+
         // Set order note if any
         if ( !orderNote.isEmpty() )
             order.setOrderNote(orderNote);
@@ -137,6 +151,9 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
 
         // Create and set Unique Order number
         order.setOrderNumber( generateOrderNumber() );
+
+        //Check order object if it is empty
+
 
         // Complete finalization of order
         return create(order);
@@ -221,7 +238,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     }
     private boolean checkNullability(Order orderObj, Product prod){
         if (orderObj == null ){
-            logger.warn("The oder Object is null :(");
+            logger.warn("The order Object is null :(");
             return true;
         }
         if(prod == null){
@@ -232,7 +249,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     }
 
     private boolean isOrderEmpty(Order order){
-        return order != null && !order.getOrderItems().isEmpty() && order.getUser() != null && order.getPaymentMethod() != null;
+        return order != null && !order.getOrderItems().isEmpty() && order.getUser() != null ;
 
     }
 
