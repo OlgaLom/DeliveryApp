@@ -6,6 +6,7 @@ import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,16 +20,11 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequiredArgsConstructor
 public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
     private final OrderRepository orderRepository;
-//    private final UserRepository userRepository;
 
     @Override
     protected JpaRepository<Order, Long> getRepository() {
         return orderRepository;
     }
-//    @Override
-//    protected JpaRepository<User, Long> getUserRepository() {
-//        return userRepository;
-//    }
 
     @Override
     public Order initiateOrder(final User user, final Store store) {
@@ -161,6 +157,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Order findByOrderNumber(final String OrderNumber){
         return orderRepository.findByOrderNumber(OrderNumber);
     }
@@ -171,44 +168,53 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
 //    }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByDate(LocalDate orderDate){
         return orderRepository.findByOrderDate(orderDate);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByOrderStatus(OrderStatus orderStatus){
         return orderRepository.findOrdersByOrderStatus(orderStatus);
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByUser(Long userId){
         return orderRepository.findOrdersByUser(userId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByStore(Long storeId){
         return orderRepository.findOrdersByStore(storeId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersDateRange(LocalDate fromDate, LocalDate untilDate) {
         return orderRepository.findOrdersRangedDate(fromDate,untilDate);
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByDateRangeAndAboveTotal(LocalDate fromDate,LocalDate untilDate, BigDecimal total){
         return orderRepository.findOrdersByRangedDateAndAboveTotal(fromDate,untilDate,total);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByDateRangeAndBelowTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total) {
         return orderRepository.findOrdersByRangedDateAndBelowTotal(fromDate,untilDate,total);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByAboveTotal(BigDecimal total) {
         return  orderRepository.findOrdersByAboveTotal(total);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByBelowTotal(BigDecimal total) {
         return  orderRepository.findOrdersByBelowTotal(total);
     }
@@ -216,15 +222,18 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByOrderItem(String orderItemName) {
         return orderRepository.findOrdersByOrderItem(orderItemName);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Object[]> findOrdersByStoresRevenues() {
         return orderRepository.findOrdersByStoresRevenues();
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findOrdersByAddress(OrderAddress orderAddress){
         String ordAddress = orderAddress.getAddress();
         Integer ordStreetNum = orderAddress.getStreetNumber();
