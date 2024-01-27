@@ -69,8 +69,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
     //Initiate Order
     // @PostMapping(params = {"user", "store"}) // No need for params we will pass the data to the body
-    @RequestMapping("initialize")
-    @PostMapping
+//    @RequestMapping("initialize")
+    @PostMapping("initialize")
     public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestBody final UserResource userR, @RequestBody final StoreResource storeR) {
         var user = userMapper.toDomain(userR);
         var store = storeMapper.toDomain(storeR);
@@ -82,8 +82,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
     //Add item
     // @PostMapping(params = {"order","product","quantity"})
-    @RequestMapping("/items/add")
-    @PostMapping
+//    @RequestMapping("/items/add")
+    @PostMapping("/items/add")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR, @RequestBody final int quantity){
 
@@ -95,8 +95,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
     //Update item
 //    @PutMapping(params = {"order","product","quantity"})
-    @RequestMapping("/items/update")
-    @PutMapping
+//    @RequestMapping("/items/update")
+    @PutMapping("/items/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR, @RequestBody final int quantity){
         var ord = orderMapper.toDomain(orderR);
@@ -117,8 +117,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
     //Finalize Order
     // @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
-    @PostMapping
-    @RequestMapping("finalize")
+    @PostMapping("finalize")
+//    @RequestMapping
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
             @RequestBody final OrderResource orderR,
             @RequestBody final PaymentMethod paymentMethod,
