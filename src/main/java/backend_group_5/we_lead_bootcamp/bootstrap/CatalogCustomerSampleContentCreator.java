@@ -1,11 +1,11 @@
 package backend_group_5.we_lead_bootcamp.bootstrap;
 
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
-import backend_group_5.we_lead_bootcamp.model.Address;
 import backend_group_5.we_lead_bootcamp.model.Product;
-import backend_group_5.we_lead_bootcamp.model.Role;
-import backend_group_5.we_lead_bootcamp.model.User;
-import backend_group_5.we_lead_bootcamp.model.enums.*;
+import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
+import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
+import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
+import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import backend_group_5.we_lead_bootcamp.service.ProductCategoryService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
@@ -16,9 +16,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
 @Component
 @Profile("generate-catalog-customers")
@@ -146,7 +143,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
 //                .sorted(Comparator.comparing(Product::getId))
 //                .forEach(p -> logger.debug("{}. {}", p.getId(), p));
 //
-       List<User> customersCreated = customerService.createAll(
+/*       List<User> customersCreated = customerService.createAll(
                 User.builder()
                         .email("c.giannacoulis@codehub.gr")
                         .phone("1234567890")
@@ -200,7 +197,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                        // .city("CityX")
                         .paymentMethod(PaymentMethod.CREDIT_CARD)
                         .role(Role.USER)
-                        .build());
+                        .build());*/
              /*  User.builder().email("peter.mercury@outlookx.com")
 //                        .firstName("Peter").lastName("Mercury")
 //                        .address("Freddie Street 28th")
@@ -226,9 +223,9 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .address("Downtown 17, California")
                         .age(32).build());*/
 
-        logger.info("Created {} customers.", customersCreated.size());
+    /*    logger.info("Created {} customers.", customersCreated.size());
         customersCreated.stream()
                 .sorted(Comparator.comparing(User::getId))
-                .forEach(c -> logger.debug("{}. {}", c.getId(), c));
+                .forEach(c -> logger.debug("{}. {}", c.getId(), c)); */
     }
 }

@@ -9,9 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Getter
@@ -41,12 +39,12 @@ public class User extends  BaseModel{
     @Column
     private  String lastName;
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
-    private Date birthDate; //dd/MM/yyyy
-    @Min(value = 18, message = "A customer cannot be under 18")
-    @Max(value = 120, message = "A customer cannot be above 18")
     @Column
-    private Integer age = calculateAge(birthDate);
+    private LocalDate birthDate; //dd/MM/yyyy
+    @Min(value = 18, message = "A customer cannot be under 18")
+    @Max(value = 120, message = "A customer cannot be above 120")
+    @Column
+    private Integer age;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn  // Define the foreign key column
     private List<Address> addressList;
@@ -67,14 +65,18 @@ public class User extends  BaseModel{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn
     private List<Store> favouriteStores;
-    public Integer calculateAge(Date birthDate) {
+
+    public Integer setAge() {
         if (birthDate != null) {
-            LocalDate birthLocalDate = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate currentDate = LocalDate.now();
-            Period period = Period.between(birthLocalDate, currentDate);
-            return period.getYears();
+            System.out.println(currentDate);
+            long years = ChronoUnit.YEARS.between(birthDate, currentDate);
+            this.age = Math.toIntExact(years);
+            System.out.println(age);
         } else {
-            return  null;
+            this.age = null; // or set to a default value
         }
+        return age;
     }
+
 }
