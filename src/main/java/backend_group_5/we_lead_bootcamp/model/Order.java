@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name="ORDERS" ,indexes = {@Index(columnList = "orderNumber")})
-@SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 20 )
+@SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1 )
 public class Order extends BaseModel{
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -63,7 +63,7 @@ public class Order extends BaseModel{
     @Column(length = 16, nullable = false)
     private String orderNumber;
 
-    @ToString.Exclude
+//    @ToString.Exclude
     private String orderNote;
 
     // @Temporal → we map the Date with SQL TIMESTAMP
