@@ -3,6 +3,7 @@ package backend_group_5.we_lead_bootcamp.controller;
 import backend_group_5.we_lead_bootcamp.base.BaseComponent;
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
 import backend_group_5.we_lead_bootcamp.model.BaseModel;
+import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.BaseResource;
@@ -11,8 +12,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.PropertyEditorSupport;
 import java.util.List;
 
 @Transactional
@@ -65,6 +68,25 @@ public abstract class BaseController<T extends BaseModel, R extends BaseResource
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
         return headers;
+    }
+
+    // Registers a custom editor for ENUM, this method adds insensitive support to ENUM Classes
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // Add support for OrderStatus Class
+        binder.registerCustomEditor(OrderStatus.class, new CaseInsensitiveEnumEditor(OrderStatus.class));
+    }
+    private static class CaseInsensitiveEnumEditor extends PropertyEditorSupport {
+        private final Class<? extends Enum> enumType;
+
+        public CaseInsensitiveEnumEditor(Class<? extends Enum> enumType) {
+            this.enumType = enumType;
+        }
+
+        @Override
+        public void setAsText(String text) throws IllegalArgumentException {
+            setValue(Enum.valueOf(enumType, text.toUpperCase()));
+        }
     }
 
 }
