@@ -6,7 +6,6 @@ import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
-import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
 import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,6 +44,17 @@ public class StoreController extends BaseController<Store, StoreResource> {
 //                        .build());
 //    }
 
+    @PostMapping("/stores/create")
+    public ResponseEntity<String> createStore(@RequestBody Store store) {
+        if (!storeService.storeExists(store)) {
+            Store newStore = storeService.createStore(store);
+            return new ResponseEntity<>("Store created with ID: " + newStore.getId(), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Store with similar values already exists. Skipping creation.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
     // Get store by ID
     @GetMapping("/{storeId}")
     public ResponseEntity<ApiResponse<StoreResource>> getStoreById(@PathVariable("storeId") final Long storeId) {
@@ -62,7 +72,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
 //        return ResponseEntity.status(HttpStatus.CREATED).body(createdStoreResource);
 //    }
 
-    @PutMapping("update")
+    @PutMapping("stores/update")
     public ResponseEntity<StoreResource> updateStore( @RequestBody StoreResource storeResource) {
         Store store = storeMapper.toDomain(storeResource);
         Store updatedStore = storeService.updateStore( store);
@@ -70,7 +80,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
         return ResponseEntity.ok(updatedStoreResource);
     }
 
-    @DeleteMapping("/{storeId}")
+    @DeleteMapping("/stores/{storeId}")
     public ResponseEntity<Void> deleteStoreById(@PathVariable Long storeId) {
         storeService.deleteStoreById(storeId);
         return ResponseEntity.noContent().build();
@@ -85,7 +95,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/stores/category/{category}")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findAllStoresByCategory(@PathVariable StoreCategoryVariation category) {
         return ResponseEntity.ok(
                 ApiResponse.<List<StoreResource>>builder()
@@ -93,7 +103,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @GetMapping("/category-rating")
+    @GetMapping("/stores/category-rating")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findStoresByCategoryAndRating(
             @RequestParam StoreCategory category,
             @RequestParam int minRating) {
@@ -103,7 +113,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @GetMapping("/top-rated")
+    @GetMapping("/stores/top-rated")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findTopRatedStores(@RequestParam int limit) {
 //        return ResponseEntity.ok(
 //                ApiResponse.<List<StoreResource>>builder()
@@ -122,7 +132,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @GetMapping("/min-order-amount")
+    @GetMapping("/stores/min-order-amount")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findStoresWithMinOrderAmount(@RequestParam BigDecimal minOrderAmount) {
         return ResponseEntity.ok(
                 ApiResponse.<List<StoreResource>>builder()
@@ -130,7 +140,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @GetMapping("/average-rating/{storeId}")
+    @GetMapping("/stores/average-rating/{storeId}")
     public ResponseEntity<ApiResponse<BigDecimal>> calculateAverageRating(@PathVariable Long storeId) {
         return ResponseEntity.ok(
                 ApiResponse.<BigDecimal>builder()
@@ -138,7 +148,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @GetMapping("/delivery-time/{storeId}")
+    @GetMapping("/stores/delivery-time/{storeId}")
     public ResponseEntity<ApiResponse<Integer>> getDeliveryTime(@PathVariable Long storeId) {
         return ResponseEntity.ok(
                 ApiResponse.<Integer>builder()
@@ -146,13 +156,13 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    @PutMapping("/update-delivery-time/{storeId}/{deliveryTime}")
+    @PutMapping("/stores/update-delivery-time/{storeId}/{deliveryTime}")
     public ResponseEntity<Void> updateDeliveryTime(@PathVariable Long storeId, @PathVariable Integer deliveryTime) {
         storeService.updateDeliveryTime(storeId, deliveryTime);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/reviews/{storeId}")
+    @GetMapping("/stores/reviews/{storeId}")
     public ResponseEntity<ApiResponse<List<Review>>> findReviewsByStore(@PathVariable Long storeId) {
         Store store = storeService.getById(storeId);
         return ResponseEntity.ok(
