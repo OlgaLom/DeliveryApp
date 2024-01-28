@@ -1,7 +1,8 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
-import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.model.Role;
+import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Max;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -60,9 +62,10 @@ public class UserResource extends BaseResource{
     //@NotNull(message = "Last name cannot be null")
 
     private  String lastName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "birthdate-format")
+    private Date birthDate;
     @Min(value = 18, message = "A customer cannot be under 18")
     @Max(value = 120, message = "A customer cannot be above 18")
-
     private Integer age;
 
     private List<AddressResource> addressList;

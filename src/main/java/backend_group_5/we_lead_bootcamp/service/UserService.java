@@ -1,6 +1,7 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
+import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
 
 public interface UserService  extends  BaseService<User,Long>{
@@ -21,5 +22,6 @@ public interface UserService  extends  BaseService<User,Long>{
     void updateAddress(Long Id, Address address);
     //rate store
     //add favourite store
+    User updateFavouriteStores(Long userId, Store store);
     //leave a comment
 }

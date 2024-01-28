@@ -2,6 +2,7 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
 import backend_group_5.we_lead_bootcamp.model.Role;
+import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -202,6 +203,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
        addressList.add(address);
         //user.setAddressList(address);
         userRepository.save(user);
+    }
+
+    @Override
+    public User updateFavouriteStores(Long userId, Store store) {
+        User user = userRepository.getReferenceById(userId);
+        user.getFavouriteStores().add(store);
+        userRepository.save(user);
+        return user;
     }
     //add favourite store
 
