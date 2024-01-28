@@ -1,7 +1,9 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
+import backend_group_5.we_lead_bootcamp.transfer.resource.StoresStatistics;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -43,7 +45,7 @@ public interface OrderService extends BaseService<Order, Long>{
 
     List<Order> findOrdersByAddress(OrderAddress orderAddress);
 
-    List<Object[]>  findOrdersByStoresRevenues();
+    List<StoresStatistics> findOrdersByStoresRevenues();
 
 
 
