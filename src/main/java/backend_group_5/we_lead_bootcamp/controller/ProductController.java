@@ -82,7 +82,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
     @RequestMapping("/products/count")
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void countProduct(@RequestBody final ProductResource productResource){
+    public void countProduct(final ProductResource productResource){
         var product=productMapper.toDomain(productResource);
         productService.count();
     }
