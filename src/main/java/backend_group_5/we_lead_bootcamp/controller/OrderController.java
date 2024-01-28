@@ -2,19 +2,19 @@ package backend_group_5.we_lead_bootcamp.controller;
 
 import backend_group_5.we_lead_bootcamp.mapper.*;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
-import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
-import backend_group_5.we_lead_bootcamp.transfer.resource.ProductResource;
-import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
-import backend_group_5.we_lead_bootcamp.transfer.resource.UserResource;
+import backend_group_5.we_lead_bootcamp.transfer.resource.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -71,13 +71,20 @@ public class OrderController extends BaseController<Order, OrderResource>{
     // @PostMapping(params = {"user", "store"}) // No need for params we will pass the data to the body
 //    @RequestMapping("initialize")
     @PostMapping("/initialize")
-    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestBody final UserResource userR, @RequestBody final StoreResource storeR) {
-        var user = userMapper.toDomain(userR);
-        var store = storeMapper.toDomain(storeR);
+    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestBody final UserResource userR,@RequestBody final StoreResource storeR) {
+       logger.warn("userR→ {}",userR);
+
+//        User user = userMapper.toDomain(userR);
+//        Store store = storeMapper.toDomain(storeR);
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
+                        .data(orderMapper.toResource(orderService.getById(1L)))
                         .build());
+
+//        return ResponseEntity.ok(
+//                ApiResponse.<OrderResource>builder()
+//                        .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
+//                        .build());
     }
 
     //Add item
@@ -155,9 +162,9 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Get orders by date
-    @GetMapping("/date/{orderDate}")
+    @GetMapping(value = "/date/{orderDate}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByDate(
-            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate) {
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern = "d-M-yyyy") LocalDate orderDate) {
         List<Order> ordersByDate = orderService.findOrdersByDate(orderDate);
 
         return ResponseEntity.ok(
@@ -166,9 +173,11 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
     //Get orders by status
+
     @GetMapping("/status/{orderStatus}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderStatus(
             @PathVariable OrderStatus orderStatus) {
+
         List<Order> ordersByStatus = orderService.findOrdersByOrderStatus(orderStatus);
 
         return ResponseEntity.ok(
@@ -177,11 +186,12 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
+
     //Get orders by a range of dates
-    @GetMapping("/date-range")
+    @GetMapping(value = "/date-range",params = {"fromDate","untilDate"})
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersDateRange(
-            @RequestBody final LocalDate fromDate,
-            @RequestBody final LocalDate untilDate) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern = "d-M-yyyy") final LocalDate fromDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern = "d-M-yyyy") final LocalDate untilDate) {
         List<Order> ordersByDateRange = orderService.findOrdersDateRange(fromDate,untilDate);
 
         return ResponseEntity.ok(
@@ -191,11 +201,11 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Get orders by a range of dates
-    @GetMapping("/date-range-above-total")
+    @GetMapping(value = "/date-range-above-total",params = {"fromDate","untilDate","orderTotal"})
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndAboveTotal(
-            @RequestBody final LocalDate fromDate,
-            @RequestBody final LocalDate untilDate,
-            @RequestBody final BigDecimal orderTotal) {
+            @RequestParam @DateTimeFormat(pattern = "d-M-yyyy") final LocalDate fromDate,
+            @RequestParam @DateTimeFormat(pattern = "d-M-yyyy") final LocalDate untilDate,
+            @RequestParam final BigDecimal orderTotal) {
         List<Order> ordersByDateRangeAboveTotal = orderService.findOrdersByDateRangeAndAboveTotal(fromDate,untilDate,orderTotal);
 
         return ResponseEntity.ok(
@@ -204,11 +214,11 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    @GetMapping("/date-range-below-total")
+    @GetMapping(value = "/date-range-below-total", params = {"fromDate","untilDate","orderTotal"})
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndBelowTotal(
-            @RequestBody final LocalDate fromDate,
-            @RequestBody final LocalDate untilDate,
-            @RequestBody final BigDecimal orderTotal) {
+            @RequestParam @DateTimeFormat(pattern = "d-M-yyyy") final LocalDate fromDate,
+            @RequestParam @DateTimeFormat(pattern = "d-M-yyyy") final LocalDate untilDate,
+            @RequestParam final BigDecimal orderTotal) {
         List<Order> ordersByDateRangeBelowTotal = orderService.findOrdersByDateRangeAndBelowTotal(fromDate,untilDate,orderTotal);
 
         return ResponseEntity.ok(
@@ -239,9 +249,9 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    @GetMapping("/item/{itemName}")
+    @GetMapping(value = "/item", params = {"itemName"})
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderItem(
-            @PathVariable final String itemName) {
+            @RequestParam final String itemName) {
         List<Order> ordersByItemsName = orderService.findOrdersByOrderItem(itemName);
 
         return ResponseEntity.ok(
@@ -261,18 +271,22 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
    @GetMapping("/stores-revenues")
-    public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByStoresRevenues() {
+    public ResponseEntity<ApiResponse<List<StoresStatistics>>> findOrdersByStoresRevenues() {
         // call findOrdersByStoresRevenues
-        List<Object[]> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
+        List<StoresStatistics> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
         // Map each object to an orderResource
-        List<OrderResource> orderResources = ordersByStoresRevenues.stream()
-                .map(orderArray -> (Order) orderArray[0])  // Explicitly cast Object[] to Order
-                .map(orderMapper::toResource)
-                .collect(Collectors.toList());
+//        List<OrderResource> orderResources = ordersByStoresRevenues.stream()
+//                .map(orderArray -> (Order) orderArray[0])  // Explicitly cast Object[] to Order
+//                .map(orderMapper::toResource)
+//                .collect(Collectors.toList());
+
+
+
+
 
         return ResponseEntity.ok(
-                ApiResponse.<List<OrderResource>>builder()
-                        .data(orderResources)
+                ApiResponse.<List<StoresStatistics>>builder()
+                        .data(ordersByStoresRevenues)
                         .build());
     }
 
