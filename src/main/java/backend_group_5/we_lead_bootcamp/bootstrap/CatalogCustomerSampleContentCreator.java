@@ -98,13 +98,13 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 .name("Fredo Espresso")
                 .price(BigDecimal.valueOf(4.30))
                 .description("Hot espresso shaken with ice cubes")
-                .productCategory(productCategoryService.getById(17L))
-                .store(storeService.getStoreByName("Coffee House"))
-                .serial("SN1000-0005")
-                .sizes(Sizes.MEDIUM)
+                .productCategory(productCategoryService.getById(1L))
+                .store(storeService.getStoreByName("Helga Store"))
+                .serial("SN1000-0016")
+                .sizes(Sizes.NONE)
                 .flavours(Flavours.NONE)
                 .sauces(Sauces.NONE)
-                .toppings(Toppings.WHITE_SUGAR)
+                .toppings(Toppings.NONE)
                 .build());
         logger.info("Created {}!",newProduct);
 
