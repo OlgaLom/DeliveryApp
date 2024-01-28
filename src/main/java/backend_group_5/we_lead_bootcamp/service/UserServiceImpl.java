@@ -92,7 +92,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         System.out.println(encodedPassword);
         user.setFirstName(new_user.getFirstName());
         user.setLastName(new_user.getLastName());
-        user.setAge(new_user.getAge());
+        user.setBirthDate(new_user.getBirthDate());
+        user.setAge(new_user.setAge());
         user.setAddressList(new_user.getAddressList());
         System.out.println("THIS IS THE PAYMENT METHOD ");
 
@@ -104,6 +105,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         // otan dhmioyrgeitai o xristis opote isos gi ayto na voleyei na einai seperate method
         return user;
     }
+
     @Override
     public void deleteAccount(final String  email){
        // String email = user.getEmail();

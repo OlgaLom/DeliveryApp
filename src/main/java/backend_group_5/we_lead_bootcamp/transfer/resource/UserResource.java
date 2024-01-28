@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -62,10 +62,11 @@ public class UserResource extends BaseResource{
     //@NotNull(message = "Last name cannot be null")
 
     private  String lastName;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "birthdate-format")
-    private Date birthDate;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern="yyyy/MM/dd")
+    private LocalDate birthDate;
     @Min(value = 18, message = "A customer cannot be under 18")
-    @Max(value = 120, message = "A customer cannot be above 18")
+    @Max(value = 120, message = "A customer cannot be above 120")
     private Integer age;
 
     private List<AddressResource> addressList;
