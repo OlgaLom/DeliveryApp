@@ -45,15 +45,20 @@ public class User extends  BaseModel{
     private List<Address> addressList;
 
     @Column
-    private Integer phone;
+   // private Integer phone;
+    private String phone;
     //private Address addressObj;se List Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
     @Column
     private  String city;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column
     private PaymentMethod paymentMethod;
     @Enumerated(value = EnumType.STRING)
     @Column
     private Role role;
-
+    @Column
+    private String storedSalt;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<Store> favouriteStores;
 }

@@ -26,5 +26,6 @@ public class Address extends BaseModel  {
     @Column
     private String city;
 
+
 }
 

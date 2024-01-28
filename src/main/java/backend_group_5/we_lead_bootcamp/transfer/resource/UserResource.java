@@ -67,15 +67,15 @@ public class UserResource extends BaseResource{
 
     private List<AddressResource> addressList;
 
-    private Integer phone;
+    private String phone;
     //private Address addressObj;se List Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
 
     private  String city;
-    @Enumerated(EnumType.STRING)
 
-    private PaymentMethod paymentMethod;
     @Enumerated(value = EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
 }

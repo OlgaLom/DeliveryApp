@@ -4,6 +4,7 @@ import backend_group_5.we_lead_bootcamp.model.Address;
 import backend_group_5.we_lead_bootcamp.model.Role;
 import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,9 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -72,22 +75,27 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return optEncrypted.equals(key);
     }
     @Override
+    @Transactional
     public User createAccount(User new_user){
         User user = new User();
 
 
-       String salt = generateSalt(KEY_LENGTH);
+       String salt = generateSalt(8);
         String password = new_user.getPassword();
        String encodedPassword = hashPassword(password,salt);
 
         user.setEmail(new_user.getEmail());
 
         user.setPassword(encodedPassword);
+        user.setStoredSalt(salt);
         System.out.println(encodedPassword);
         user.setFirstName(new_user.getFirstName());
         user.setLastName(new_user.getLastName());
         user.setAge(new_user.getAge());
         user.setAddressList(new_user.getAddressList());
+        System.out.println("THIS IS THE PAYMENT METHOD ");
+
+        user.setPaymentMethod(new_user.getPaymentMethod());
 
         user.setRole(Role.USER);
         userRepository.save(user);
@@ -96,10 +104,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return user;
     }
     @Override
-    public Long deleteAccount(final User  user){
-        String email = user.getEmail();
+    public void deleteAccount(final String  email){
+       // String email = user.getEmail();
         Long Id = userRepository.findByEmail(email).getId();
-        return  Id;
+        deleteById(Id);
     }
 
     @Override
@@ -108,10 +116,22 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User logIn(String user) {
-        var user_login = userRepository.findByEmail(user);
+    public User logIn(String user,String password) {
+        User result = null;
+        User user_login = userRepository.findByEmail(user);
+        String key = hashPassword(password, user_login.getPassword());
+        String salt = user_login.getStoredSalt();
+        if (verifyPassword(password,user_login.getPassword(),salt)) {
+            System.out.println("LOGGRF IN");
 
-        return user_login;
+            result = user_login;
+        } else {
+            System.out.println("WRONG ");
+
+        }
+
+
+        return result;
     }
 
     @Override
@@ -121,24 +141,58 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 
     @Override
-    public void updatePhone(Long Id,Integer phone) {
+    public void updatePhone(String email,String phone) {
         //na parei olo to obj, meso setphone px
-        var user = userRepository.getById(Id);
+        var user = userRepository.findByEmail(email);
         user.setPhone(phone);
         userRepository.save(user);//me save
 
     }
 
     @Override
-    public void updateEmail(Long Id,String email) {
-        var user = userRepository.getById(Id);
-        user.setEmail(email);
-        userRepository.save(user);
+    public void updateEmail(String email,String new_email,String password) {
+        User user;
+        user = findByEmail(email);
+        if(user ==null){
+            System.out.println("USER NOT FOUND");
+        }
+        assert user != null;
+        String key = hashPassword(password, user.getPassword());
+
+        String salt = user.getStoredSalt();
+        if (verifyPassword(password, user.getPassword(),salt)) {
+            System.out.println("verified ");
+                user.setEmail(new_email);
+                userRepository.save(user);
+        } else {
+            System.out.println("WRONG password or email");
+
+        }
+
     }
 
     @Override
-    public void updatePassword(String password) {
+    public void updatePassword(String email,String password,String new_password) {
+        User user;
+        user = findByEmail(email);
+        if(user ==null){
+            System.out.println("USER NOT FOUND");
+        }
+        assert user != null;
+        String key = hashPassword(password, user.getPassword());
+        String salt = user.getStoredSalt();
+        if (verifyPassword(password,  user.getPassword(),salt)) {
+            System.out.println("verified enter new password");
+            String new_salt = generateSalt(8);
 
+            String encodedPassword = hashPassword(new_password,new_salt);
+            user.setPassword(encodedPassword);
+            user.setStoredSalt(new_salt);
+            userRepository.save(user);
+        } else {
+            System.out.println("WRONG password or email");
+
+        }
 
     }
     @Override
@@ -149,6 +203,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         //user.setAddressList(address);
         userRepository.save(user);
     }
+    //add favourite store
 
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
+//@Transactional
 public class UserController extends BaseController<User, UserResource> {
     private final UserService userService;
     private  final UserMapper userMapper;
@@ -35,18 +36,21 @@ public class UserController extends BaseController<User, UserResource> {
     }
 
 
-    @ResponseBody
+ /*   @ResponseBody
     @RequestMapping(value = "hello", method = RequestMethod.GET)
     public String hello() {
         return "hello world";
-    }
+    }*/
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody UserResource userResource) {
-        //ksexorista tis parametroys ena ena
+
         var user = getMapper().toDomain(userResource);
+        System.out.println(user);
         user.setAddressList(userMapper.toDomainAddressList(userResource.getAddressList()));
-        System.out.println(user.getAddressList());
+        user.setPaymentMethod(userMapper.toDomainPaymentMethod(userResource.getPaymentMethod()));
+        System.out.println(user.getPaymentMethod());
+        //mporei na mn xreiazetai
         /*example request
         {
   "email": "user@example.com",
@@ -77,54 +81,61 @@ public class UserController extends BaseController<User, UserResource> {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserResource userResource) {
-        var loginRequest = userMapper.toDomain(userResource);
+    public void login(@RequestParam String username,@RequestParam String password) {
+     /*   var loginRequest = userMapper.toDomain(userResource);
         String username = loginRequest.getEmail();
-        return new ResponseEntity<>(ApiResponse.<UserResource>builder()
-                .data(userMapper.toResource(userService.logIn(username)))
-                .build(),
+        String password = loginRequest.getPassword();*/
+        User user=userService.logIn(username,password);
+        System.out.println(user);
+       // return new ResponseEntity<>(ApiResponse.<UserResource>builder()
+         //       .data(userMapper.toResource(userService.logIn(username,password)))
+           //     .build(),
               //  getNoCacheHeaders(),
-                HttpStatus.CREATED);
+             //   HttpStatus.CREATED);
 
     }
 
 
 
-    //   @PostMapping ( "/login")
-    // public ResponseEntity<?> createAuthenticationToken(@RequestBody UserResource authenticationRequest) throws Exception {
-    //  var user = getBaseService().create(getMapper().toDomain(authenticationRequest));
-    //   authenticate(user.getUsername(), user.getPassword());
 
-
-    //   final UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
-    //  Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-    //-   authenticationManager.authenticate(
-    //-         new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-    //    final User userDetails = userService.logIn(user);
-    //  final String token = jwtUtil.generateToken(user);
-
-    //  }
-    @PutMapping("/update/phone{id}")
+    @PutMapping("/update/phone")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePhone(@PathVariable("id") Long id,@RequestBody Integer phone){
-
-        userService.updatePhone(id,phone);
+    public void updatePhone(@RequestBody UserResource userResource){
+        User user = getMapper().toDomain(userResource);
+        String email = user.getEmail();
+        String phone = user.getPhone();
+        userService.updatePhone(email,phone);
     }
-    @PutMapping("/update/email{id}")
+    @PutMapping("/update/email")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateEmail(@PathVariable("id") Long id,@RequestBody String email){
+    public void updateEmail(@RequestBody UserResource userResource,@RequestParam String new_email){
+        var user = userMapper.toDomain(userResource);
+        String email = user.getEmail();
+        String password = user.getPassword();
 
-        userService.updateEmail(id,email);
+        System.out.println(password);
+        userService.updateEmail(email,new_email,password);
+
+    }
+    @PutMapping("/update/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updatePassword(@RequestBody UserResource userResource,@RequestParam String new_password){
+        var user = userMapper.toDomain(userResource);
+        String email = user.getEmail();
+        String password = user.getPassword();
+
+        userService.updatePassword(email,password,new_password);
 
     }
 
     @DeleteMapping("/deleteAccount")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestBody UserResource userResource) {
-        User user = userMapper.toDomain(userResource);
-        String email = user.getEmail();
-        Long id = userService.deleteAccount(user);
-        getBaseService().deleteById(id);
+    public void delete(@RequestParam String email) {
+       // User user = userMapper.toDomain(userResource);
+       // String email = user.getEmail();
+        System.out.println(email);
+         userService.deleteAccount(email);
+
     }
 
 
