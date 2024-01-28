@@ -1,5 +1,6 @@
 package backend_group_5.we_lead_bootcamp.model;
 
+import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -20,10 +21,12 @@ import java.util.Set;
 @Table(name="ORDERS" ,indexes = {@Index(columnList = "orderNumber")})
 @SequenceGenerator(name="idGenerator", sequenceName = "ORDERS_SEQ", initialValue = 1, allocationSize = 1 )
 public class Order extends BaseModel{
+    @NotNull(message = "User Object cannot be null.")
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
+    @NotNull(message = "Store Object cannot be null.")
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY,optional = false )
     private Store store;
@@ -48,7 +51,7 @@ public class Order extends BaseModel{
     @Column(length = 11, nullable = false)
     private PaymentMethod paymentMethod;
 
-    @NotNull
+    @NotNull(message = "Store Object cannot be null.")
     @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private OrderAddress orderAddressList;
