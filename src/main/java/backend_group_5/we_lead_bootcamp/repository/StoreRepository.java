@@ -35,10 +35,10 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     List<Review> findReviewsByStore(Long storeId);
     @Query( "SELECT AVG(rev.rating) FROM Store st JOIN st.reviews rev WHERE st.id = :storeId")
     BigDecimal calculateAverageRating(Long storeId);
-    @Query("SELECT st.DeliveryTime FROM Store st WHERE st.id = :storeId")
+    @Query("SELECT st.deliveryTime FROM Store st WHERE st.id = :storeId")
     Integer getDeliveryTime(Long storeId);
 
-    @Query("UPDATE Store st SET st.DeliveryTime = :deliveryTime WHERE st.id = :storeId")
+    @Query("UPDATE Store st SET st.deliveryTime = :deliveryTime WHERE st.id = :storeId")
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
 
 }
