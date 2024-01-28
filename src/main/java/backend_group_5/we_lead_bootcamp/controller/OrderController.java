@@ -50,16 +50,16 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
 
     //Get all orders
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<OrderResource>>> findAll(){
-        return ResponseEntity.ok(
-                ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(orderService.findAll()))
-                        .build());
-    }
+//    @GetMapping
+//    public ResponseEntity<ApiResponse<List<OrderResource>>> findAll(){
+//        return ResponseEntity.ok(
+//                ApiResponse.<List<OrderResource>>builder()
+//                        .data(orderMapper.toResources(orderService.findAll()))
+//                        .build());
+//    }
 
     // Get order by order number
-    @GetMapping("{orderNumber}")
+    @GetMapping("/orderNumber/{orderNumber}")
     public ResponseEntity<ApiResponse<OrderResource>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
@@ -70,7 +70,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     //Initiate Order
     // @PostMapping(params = {"user", "store"}) // No need for params we will pass the data to the body
 //    @RequestMapping("initialize")
-    @PostMapping("initialize")
+    @PostMapping("/initialize")
     public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestBody final UserResource userR, @RequestBody final StoreResource storeR) {
         var user = userMapper.toDomain(userR);
         var store = storeMapper.toDomain(storeR);
@@ -105,8 +105,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
         orderService.updateItem(ord,prod,quantity);
     }
     //@DeleteMapping(params = {"order","product"})
-    @RequestMapping("/items/remove")
-    @DeleteMapping
+//    @RequestMapping
+    @DeleteMapping("/items/remove")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR){
         var ord = orderMapper.toDomain(orderR);
@@ -117,7 +117,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
     //Finalize Order
     // @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
-    @PostMapping("finalize")
+    @PostMapping("/finalize")
 //    @RequestMapping
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
             @RequestBody final OrderResource orderR,
@@ -135,7 +135,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
 
     //Get All orders of a user
-    @GetMapping("user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByUser(@PathVariable("userId") final Long userId) {
         List<Order> userOrders = orderService.findOrdersByUser(userId);
 
@@ -144,7 +144,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResources(userOrders))
                         .build());
     }
-    @GetMapping("store/{storeId}")
+    @GetMapping("/store/{storeId}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByStore(@PathVariable("storeId") final Long storeId) {
         List<Order> storeOrders = orderService.findOrdersByStore(storeId);
 
@@ -155,7 +155,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Get orders by date
-    @GetMapping("date/{orderDate}")
+    @GetMapping("/date/{orderDate}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByDate(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate) {
         List<Order> ordersByDate = orderService.findOrdersByDate(orderDate);
@@ -166,7 +166,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
     //Get orders by status
-    @GetMapping("status/{orderStatus}")
+    @GetMapping("/status/{orderStatus}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderStatus(
             @PathVariable OrderStatus orderStatus) {
         List<Order> ordersByStatus = orderService.findOrdersByOrderStatus(orderStatus);
@@ -178,7 +178,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Get orders by a range of dates
-    @GetMapping("date-range")
+    @GetMapping("/date-range")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersDateRange(
             @RequestBody final LocalDate fromDate,
             @RequestBody final LocalDate untilDate) {
@@ -191,7 +191,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     //Get orders by a range of dates
-    @GetMapping("date-range-above-total")
+    @GetMapping("/date-range-above-total")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndAboveTotal(
             @RequestBody final LocalDate fromDate,
             @RequestBody final LocalDate untilDate,
@@ -204,7 +204,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    @GetMapping("date-range-below-total")
+    @GetMapping("/date-range-below-total")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndBelowTotal(
             @RequestBody final LocalDate fromDate,
             @RequestBody final LocalDate untilDate,
@@ -217,7 +217,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    @GetMapping("above-total/{orderTotal}")
+    @GetMapping("/above-total/{orderTotal}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAboveTotal(
             @PathVariable final BigDecimal orderTotal) {
         List<Order> ordersByAboveTotal = orderService.findOrdersByAboveTotal(orderTotal);
@@ -228,7 +228,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    @GetMapping("below-total/{orderTotal}")
+    @GetMapping("/below-total/{orderTotal}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByBelowTotal(
             @PathVariable final BigDecimal orderTotal) {
         List<Order> ordersByBelowTotal = orderService.findOrdersByBelowTotal(orderTotal);
@@ -239,7 +239,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    @GetMapping("item/{itemName}")
+    @GetMapping("/item/{itemName}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderItem(
             @PathVariable final String itemName) {
         List<Order> ordersByItemsName = orderService.findOrdersByOrderItem(itemName);
@@ -249,7 +249,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toResources(ordersByItemsName))
                         .build());
     }
-    @GetMapping("address")
+    @GetMapping("/address")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAddress(
             @RequestBody final OrderAddress orderAddress) {
         List<Order> ordersByAddress = orderService.findOrdersByAddress(orderAddress);
@@ -260,7 +260,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-   @GetMapping("stores-revenues")
+   @GetMapping("/stores-revenues")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByStoresRevenues() {
         // call findOrdersByStoresRevenues
         List<Object[]> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
