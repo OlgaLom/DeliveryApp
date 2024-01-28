@@ -1,7 +1,8 @@
 package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.*;
-import org.springframework.cglib.core.Local;
+import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
+import backend_group_5.we_lead_bootcamp.transfer.resource.StoresStatistics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 //The @Repository annotation is used to indicate that a class is a Data Access Object (DAO)
 // [ its primary purpose is to inform Spring to manage the bean lifecycle and provide additional features specific to data access. ]
@@ -18,47 +18,48 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord FROM Order ord WHERE ord.orderNumber = :orderNum")
     Order findByOrderNumber(final String orderNum);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) = :orderDate")
+    @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) = :orderDate")
     List<Order> findByOrderDate(LocalDate orderDate);
 
     @Query("SELECT ord FROM Order ord WHERE ord.orderStatus = :orderStatus")
     List<Order> findOrdersByOrderStatus(OrderStatus orderStatus);
 
-    @Query("SELECT ord FROM Order ord JOIN FETCH ord.user WHERE ord.id = :userId")
+    @Query("SELECT ord FROM Order ord WHERE ord.user.id = :userId")
     List<Order> findOrdersByUser(Long userId);
 
-    @Query("SELECT ord FROM Order ord JOIN FETCH ord.store WHERE ord.id = :storeId")
+    @Query("SELECT ord FROM Order ord WHERE ord.store.id = :storeId")
     List<Order> findOrdersByStore(Long storeId);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :untilDate AND ord.orderTotal > :total")
+    @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) >= :fromDate AND CAST(ord.createDate AS DATE) <= :untilDate AND ord.orderTotal >= :total")
     List<Order> findOrdersByRangedDateAndAboveTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :untilDate AND ord.orderTotal < :total")
+    @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) >= :fromDate AND CAST(ord.createDate AS DATE) <= :untilDate AND ord.orderTotal <= :total")
     List<Order> findOrdersByRangedDateAndBelowTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total);
 
-    @Query("SELECT ord FROM Order ord WHERE ord.orderTotal > :total")
+    @Query("SELECT ord FROM Order ord WHERE ord.orderTotal >= :total")
     List<Order> findOrdersByAboveTotal(BigDecimal total);
 
-    @Query("SELECT ord FROM Order ord WHERE ord.orderTotal < :total")
+    @Query("SELECT ord FROM Order ord WHERE ord.orderTotal <= :total")
     List<Order> findOrdersByBelowTotal(BigDecimal total);
 
-    @Query("SELECT ord FROM Order ord WHERE DATE(ord.createDate) > :fromDate AND  DATE(ord.createDate) < :UntilDate ")
+    @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) >= :fromDate AND  CAST(ord.createDate AS DATE) <= :UntilDate ")
     List<Order> findOrdersRangedDate(LocalDate fromDate, LocalDate UntilDate);
 
-    @Query("SELECT ord FROM Order ord JOIN FETCH ord.orderItems oi WHERE oi.product.name = :orderItemName")
+    @Query("SELECT ord FROM Order ord JOIN FETCH ord.orderItems oi WHERE oi.product.name LIKE %:orderItemName%")
     List<Order> findOrdersByOrderItem(String orderItemName);
 
-    @Query("SELECT st, SUM(ord.orderTotal) AS maxRevenue " +
-            "FROM Order ord " +
-            "JOIN ord.store st " +
-            "GROUP BY st")
-    List<Object[]> findOrdersByStoresRevenues();
-
+//    @Query("SELECT st, SUM(ord.orderTotal) AS maxRevenue " +
+//            "FROM Order ord " +
+//            "JOIN ord.store st " +
+//            "GROUP BY st")
+//    List<Object[]> findOrdersByStoresRevenues();
+    @Query(value ="SELECT st.NAME AS Stores , SUM(ord.ORDERTOTAL) AS maxRevenue FROM ORDERS ord , STORES st WHERE ord.STORE_ID = st.ID GROUP BY st.NAME ORDER BY SUM(ord.ORDERTOTAL) ASC", nativeQuery = true)
+    List<StoresStatistics> findOrdersByStoresRevenues();
 
     @Query("SELECT ord " +
             "FROM Order ord "+
             "JOIN FETCH ord.orderAddressList addr " +
-            "WHERE addr.address = :ordAddress AND addr.streetNumber = :ordStreetNum AND addr.city = :ordCity")
+            "WHERE addr.address LIKE %:ordAddress% OR addr.streetNumber = :ordStreetNum OR addr.city LIKE %:ordCity%")
     List<Order> findOrdersByAddress(String ordAddress, Integer ordStreetNum, String ordCity);
 
 }
