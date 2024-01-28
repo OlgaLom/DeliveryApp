@@ -110,6 +110,14 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.findReviewsByStore(store.getId());
     }
 
+    // Add the storeExists method
+    @Override
+    public boolean storeExists(Store store) {
+        Store existingStore = getStoreByName(store.getName());
+        return existingStore != null && !existingStore.getId().equals(store.getId());
+    }
+
+
 
     /*show all products in store (?)
     @Override
