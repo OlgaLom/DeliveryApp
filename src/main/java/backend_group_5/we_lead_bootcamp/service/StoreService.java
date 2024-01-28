@@ -27,6 +27,7 @@ public interface StoreService extends BaseService<Store, Long> {
     Integer getDeliveryTime(Long storeId);
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
     List<Review> findReviewsByStore(Store store);
+    boolean storeExists(Store store);
 
     //this is an optional additional feature because it needs specific PostalCodes perhaps
     // List<Store> getStoresWithinDistance(BigDecimal latitude, BigDecimal longitude, double maxDistance);
