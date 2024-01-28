@@ -73,7 +73,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
                 .vatNumber("FP-6521354")
                 .minOrderAmount(BigDecimal.valueOf(5))
                 .category(StoreCategoryVariation.COCKTAILS)
-                .DeliveryTime(30).products(new ArrayList<>())
+                .deliveryTime(30).products(new ArrayList<>())
                 .build());
 
         logger.info("New store → {}.",newStore1 );

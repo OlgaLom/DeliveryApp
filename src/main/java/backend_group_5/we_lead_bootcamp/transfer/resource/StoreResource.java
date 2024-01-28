@@ -20,15 +20,15 @@ public class StoreResource extends BaseResource {
     private String address;
     @NotNull
     private StoreCategoryVariation category;
-    @NotNull
-    private String location;
     //@Pattern(regexp = "\\d{10}", message = "Phone number must be of 10 digits")
     private String phone;
     @NotNull
     private String vatNumber;
     private BigDecimal minOrderAmount;
-    @NotNull(message = "Delivery time is required")
+    @NotNull
     private Integer deliveryTime;
+    //private List<Review> reviews;
+    private Double rating;
 
 
 }
