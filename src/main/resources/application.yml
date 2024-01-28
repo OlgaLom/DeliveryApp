@@ -66,7 +66,6 @@ spring:
       platform: h2
   jackson:
     date-format: "dd/MM/yyyy hh:mm:ss.SSS"
-    birthdate-format: "dd-MM-yyyy"
     time-zone: Europe/Athens
     serialization:
       fail-on-empty-beans: false

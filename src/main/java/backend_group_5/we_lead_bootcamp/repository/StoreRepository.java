@@ -5,12 +5,13 @@ import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -26,10 +27,14 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Query("SELECT st FROM Store st JOIN st.reviews rev WHERE st.category = :category GROUP BY st.name HAVING AVG(rev.rating) > :rating  ")
     List<Store> findStoresByCategoryAndRating(@NotNull(message = "Category field is required") StoreCategoryVariation category, double rating);
     @Transactional
-    @Modifying
+//    @Modifying
+//    @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
+//            "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
+//    List<Object[]> findTopRatedStores(); //Pageable pageable
     @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
             "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
-    List<Object[]> findTopRatedStores(); //Pageable pageable
+    Page<Object[]> findTopRatedStores(Pageable pageable);
+
     List<Store> findStoresByMinOrderAmount(BigDecimal minOrderAmount);
     @Query("SELECT st.reviews FROM Store st WHERE st.id = :storeId")
     List<Review> findReviewsByStore(Long storeId);
@@ -38,6 +43,8 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Query("SELECT st.deliveryTime FROM Store st WHERE st.id = :storeId")
     Integer getDeliveryTime(Long storeId);
 
+    @Transactional
+    @Modifying
     @Query("UPDATE Store st SET st.deliveryTime = :deliveryTime WHERE st.id = :storeId")
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
 

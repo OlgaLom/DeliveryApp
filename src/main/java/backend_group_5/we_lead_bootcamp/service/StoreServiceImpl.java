@@ -6,11 +6,11 @@ import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -59,17 +59,18 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     }
 
     @Override
-    public List<Store> findStoresByCategoryAndRating(StoreCategory category,int minRating){
-        return storeRepository.findStoresByCategoryAndRating(category.getDisplayName(),minRating);
+    public List<Store> findStoresByCategoryAndRating(StoreCategory category,int rating){
+        return storeRepository.findStoresByCategoryAndRating(category.getDisplayName(),rating);
     }
 
     //Pageable - PageReq (JPA) Pagination is a technique used to limit the number of results returned from a query
     // and to provide the client with the ability to request more results as needed.
     // Pageable - info about the page
     //PageRequest - Request for the (e.g) 1st page, with number limit in items per page
+
     @Override
-    public List<Object[]> findTopRatedStores(int limit){
-        return storeRepository.findTopRatedStores(); //(Pageable) PageRequest.of(0,limit)
+    public Page<Object[]> findTopRatedStores(int limit) {
+        return storeRepository.findTopRatedStores(PageRequest.of(0,limit));
     }
     public List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount){
         return storeRepository.findStoresByMinOrderAmount(minOrderAmount);
@@ -117,6 +118,16 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return existingStore != null && !existingStore.getId().equals(store.getId());
     }
 
+//    @Override
+//    public void addReviewToStore(Long storeId, Review review) {
+//        Store store = getById(storeId);
+//        if (store != null) {
+//            List<Review> reviews = store.getReviews();
+//            reviews.add(review);
+//            review.setStore(store);
+//            update(store);
+//        }
+//    }
 
 
     /*show all products in store (?)

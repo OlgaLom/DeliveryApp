@@ -21,7 +21,9 @@ public interface UserService  extends  BaseService<User,Long>{
 
     void updateAddress(Long Id, Address address);
     //rate store
+
     //add favourite store
     User updateFavouriteStores(Long userId, Store store);
     //leave a comment
+    //get order history
 }
