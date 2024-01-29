@@ -6,8 +6,10 @@ import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
 import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
 import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
 import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
+import backend_group_5.we_lead_bootcamp.transfer.resource.ProductResource;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface ProductService extends BaseService<Product,Long>{
 
@@ -15,7 +17,7 @@ public interface ProductService extends BaseService<Product,Long>{
     Product findBySerial(String serial);
 
     //create Product
-    Product createProduct(Product product,Long categoryId);
+    Product create(Product product,Long productCategoryId);
 
     //get product by name
     Product getProductName(String name);
@@ -27,7 +29,7 @@ public interface ProductService extends BaseService<Product,Long>{
     Product getProductDescription(String description);
 
     //get variation size
-    Sizes getVariationSize(Sizes sizes, String productName);
+    List<ProductResource> getVariationSize(String productName, Sizes sizes);
 
     //get Variation flavours
     Flavours getVariationFlavour( Flavours flavours, String productName);
@@ -36,8 +38,8 @@ public interface ProductService extends BaseService<Product,Long>{
     Sauces getVariationSauces(Sauces sauces, String productName );
 
     //get variation toppings
-    Toppings getVariationToppings(Toppings toppings,String productName);
+    Toppings getProductByToppings(Toppings toppings,String productName);
 
     //get store
-    Store getStore(Store store);
+    List<Product> findProductsByStore(Long storeId);
 }

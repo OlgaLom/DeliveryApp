@@ -7,12 +7,14 @@ import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
 import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
 import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import backend_group_5.we_lead_bootcamp.repository.ProductRepository;
+import backend_group_5.we_lead_bootcamp.transfer.resource.ProductResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Service
@@ -35,9 +37,9 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
 
     @Override
-    public Product createProduct(Product product, final Long categoryId) {
-        var category=productCategoryService.getById(categoryId);
-        product.setProductCategory(category);
+    public Product create(Product product, final Long productCategoryId) {
+        var productCategory=productCategoryService.getById(productCategoryId);
+        product.setProductCategory(productCategory);
         return productRepository.save(product);
     }
     @Override
@@ -82,8 +84,8 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getProductByPrice(price);
     }
     @Override
-    public Sizes getVariationSize(Sizes sizes,String productName) {
-        return  productRepository.getVariationBySizes(sizes, productName);
+    public List<ProductResource> getVariationSize(String productName, Sizes sizes) {
+        return  productRepository.getVariationBySizes(productName,sizes);
     }
 
     @Override
@@ -95,12 +97,13 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getVariationBySauces(sauces, productName);
     }
     @Override
-    public Toppings getVariationToppings(Toppings toppings,String productName) {
-        return productRepository.getVariationByToppings(toppings, productName);
+    public Toppings getProductByToppings(Toppings toppings,String productName) {
+        return productRepository.getProductByToppings(toppings,productName);
     }
     @Override
-    public Store getStore(Store store) {
-        return store;
+    @Transactional(readOnly = true)
+    public List<Product> findProductsByStore(Long storeId) {
+        return productRepository.findProductsByStore(storeId);
     }
 
 }

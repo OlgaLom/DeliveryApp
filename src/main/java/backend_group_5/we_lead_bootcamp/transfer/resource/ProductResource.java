@@ -1,5 +1,6 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
+import backend_group_5.we_lead_bootcamp.model.ProductCategory;
 import backend_group_5.we_lead_bootcamp.model.enums.Flavours;
 import backend_group_5.we_lead_bootcamp.model.enums.Sauces;
 import backend_group_5.we_lead_bootcamp.model.enums.Sizes;
@@ -22,7 +23,7 @@ public class ProductResource extends BaseResource {
     @NotNull
     private BigDecimal price;
     @NotNull
-    private ProductCategoryResource category;
+    private ProductCategory productCategory;
     private Sizes sizes;
     private Flavours flavours;
     private Sauces sauces;

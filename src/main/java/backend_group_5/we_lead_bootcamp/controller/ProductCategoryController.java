@@ -36,4 +36,10 @@ public class ProductCategoryController extends BaseController<ProductCategory, P
                 .build());
     }
 
+//    @GetMapping
+//    public ResponseEntity<ApiResponse<ProductCategoryResource>> getProductCategoryName(){
+//        return ResponseEntity.ok(ApiResponse.<ProductCategoryResource>builder()
+//                .data(getMapper().toResource(productCategoryService.getProductCategoryName())).build());
+//    }
+
 }
