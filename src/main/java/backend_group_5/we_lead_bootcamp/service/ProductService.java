@@ -29,16 +29,16 @@ public interface ProductService extends BaseService<Product,Long>{
     Product getProductDescription(String description);
 
     //get variation size
-    List<ProductResource> getVariationSize(String productName, Sizes sizes);
+    List<Product> getProductBySize(Sizes sizes);
 
     //get Variation flavours
-    Flavours getVariationFlavour( Flavours flavours, String productName);
+    List<Product> getProductByFlavour( Flavours flavours);
 
     //get variation sauces
-    Sauces getVariationSauces(Sauces sauces, String productName );
+    List<Product> getProductBySauces(Sauces sauces);
 
     //get variation toppings
-    Toppings getProductByToppings(Toppings toppings,String productName);
+    List<Product> getProductByToppings(Toppings toppings);
 
     //get store
     List<Product> findProductsByStore(Long storeId);

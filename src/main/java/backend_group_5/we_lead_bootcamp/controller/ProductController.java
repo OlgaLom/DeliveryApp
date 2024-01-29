@@ -76,7 +76,8 @@ public class ProductController extends BaseController<Product, ProductResource>{
     }
     //findBySerial
     @GetMapping("/serial/{serial}")
-    public ResponseEntity<ApiResponse<ProductResource>> getProductBySerial(@PathVariable("serial") final String serial){
+    public ResponseEntity<ApiResponse<ProductResource>> getProductBySerial
+    (@PathVariable("serial") final String serial){
 
         return ResponseEntity.ok(
                 ApiResponse.<ProductResource>builder().data(productMapper.toResource(productService.findBySerial(serial)))
@@ -84,19 +85,22 @@ public class ProductController extends BaseController<Product, ProductResource>{
     }
     //getProductName
     @GetMapping("/productName/{name}")
-    public ResponseEntity<ApiResponse<ProductResource>> getProductByName(@PathVariable("name") final String name){
+    public ResponseEntity<ApiResponse<ProductResource>> getProductByName
+    (@PathVariable("name") final String name){
         final ProductResource productResource= getMapper().toResource(productService.getProductName(name));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
     //getProductById
     @GetMapping("/productId/{productId}")
-    public ResponseEntity<ApiResponse<ProductResource>> getProductById(@PathVariable("productId") final Long productId){
+    public ResponseEntity<ApiResponse<ProductResource>> getProductById
+    (@PathVariable("productId") final Long productId){
         final ProductResource productResource= getMapper().toResource(productService.getById(productId));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
     //getProductByPrice
     @GetMapping("/productPrice/{price}")
-    public ResponseEntity<ApiResponse<ProductResource>> getProductByPrice(@PathVariable("price") final BigDecimal price){
+    public ResponseEntity<ApiResponse<ProductResource>> getProductByPrice
+    (@PathVariable("price") final BigDecimal price){
         final ProductResource productResource= getMapper().toResource(productService.getProductPrice(price));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
@@ -108,38 +112,47 @@ public class ProductController extends BaseController<Product, ProductResource>{
                 .toResource(productService.getProductDescription(description));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
+
     //getVariationBySize
-    @GetMapping(params ={"productName","sizes"})
+    @GetMapping("/productSize/{size}")
     public ResponseEntity<ApiResponse<List<ProductResource>>> getVariationBySize
-    (@RequestParam String productName,@RequestParam Sizes sizes){
-        final List<ProductResource> variationSize= productService.getVariationSize(productName,sizes);
-        return ResponseEntity.ok(ApiResponse.<List<ProductResource>>builder().data(variationSize).build());
+    (@PathVariable("size") final Sizes sizes){
+        List<Product> productSizes= productService.getProductBySize(sizes);
+        return ResponseEntity.ok(ApiResponse.<List<ProductResource>>builder()
+                .data(productMapper.toResources(productSizes))
+                .build());
     }
     //getVariationByFlavour
-    @GetMapping(params = {"flavours"})
-    public ResponseEntity<ApiResponse<Flavours>> getVariationByFlavours
-    (@RequestParam String productName,@RequestParam Flavours flavours){
-        final Flavours variationFlavours= productService.getVariationFlavour(flavours,productName);
-        return ResponseEntity.ok(ApiResponse.<Flavours>builder().data(variationFlavours).build());
+    @GetMapping("/productFlavour/{flavour}")
+    public ResponseEntity<ApiResponse<List<ProductResource>>> getVariationByFlavour
+    (@PathVariable("flavour") final Flavours flavours){
+        List<Product> productFlavours= productService.getProductByFlavour(flavours);
+        return ResponseEntity.ok(ApiResponse.<List<ProductResource>>builder()
+                .data(productMapper.toResources(productFlavours))
+                .build());
     }
     //getVariationBySauces
-    @GetMapping(params = {"sauces"})
-    public ResponseEntity<ApiResponse<Sauces>> getVariationBySauces
-    (@RequestParam String productName,@RequestParam Sauces sauces){
-        final Sauces variationSauces= productService.getVariationSauces(sauces,productName);
-        return ResponseEntity.ok(ApiResponse.<Sauces>builder().data(variationSauces).build());
-    }
+    @GetMapping("/productSauces/{sauces}")
+    public ResponseEntity<ApiResponse<List<ProductResource>>> getVariationBySauces
+    (@PathVariable("sauces") final Sauces sauces){
+        List<Product> productSauces= productService.getProductBySauces(sauces);
+        return ResponseEntity.ok(ApiResponse.<List<ProductResource>>builder()
+                .data(productMapper.toResources(productSauces))
+                .build());    }
     //getVariationByToppings
 
-    @GetMapping(params = {"toppings"})
-    public ResponseEntity<ApiResponse<Toppings>> getProductsByToppings
-    (@RequestParam String productName,@PathVariable final Toppings toppings){
-        final Toppings variationToppings= productService.getProductByToppings(toppings,productName);
-        return ResponseEntity.ok(ApiResponse.<Toppings>builder().data(variationToppings).build());
+    @GetMapping("/productToppings/{toppings}")
+    public ResponseEntity<ApiResponse<List<ProductResource>>> getProductsByToppings
+    (@PathVariable final Toppings toppings){
+        List<Product> productToppings= productService.getProductByToppings(toppings);
+        return ResponseEntity.ok(ApiResponse.<List<ProductResource>>builder()
+                .data(productMapper.toResources(productToppings))
+                .build());
     }
     //getStore
     @GetMapping( "/store/{storeId}")
-    public ResponseEntity<ApiResponse<List<ProductResource>>> getProductsByStore(@PathVariable("storeId") final Long storeId){
+    public ResponseEntity<ApiResponse<List<ProductResource>>> getProductsByStore
+    (@PathVariable("storeId") final Long storeId){
         List<Product> storeProducts=productService.findProductsByStore(storeId);
         return ResponseEntity.ok(
                 ApiResponse.<List<ProductResource>>builder()

@@ -63,7 +63,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
 
     @Override
-    @Transactional(readOnly = true)
+   // @Transactional(readOnly = true)
     public boolean exists(Product productId) {
         logger.trace("Checking whether {} exists!",productId);
         return getRepository().existsById(productId.getId());
@@ -84,24 +84,24 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getProductByPrice(price);
     }
     @Override
-    public List<ProductResource> getVariationSize(String productName, Sizes sizes) {
-        return  productRepository.getVariationBySizes(productName,sizes);
+    public List<Product> getProductBySize(Sizes sizes) {
+        return  productRepository.getProductBySizes(sizes);
     }
 
     @Override
-    public Flavours getVariationFlavour(Flavours flavours, String productName) {
-        return productRepository.getVariationByFlavours(flavours, productName );
+    public List<Product> getProductByFlavour(Flavours flavours) {
+        return productRepository.getProductByFlavours(flavours);
     }
     @Override
-    public Sauces getVariationSauces(Sauces sauces, String productName) {
-        return productRepository.getVariationBySauces(sauces, productName);
+    public List<Product> getProductBySauces(Sauces sauces) {
+        return productRepository.getProductBySauces(sauces);
     }
     @Override
-    public Toppings getProductByToppings(Toppings toppings,String productName) {
-        return productRepository.getProductByToppings(toppings,productName);
+    public List<Product> getProductByToppings(Toppings toppings) {
+        return productRepository.getProductByToppings(toppings);
     }
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public List<Product> findProductsByStore(Long storeId) {
         return productRepository.findProductsByStore(storeId);
     }

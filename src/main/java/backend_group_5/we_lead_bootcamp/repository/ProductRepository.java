@@ -22,14 +22,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product getProductByDescription(final String description);
     Product getProductByName(final String productName);
     Product getProductByPrice(final BigDecimal productPrice);
-    @Query("SELECT pr FROM Product pr WHERE pr.sizes = :sizes AND pr.name LIKE %:productName%")
-    List<ProductResource> getVariationBySizes(final String productName, Sizes sizes);
-    @Query("SELECT pr FROM Product pr WHERE pr.flavours = :flavours AND pr.name = :productName")
-    Flavours getVariationByFlavours(Flavours flavours, final String productName);
-    @Query("SELECT pr FROM Product pr WHERE pr.sauces = :sauces AND pr.name = :productName")
-    Sauces getVariationBySauces(Sauces sauces,final String productName);
-    @Query("SELECT pr FROM Product pr WHERE pr.toppings = :toppings AND pr.name = :productName")
-    Toppings getProductByToppings(Toppings toppings, final String productName);
+    //AND pr.name LIKE %:productName%
+    @Query("SELECT pr FROM Product pr WHERE pr.sizes = :sizes")
+    List<Product> getProductBySizes(Sizes sizes);
+    @Query("SELECT pr FROM Product pr WHERE pr.flavours = :flavours")
+    List<Product> getProductByFlavours(Flavours flavours);
+    @Query("SELECT pr FROM Product pr WHERE pr.sauces = :sauces")
+    List<Product> getProductBySauces(Sauces sauces);
+    @Query("SELECT pr FROM Product pr WHERE pr.toppings = :toppings")
+    List<Product> getProductByToppings(Toppings toppings);
     @Query("SELECT pr FROM Product pr WHERE pr.store.id = :storeId")
     List<Product> findProductsByStore(Long storeId);
 
