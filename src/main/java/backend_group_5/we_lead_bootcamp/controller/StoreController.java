@@ -63,7 +63,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
 //    }
 
     //500ari could not commit JPA transaction
-    @Transactional
+//    @Transactional
     @PutMapping("/updateStore")
     public ResponseEntity<StoreResource> updateStore( @RequestBody StoreResource storeResource) {
         Store store = storeMapper.toDomain(storeResource);
