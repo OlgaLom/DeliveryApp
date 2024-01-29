@@ -6,19 +6,18 @@ import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
+import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.StoresStatistics;
 import backend_group_5.we_lead_bootcamp.transfer.resource.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 // @RestController:
 // → With this annotation we define this class responsibly for handling incoming request and returning responses
@@ -271,21 +270,12 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
    @GetMapping("/stores-revenues")
-    public ResponseEntity<ApiResponse<List<StoresStatistics>>> findOrdersByStoresRevenues() {
-        // call findOrdersByStoresRevenues
-        List<StoresStatistics> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
-        // Map each object to an orderResource
-//        List<OrderResource> orderResources = ordersByStoresRevenues.stream()
-//                .map(orderArray -> (Order) orderArray[0])  // Explicitly cast Object[] to Order
-//                .map(orderMapper::toResource)
-//                .collect(Collectors.toList());
+    public ResponseEntity<ApiResponse<List<KeyValue<String, BigDecimal>>>>findOrdersByStoresRevenues() {
 
-
-
-
+       List<KeyValue<String, BigDecimal>> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
 
         return ResponseEntity.ok(
-                ApiResponse.<List<StoresStatistics>>builder()
+                ApiResponse.<List<KeyValue<String, BigDecimal>>>builder()
                         .data(ordersByStoresRevenues)
                         .build());
     }

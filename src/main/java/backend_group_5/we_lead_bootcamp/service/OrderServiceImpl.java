@@ -4,7 +4,7 @@ import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
-import backend_group_5.we_lead_bootcamp.transfer.resource.StoresStatistics;
+import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -232,7 +232,7 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
 
     @Override
     @Transactional(readOnly = true)
-    public List<StoresStatistics> findOrdersByStoresRevenues() {
+    public List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues() {
         return orderRepository.findOrdersByStoresRevenues();
     }
     @Override
