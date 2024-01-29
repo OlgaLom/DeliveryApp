@@ -7,7 +7,6 @@ import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
-import backend_group_5.we_lead_bootcamp.transfer.StoresStatistics;
 import backend_group_5.we_lead_bootcamp.transfer.resource.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

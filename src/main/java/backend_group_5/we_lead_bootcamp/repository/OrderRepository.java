@@ -3,7 +3,6 @@ package backend_group_5.we_lead_bootcamp.repository;
 import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
-import backend_group_5.we_lead_bootcamp.transfer.StoresStatistics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
