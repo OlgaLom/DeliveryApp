@@ -1,7 +1,7 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
-import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 
 import java.util.List;
 import java.util.Optional;

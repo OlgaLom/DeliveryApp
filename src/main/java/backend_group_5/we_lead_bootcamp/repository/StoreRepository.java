@@ -2,7 +2,7 @@ package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.Review;
 import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;

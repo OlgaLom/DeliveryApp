@@ -1,5 +1,6 @@
 package backend_group_5.we_lead_bootcamp.model;
 
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

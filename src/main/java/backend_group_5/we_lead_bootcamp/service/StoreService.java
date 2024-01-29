@@ -3,7 +3,7 @@ package backend_group_5.we_lead_bootcamp.service;
 import backend_group_5.we_lead_bootcamp.model.Review;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
-import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;

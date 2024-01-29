@@ -3,10 +3,12 @@ package backend_group_5.we_lead_bootcamp.controller;
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
 import backend_group_5.we_lead_bootcamp.mapper.StoreMapper;
 import backend_group_5.we_lead_bootcamp.model.*;
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -36,7 +38,13 @@ public class StoreController extends BaseController<Store, StoreResource> {
         return storeMapper;
     }
 
-    @PostMapping("/stores/create")
+    //~~~~~TOTAL ENDPOINTS: 12~~~~~~~~~~~~~~~~//
+    //~~~~~ENDPOINTS THAT WORKING: 8~~~~~~~~~~//
+    //~~~~~ENDPOINTS RETURNING EMPTY DATA:1~~~//
+    //~~~~~ENDPOINTS WITH ERRORS:3~~~~~~~~~~~~//
+
+
+    @PostMapping("/create")
     public ResponseEntity<String> createStore(@RequestBody Store store) {
         if (!storeService.storeExists(store)) {
             Store newStore = storeService.createStore(store);
@@ -53,7 +61,10 @@ public class StoreController extends BaseController<Store, StoreResource> {
 //        StoreResource createdStoreResource = storeMapper.toResource(createdStore);
 //        return ResponseEntity.status(HttpStatus.CREATED).body(createdStoreResource);
 //    }
-    @PutMapping("/update")
+
+    //500ari could not commit JPA transaction
+    @Transactional
+    @PutMapping("/updateStore")
     public ResponseEntity<StoreResource> updateStore( @RequestBody StoreResource storeResource) {
         Store store = storeMapper.toDomain(storeResource);
         Store updatedStore = storeService.updateStore(store);
@@ -152,8 +163,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-//"status": 500,
-//"message": "Could not commit JPA transaction",
     @PutMapping("/update-delivery-time/{storeId}/{deliveryTime}")
     public ResponseEntity<Void> updateDeliveryTime(@PathVariable Long storeId, @PathVariable Integer deliveryTime) {
         storeService.updateDeliveryTime(storeId, deliveryTime);

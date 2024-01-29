@@ -1,6 +1,6 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
-import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

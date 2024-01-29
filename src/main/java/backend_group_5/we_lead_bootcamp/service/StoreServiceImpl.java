@@ -3,7 +3,7 @@ package backend_group_5.we_lead_bootcamp.service;
 import backend_group_5.we_lead_bootcamp.model.Review;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.StoreCategory;
-import backend_group_5.we_lead_bootcamp.model.StoreCategoryVariation;
+import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
 import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

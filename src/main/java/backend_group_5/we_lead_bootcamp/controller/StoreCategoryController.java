@@ -11,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/store-categories")
 @RequiredArgsConstructor
@@ -41,11 +38,11 @@ public class StoreCategoryController extends BaseController<StoreCategory, Store
 //        return ResponseEntity.ok(categoryResources);
 //    }
 
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<StoreCategoryResource> getStoreCategoryById(@PathVariable Long categoryId) {
-        StoreCategoryResource categoryResource = storeCategoryMapper.toResource(storeCategoryService.getCategoryById(categoryId));
-        return ResponseEntity.ok(categoryResource);
-    }
+//    @GetMapping("{categoryId}")
+//    public ResponseEntity<StoreCategoryResource> getStoreCategoryById(@PathVariable Long categoryId) {
+//        StoreCategoryResource categoryResource = storeCategoryMapper.toResource(storeCategoryService.getCategoryById(categoryId));
+//        return ResponseEntity.ok(categoryResource);
+//    }
 
     @PostMapping("create")
     public ResponseEntity<StoreCategoryResource> createStoreCategory(@RequestBody StoreCategoryResource categoryResource) {
@@ -63,10 +60,10 @@ public class StoreCategoryController extends BaseController<StoreCategory, Store
         return ResponseEntity.ok(updatedCategoryResource);
     }
 
-    @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> deleteStoreCategory(@PathVariable Long categoryId) {
-        storeCategoryService.deleteCategory(categoryId);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{categoryId}")
+//    public ResponseEntity<Void> deleteStoreCategory(@PathVariable Long categoryId) {
+//        storeCategoryService.deleteCategory(categoryId);
+//        return ResponseEntity.noContent().build();
+//    }
 
 }
