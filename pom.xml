@@ -16,6 +16,8 @@
     <!-- Properties -->
     <properties>
         <java.version>17</java.version>
+        <mapstruct-version>1.5.5.Final</mapstruct-version>
+        <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
     </properties>
 
     <!-- Dependencies -->
@@ -42,22 +44,12 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.5.Final</version>
+            <version>${mapstruct-version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.5.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>Backend_Group_5</groupId>
-            <artifactId>We_Lead_Bootcamp</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
+            <version>${mapstruct-version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -89,8 +81,36 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <!--
+                    In order to compile your project for Java 11, add the release configuration to the compiler
+                    plugin, a new compiler parameter to replace the source and target version parameters
+                    -->
+                    <release>${java.version}</release>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <optimize>true</optimize>
+                    <fork>true</fork>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct-version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok.mapstruct.binding.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>
