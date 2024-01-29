@@ -2,7 +2,8 @@ package backend_group_5.we_lead_bootcamp.repository;
 
 import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
-import backend_group_5.we_lead_bootcamp.transfer.resource.StoresStatistics;
+import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.StoresStatistics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -48,13 +49,8 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord FROM Order ord JOIN FETCH ord.orderItems oi WHERE oi.product.name LIKE %:orderItemName%")
     List<Order> findOrdersByOrderItem(String orderItemName);
 
-//    @Query("SELECT st, SUM(ord.orderTotal) AS maxRevenue " +
-//            "FROM Order ord " +
-//            "JOIN ord.store st " +
-//            "GROUP BY st")
-//    List<Object[]> findOrdersByStoresRevenues();
-    @Query(value ="SELECT st.NAME AS Stores , SUM(ord.ORDERTOTAL) AS maxRevenue FROM ORDERS ord , STORES st WHERE ord.STORE_ID = st.ID GROUP BY st.NAME ORDER BY SUM(ord.ORDERTOTAL) ASC", nativeQuery = true)
-    List<StoresStatistics> findOrdersByStoresRevenues();
+    @Query("SELECT new backend_group_5.we_lead_bootcamp.transfer.KeyValue( st.name, SUM(ord.orderTotal) ) FROM Order ord JOIN ord.store st WHERE ord.store.id = st.id GROUP BY st.name ORDER BY SUM(ord.orderTotal) ASC")
+    List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues();
 
     @Query("SELECT ord " +
             "FROM Order ord "+
