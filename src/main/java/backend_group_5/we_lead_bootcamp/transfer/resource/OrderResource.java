@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,15 +24,13 @@ public class OrderResource extends BaseResource{
     private Set<OrderItemResource> orderItems = new HashSet<>();
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
-    private Address address;
+    private Address orderAddressList;
     private BigDecimal orderTotal;
     private String orderNumber;
     private String orderNote;
-//    @JsonFormat(shape = JsonFormat.Shape.STRING)
-//    private Date createOrderDate;
-@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-private LocalDate createOrderDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Date updateOrderDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Date createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Date updateDate;
 
 }
