@@ -5,7 +5,9 @@ import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,10 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
         return orderRepository;
     }
 
+    @Override
+    public List<Order> findAll(){
+        return orderRepository.findAll();
+    }
     @Override
     public Order initiateOrder(final User user, final Store store) {
         return Order.builder().user(user).store(store).build();
@@ -235,13 +241,16 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     public List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues() {
         return orderRepository.findOrdersByStoresRevenues();
     }
+
+//    @Override
+//    public List<Order> findAllOrderWithUserData() {
+//        return orderRepository.findAllOrderWithUserData();
+//    }
+
+
     @Override
     @Transactional(readOnly = true)
-    public List<Order> findOrdersByAddress(OrderAddress orderAddress){
-        String ordAddress = orderAddress.getAddress();
-        Integer ordStreetNum = orderAddress.getStreetNumber();
-        String ordCity = orderAddress.getCity();
-
+    public List<Order> findOrdersByAddress(String ordAddress, Integer ordStreetNum,String ordCity){
         return orderRepository.findOrdersByAddress(ordAddress,ordStreetNum,ordCity);
     }
 
