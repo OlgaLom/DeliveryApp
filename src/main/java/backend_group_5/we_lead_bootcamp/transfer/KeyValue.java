@@ -1,4 +1,7 @@
 package backend_group_5.we_lead_bootcamp.transfer;
 
-public record KeyValue<K, V>(K key, V value)  {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record KeyValue<K, V>( @JsonProperty("Store Name")K key,  @JsonProperty("Revenue")V value)  {
+
 }
