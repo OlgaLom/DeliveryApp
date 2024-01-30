@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderService extends BaseService<Order, Long>{
+
     Order initiateOrder(User user, Store store);
 //    We probably need to add the store also
 //    Order InitiateOrder(User user, Store store);
@@ -43,10 +44,13 @@ public interface OrderService extends BaseService<Order, Long>{
 
     List<Order> findOrdersByOrderItem(String orderItemName);
 
-    List<Order> findOrdersByAddress(OrderAddress orderAddress);
+    List<Order> findOrdersByAddress(String address, Integer streetNumber,String city);
 
     List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues();
 
+    List<Order> findAllOrderWithUserData();
+
+//    List<Order> findAll();
 
 
 
