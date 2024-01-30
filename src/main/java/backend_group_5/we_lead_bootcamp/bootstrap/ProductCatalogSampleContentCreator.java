@@ -10,7 +10,6 @@ import backend_group_5.we_lead_bootcamp.model.enums.Toppings;
 import backend_group_5.we_lead_bootcamp.service.ProductCategoryService;
 import backend_group_5.we_lead_bootcamp.service.ProductService;
 import backend_group_5.we_lead_bootcamp.service.StoreService;
-import backend_group_5.we_lead_bootcamp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -21,22 +20,22 @@ import java.util.Comparator;
 import java.util.List;
 
 @Component
-@Profile("generate-catalog-customers")
+@Profile("generate-catalog-products")
 @RequiredArgsConstructor
-public class CatalogCustomerSampleContentCreator extends BaseComponent implements CommandLineRunner {
+public class ProductCatalogSampleContentCreator extends BaseComponent implements CommandLineRunner{
     private final ProductService productService;
     private final ProductCategoryService productCategoryService;
 
     private final StoreService storeService;
-    private final UserService customerService;
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) throws Exception{
         //create productCategory
         ProductCategory newCategory = productCategoryService.create(ProductCategory.builder()
-               .description("Rich Aromatic Coffee Blends")
-               .name("Cafe").build());
+                .description("Rich Aromatic Coffee Blends")
+                .name("Cafe").build());
         logger.info("Created {}.", newCategory);
-        //Createall productCategory
+
+        //CreateAll productCategories
         List<ProductCategory> productCategories= List.of(
                 ProductCategory.builder().description("Italian Pizza").name("Pizza").build(),
                 ProductCategory.builder().description("Fresh Artisanal Bread Varieties").name("Bakery").build(),
@@ -51,7 +50,7 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 .sorted(Comparator.comparing(ProductCategory::getId))
                 .forEach(p -> logger.debug("{}. {}", p.getId(), p));
 
-    //Create Product
+        //Create Product
         Product newProduct=productService.create(Product.builder()
                 .serial("SN1000-0001")
                 .name("Fredo Espresso")
@@ -66,11 +65,11 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                 .build());
         logger.info("Created {}!",newProduct);
 
-       //CreateAll Products
-       List<Product> products = List.of(
+        //CreateAll Products
+        List<Product> products = List.of(
                 Product.builder().serial("SN1000-0002").name("HOT CHOCOLATE")
                         .price(BigDecimal.valueOf(3.00)).productCategory(productCategoryService.getById(1L))
-                        .description("Classic Chocolate").store(storeService.getStoreByName("Sore4"))
+                        .description("Classic Chocolate").store(storeService.getStoreByName("Store4"))
                         .sizes(Sizes.MEDIUM)
                         .flavours(Flavours.STRAWBERRY)
                         .toppings(Toppings.WHIPPED_CREAM)
@@ -104,97 +103,12 @@ public class CatalogCustomerSampleContentCreator extends BaseComponent implement
                         .toppings(Toppings.BACON)
                         .build());
 
-                //ADD MORE PRODUCTS AS NEEDED
+        //ADD MORE PRODUCTS AS NEEDED
 
         var productsCreated = productService.createAll(products);
         logger.info("Created {} products.", productsCreated.size());
         productsCreated.stream()
                 .sorted(Comparator.comparing(Product::getId))
                 .forEach(p -> logger.debug("{}. {}", p.getId(), p));
-//
-/*       List<User> customersCreated = customerService.createAll(
-                User.builder()
-                        .email("c.giannacoulis@codehub.gr")
-                        .phone("1234567890")
-                        .password("securePassword123")
-                        .age(47)
-                      //  .addressList("3583 Tennessee Avenue")
-                       .addressList(Arrays.asList(
-                               Address.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build()))
-                        .firstName("Constantinos")
-                        .lastName("Giannacoulis")
-                       // .city("SomeCity")
-                        .paymentMethod(PaymentMethod.CREDIT_CARD)
-                       .role(Role.USER)
-                        .build(),
-                User.builder().email("john.doe@example.com")
-                .phone("987654321")
-                .password("strongPass456")
-               .age(30)
-                //.address("123 Main Street")
-               .addressList(Arrays.asList(
-                       Address.builder().address("Main Street").streetNumber(123).city("AnotherCity").build()))
-                .firstName("John")
-              .lastName("Doe")
-               // .city("AnotherCity")
-                .paymentMethod(PaymentMethod.PAYPAL)
-                .role(Role.USER)
-                .build(),
-                User.builder()
-                        .email("jane.smith@example.com")
-                        .phone("555555555")
-                        .password("securePass789")
-                        .age(25)
-                        .addressList(Arrays.asList(
-                                Address.builder().address("Oak Avenue").streetNumber(456).city("YetAnotherCity").build()))
-                        .firstName("Jane")
-                        .lastName("Smith")
-                     //   .city("YetAnotherCity")
-                        .paymentMethod(PaymentMethod.COD)
-                        .role(Role.USER)
-                        .build(),
-                User.builder()
-                        .email("alice.jones@example.com")
-                        .phone("111223344")
-                        .password("password123")
-                        .age(28)
-                    //    .address("789 Elm Street")
-                        .addressList(Arrays.asList(
-                                Address.builder().address("Elm Street").streetNumber(789).city("CityX").build()))
-                        .firstName("Alice")
-                        .lastName("Jones")
-                       // .city("CityX")
-                        .paymentMethod(PaymentMethod.CREDIT_CARD)
-                        .role(Role.USER)
-                        .build());*/
-             /*  User.builder().email("peter.mercury@outlookx.com")
-//                        .firstName("Peter").lastName("Mercury")
-//                        .address("Freddie Street 28th")
-//                        .age(32).build(),
-//                User.builder().email("magdalene.ferguson@gmailx.com")
-//                        .firstName("Magdalene").lastName("Ferguson")
-//                        .address("Jelly Avenue 73")
-//                        .age(32).build(),
-//                User.builder().email("jones.pirves@gmailx.com")
-//                        .firstName("Jones").lastName("Pirves")
-//                        .address("3rd Mountain Hike, 3")
-//                        .age(32).build(),
-//                User.builder().email("michael.anderson@gmailx.com")
-//                        .firstName("Michael").lastName("Anderson")
-//                        .address("Hollywood Street 63")
-//                        .age(32).build(),
-//                User.builder().email("yennefer.lawrance@windowslivex.com")
-                        .firstName("Yennefer").lastName("Lawrance")
-                        .address("Rivia 43")
-                        .age(32).build(),
-                User.builder().email("mary.ferry@windowslivex.com")
-                        .firstName("Mary").lastName("Ferry")
-                        .address("Downtown 17, California")
-                        .age(32).build());*/
-
-    /*    logger.info("Created {} customers.", customersCreated.size());
-        customersCreated.stream()
-                .sorted(Comparator.comparing(User::getId))
-                .forEach(c -> logger.debug("{}. {}", c.getId(), c)); */
     }
 }
