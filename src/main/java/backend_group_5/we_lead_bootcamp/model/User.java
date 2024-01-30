@@ -1,6 +1,7 @@
 package backend_group_5.we_lead_bootcamp.model;
 
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
+import backend_group_5.we_lead_bootcamp.model.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -21,7 +22,7 @@ import java.util.List;
 @Entity
 //add colums to all
 @Table(name = "USERS", indexes = {@Index(columnList = "email")})
-@SequenceGenerator(name = "idGenerator", sequenceName = "USER_SEQ", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "idGenerator", sequenceName = "USER_SEQ")//, initialValue = 1, allocationSize = 1)
 public class User extends  BaseModel{
 
     @NotNull(message = "Email address cannot be null")

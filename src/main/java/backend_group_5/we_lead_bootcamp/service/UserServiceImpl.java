@@ -1,7 +1,7 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
-import backend_group_5.we_lead_bootcamp.model.Role;
+import backend_group_5.we_lead_bootcamp.model.enums.Role;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;

@@ -1,7 +1,7 @@
 package backend_group_5.we_lead_bootcamp.transfer.resource;
 
-import backend_group_5.we_lead_bootcamp.model.Role;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
+import backend_group_5.we_lead_bootcamp.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

@@ -42,7 +42,7 @@ public class Store extends BaseModel {
     @JsonIgnore
     private List<Product> products;
     @JsonIgnore
-    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
     @NotNull (message = "Delivery Time is required")
     private Integer deliveryTime; // in minutes

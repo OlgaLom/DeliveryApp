@@ -19,7 +19,7 @@ import java.beans.PropertyEditorSupport;
 import java.util.List;
 
 //@Transactional
-public abstract class BaseController<T extends BaseModel, R extends BaseResource> extends BaseComponent {
+public abstract class  BaseController<T extends BaseModel, R extends BaseResource> extends BaseComponent {
 //    T stands for Type | R stands for Resource
     protected abstract BaseService<T, Long> getBaseService();
     protected abstract BaseMapper<T, R> getMapper();

@@ -78,7 +78,7 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
             logger.info("Find store by name: {}", storeService.getStoreByName("Store5"));
             logger.info("Find all stores: {}", storeService.findAll());
             logger.info("Find all stores by category: {}", storeService.findAllStoresByCategory(StoreCategoryVariation.BAKERY));
-            logger.info("Find top-rated stores: {}", storeService.findTopRatedStores(5));
+            logger.info("Find top-rated stores: {}", storeService.findTopRatedStores(5, StoreCategoryVariation.GRILL));
             logger.info("Find stores with min order amount: {}", storeService.findStoresWithMinOrderAmount(BigDecimal.valueOf(5.0)));
             logger.info("Calculate average rating for Store6: {}", storeService.calculateAverageRating(store6.getId()));
             logger.info("Get delivery time for Store5: {}", storeService.getDeliveryTime(store5.getId()));

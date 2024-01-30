@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Value
 @Builder
-public class ApiResponse<T> implements Serializable {
+public class  ApiResponse<T> implements Serializable {
     String transactionId = UUID.randomUUID().toString().toUpperCase();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd hh:mm:ss.SSS")

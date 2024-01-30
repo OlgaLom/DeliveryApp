@@ -91,29 +91,31 @@ public class StoreController extends BaseController<Store, StoreResource> {
 
     //"status": 400,
     //"message": "Required request parameter 'category' for method parameter type StoreCategory is not present",
-    @GetMapping("/category-rating")
-    public ResponseEntity<ApiResponse<List<StoreResource>>> findStoresByCategoryAndRating(
-            @RequestParam StoreCategory category,
-            @RequestParam int rating) {
-        return ResponseEntity.ok(
-                ApiResponse.<List<StoreResource>>builder()
-                        .data(storeMapper.toResources(storeService.findStoresByCategoryAndRating(category, rating)))
-                        .build());
-    }
+//    @GetMapping("/category-rating")
+//    public ResponseEntity<ApiResponse<List<StoreResource>>> findStoresByCategoryAndRating(
+//            @RequestParam StoreCategory category,
+//            @RequestParam int rating) {
+//        return ResponseEntity.ok(
+//                ApiResponse.<List<StoreResource>>builder()
+//                        .data(storeMapper.toResources(storeService.findStoresByCategoryAndRating(category, rating)))
+//                        .build());
+//    }
 
    //"status": 500,
    //"message": "class java.lang.Double cannot be cast to class backend_group_5.we_lead_bootcamp.model.Store
    // (java.lang.Double is in module java.base of loader 'bootstrap'; backend_group_5.we_lead_bootcamp.model.Store is in unnamed module of loader 'app')",
     @GetMapping("/top-rated")
-    public ResponseEntity<ApiResponse<List<StoreResource>>> findTopRatedStores(@RequestParam Integer limit) {
+    public ResponseEntity<ApiResponse<List<StoreResource>>> findTopRatedStores(
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(required = false) StoreCategoryVariation category) {
 
-        Page<Object[]> findTopRatedStores = storeService.findTopRatedStores(limit);
-        List<StoreResource> storeResources = findTopRatedStores.stream()
+        List<Object[]> topRatedStores = storeService.findTopRatedStores(limit, category);
+        List<StoreResource> storeResources = topRatedStores.stream()
                 .map(array -> {
                     Double rating = (Double) array[0];
                     Store store = (Store) array[1];
                     StoreResource storeResource = storeMapper.toResource(store);
-                    storeResource.setRating(rating); // set the rating in the StoreResource
+                    storeResource.setRating(rating);
                     return storeResource;
                 })
                 .collect(Collectors.toList());
