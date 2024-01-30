@@ -29,7 +29,7 @@ public interface OrderService extends BaseService<Order, Long>{
 
     List<Order> findOrdersByOrderStatus( OrderStatus orderStatus);
 
-    List<Order> findOrdersByUser(Long userId);
+//    List<Order> findOrdersByUser(Long userId);
 
     List<Order> findOrdersByStore(Long storeId);
     List<Order> findOrdersDateRange(LocalDate fromDate,LocalDate untilDate);
@@ -48,7 +48,7 @@ public interface OrderService extends BaseService<Order, Long>{
 
     List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues();
 
-    List<Order> findAllOrderWithUserData();
+//    List<Order> findAllOrderWithUserData();
 
 //    List<Order> findAll();
 
