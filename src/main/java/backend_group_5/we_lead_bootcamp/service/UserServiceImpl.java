@@ -1,9 +1,12 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
-import backend_group_5.we_lead_bootcamp.model.enums.Role;
+import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
+import backend_group_5.we_lead_bootcamp.model.enums.Role;
+import backend_group_5.we_lead_bootcamp.repository.AddressRepository;
+import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final OrderRepository orderRepository;
     private static final SecureRandom RAND = new SecureRandom();
     private static final int ITERATIONS = 65536;
     private static final int KEY_LENGTH = 512;
@@ -32,8 +37,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return userRepository;
     }
 
-
-    public static String generateSalt (final int length) {
+    @Override
+    public  String generateSalt (final int length) {
 
         if (length < 1) {
             System.err.println("error in generateSalt: length must be > 0");
@@ -47,8 +52,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         //check for absense
     }
 
-
-    public static String hashPassword (String password, String salt) {
+    @Override
+    public  String hashPassword (String password, String salt) {
 
         char[] chars = password.toCharArray();
         byte[] bytes = salt.getBytes();
@@ -70,11 +75,23 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             spec.clearPassword();
         }
     }
-    public static boolean verifyPassword (String password, String key, String salt) {
+    @Override
+    public  boolean verifyPassword (String password, String key, String salt) {
         String optEncrypted = hashPassword(password, salt);
         // true h false
         return optEncrypted.equals(key);
     }
+
+    @Override
+    public List<Order> getOrderHistory(Long userId) {
+        return orderRepository.findOrdersByUser(userId) ;
+    }
+
+    @Override
+    public List<Address> getUserAddressList(Long userId) {
+        return addressRepository.findAddressesByUserId(userId);
+    }
+
     @Override
     @Transactional
     public User createAccount(User new_user){
@@ -104,6 +121,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 //h create method yparxei hdh sto base service alla emeis theloyme na ginettai encryption sto password
         // otan dhmioyrgeitai o xristis opote isos gi ayto na voleyei na einai seperate method
         return user;
+    }
+    @Override
+    @Transactional
+   public List<User> findAll(){
+        List<User> users = userRepository.findAll(); // your logic to get users
+        for (User user : users) {
+            // Accessing the collection to initialize it
+            user.getAddressList().size();
+        }
+        return users;
     }
 
     @Override
@@ -206,6 +233,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         //user.setAddressList(address);
         userRepository.save(user);
     }
+
+
 
     @Override
     public User updateFavouriteStores(Long userId, Store store) {

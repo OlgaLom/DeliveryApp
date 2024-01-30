@@ -14,17 +14,24 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true,exclude = "user")
 @Entity
 @Table(name="ADDRESS")
 @SequenceGenerator(name = "idGenerator", sequenceName = "ADDRESS_SEQ", initialValue = 1, allocationSize = 1)
 public class Address extends BaseModel  {
+
     @Column
     private String address;
     @Column
     private Integer streetNumber;
     @Column
     private String city;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
 
 
 }

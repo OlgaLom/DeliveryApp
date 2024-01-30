@@ -20,9 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @Entity
-//add colums to all
 @Table(name = "USERS", indexes = {@Index(columnList = "email")})
-@SequenceGenerator(name = "idGenerator", sequenceName = "USER_SEQ")//, initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "idGenerator", sequenceName = "USER_SEQ", initialValue = 1, allocationSize = 1)
 public class User extends  BaseModel{
 
     @NotNull(message = "Email address cannot be null")
@@ -46,13 +45,11 @@ public class User extends  BaseModel{
     @Max(value = 120, message = "A customer cannot be above 120")
     @Column
     private Integer age;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn  // Define the foreign key column
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
     private List<Address> addressList;
     @Column
-   // private Integer phone;
     private String phone;
-    //private Address addressObj;se List Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
     @Column
     private  String city;
     @Enumerated(value = EnumType.STRING)
@@ -66,7 +63,6 @@ public class User extends  BaseModel{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn
     private List<Store> favouriteStores;
-
     public Integer setAge() {
         if (birthDate != null) {
             LocalDate currentDate = LocalDate.now();
