@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -24,16 +25,20 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     void deleteStoreById(Long storeId);
     List<Store> findAllStoresByNameIgnoreCase(String name);
     List<Store> findAllStoresByCategory(@NotNull(message = "Category field is required") StoreCategoryVariation category);
-    @Query("SELECT st FROM Store st JOIN st.reviews rev WHERE st.category = :category GROUP BY st.name HAVING AVG(rev.rating) > :rating  ")
-    List<Store> findStoresByCategoryAndRating(@NotNull(message = "Category field is required") StoreCategoryVariation category, double rating);
-    @Transactional
-//    @Modifying
+//    @Query("SELECT st FROM Store st JOIN st.reviews rev WHERE st.category = :category GROUP BY st.name HAVING AVG(rev.rating) > :rating  ")
+//    List<Store> findStoresByCategoryAndRating(@NotNull(message = "Category field is required") StoreCategoryVariation category, double rating);
+//    @Transactional
+////    @Modifying
+////    @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
+////            "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
+////    List<Object[]> findTopRatedStores(); //Pageable pageable
 //    @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
 //            "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
-//    List<Object[]> findTopRatedStores(); //Pageable pageable
-    @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
-            "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
-    Page<Object[]> findTopRatedStores(Pageable pageable);
+//    Page<Object[]> findTopRatedStores(Pageable pageable);
+@Query("SELECT AVG(rev.rating) as rating, st as store FROM Store st JOIN st.reviews rev " +
+        "WHERE :category IS NULL OR st.category = :category " +
+        "GROUP BY st ORDER BY rating DESC")
+List<Object[]> findTopRatedStoresByCategory(@Param("category") StoreCategoryVariation category);
 
     List<Store> findStoresByMinOrderAmount(BigDecimal minOrderAmount);
     @Query("SELECT st.reviews FROM Store st WHERE st.id = :storeId")

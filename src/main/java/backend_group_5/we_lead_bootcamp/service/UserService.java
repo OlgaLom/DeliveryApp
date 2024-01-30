@@ -1,8 +1,11 @@
 package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
+import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
+
+import java.util.List;
 
 public interface UserService  extends  BaseService<User,Long>{
     //User createAccount(User user); // returns type User based on lectures (lecture 14 part B)
@@ -12,7 +15,10 @@ public interface UserService  extends  BaseService<User,Long>{
     User findByEmail(String email);
     User logIn(String user,String password);
     void logOut();
-
+    List<User> findAll();
+     String hashPassword(String password, String salt) ;
+    boolean verifyPassword (String password, String key, String salt);
+    String generateSalt (final int length);
 
 
     void updatePhone(String email, String phone);
@@ -25,5 +31,11 @@ public interface UserService  extends  BaseService<User,Long>{
     //add favourite store
     User updateFavouriteStores(Long userId, Store store);
     //leave a comment
+
     //get order history
+
+    List<Order> getOrderHistory(Long userId);
+
+    List<Address> getUserAddressList(Long userId);
+;
 }

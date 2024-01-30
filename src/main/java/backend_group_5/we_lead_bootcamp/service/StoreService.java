@@ -17,11 +17,14 @@ public interface StoreService extends BaseService<Store, Long> {
     void deleteStoreById(Long storeId);
     List<Store> findAllStoresByNameIgnoreCase(String name);
     //specified keyword many stores - for the lowercase (e.g. CafeShop and cafeShop)
+
     List<Store> findAllStoresByCategory(StoreCategoryVariation category);
-    //stores per Category
-    List<Store> findStoresByCategoryAndRating(StoreCategory category, int rating);
-    //gives top stores with limit e.g. top10
-    Page<Object[]> findTopRatedStores(int limit);
+//    //stores per Category
+
+//    List<Store> findStoresByCategoryAndRating(StoreCategory category, int rating);
+//    List<Object[]> findTopRatedStores(Integer limit, StoreCategoryVariation category);
+//    //gives top stores with limit e.g. top10
+    List<Object[]> findTopRatedStores(int limit, StoreCategoryVariation category);
     List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount);
     //List<Product> getAllProductsInStore(Long storeId);
     BigDecimal calculateAverageRating(Long storeId);
@@ -29,7 +32,7 @@ public interface StoreService extends BaseService<Store, Long> {
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
     List<Review> findReviewsByStore(Store store);
     boolean storeExists(Store store);
-    //void addReviewToStore(Long storeId, Review review);
+    void addReviewToStore(Long storeId, Review review);
 
     //this is an optional additional feature because it needs specific PostalCodes perhaps
     // List<Store> getStoresWithinDistance(BigDecimal latitude, BigDecimal longitude, double maxDistance);

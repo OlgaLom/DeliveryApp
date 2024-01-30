@@ -2,26 +2,34 @@ package backend_group_5.we_lead_bootcamp.controller;
 
 import backend_group_5.we_lead_bootcamp.mapper.AddressMapper;
 import backend_group_5.we_lead_bootcamp.mapper.BaseMapper;
+import backend_group_5.we_lead_bootcamp.mapper.StoreMapper;
 import backend_group_5.we_lead_bootcamp.mapper.UserMapper;
 import backend_group_5.we_lead_bootcamp.model.User;
+import backend_group_5.we_lead_bootcamp.repository.AddressRepository;
 import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.UserService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
+import backend_group_5.we_lead_bootcamp.transfer.resource.AddressResource;
+import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
 import backend_group_5.we_lead_bootcamp.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
-//@Transactional
+
 public class UserController extends BaseController<User, UserResource> {
     private final UserService userService;
     private  final UserMapper userMapper;
+    private final StoreMapper storeMapper;
     private final AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
 
 
 
@@ -41,15 +49,18 @@ public class UserController extends BaseController<User, UserResource> {
     public String hello() {
         return "hello world";
     }*/
+//
+
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody UserResource userResource) {
 
         var user = getMapper().toDomain(userResource);
-        System.out.println(user);
-        user.setAddressList(userMapper.toDomainAddressList(userResource.getAddressList()));
+
+        //user.setAddressList(userMapper.toDomainAddressList(userResource.getAddressList()));
         user.setPaymentMethod(userMapper.toDomainPaymentMethod(userResource.getPaymentMethod()));
         System.out.println(user.getPaymentMethod());
+
         //mporei na mn xreiazetai
         /*example request
         {
@@ -127,12 +138,55 @@ public class UserController extends BaseController<User, UserResource> {
         userService.updatePassword(email,password,new_password);
 
     }
+    @PutMapping("/update/favourite")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateFavouriteStore(@RequestBody UserResource userResource, @RequestBody StoreResource storeResource){
+        var user = userMapper.toDomain(userResource);
+        Long id = user.getId();
+        var store = storeMapper.toDomain(storeResource);
+        System.out.println(userService.updateFavouriteStores(id,store));
+
+
+    }
+    @PutMapping("/update/address")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateAddress(@RequestBody UserResource userResource, @RequestBody AddressResource addressResource){
+        var user = userMapper.toDomain(userResource);
+        var address = addressMapper.toDomain(addressResource);
+        userService.updateAddress(user.getId(),address);
+
+
+    }
+    @PostMapping("/get_user_addresses")
+    public List<AddressResource> getUserAddresses(@RequestParam String email){
+
+        var user = userService.findByEmail(email);
+        Long id = user.getId();
+
+
+        System.out.println(id);
+
+
+        return addressMapper.toResources(userService.getUserAddressList(id));
+
+
+
+
+    }
+    @GetMapping("/update/my-orderHistory")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void getOrderHistory(@RequestBody UserResource userResource){
+        var user = userMapper.toDomain(userResource);
+        Long id = user.getId();
+        System.out.println((userService.getOrderHistory(id)));
+
+
+    }
 
     @DeleteMapping("/deleteAccount")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@RequestParam String email) {
-       // User user = userMapper.toDomain(userResource);
-       // String email = user.getEmail();
+
         System.out.println(email);
          userService.deleteAccount(email);
 
