@@ -32,7 +32,7 @@ public interface StoreService extends BaseService<Store, Long> {
     void updateDeliveryTime(Long storeId, Integer deliveryTime);
     List<Review> findReviewsByStore(Store store);
     boolean storeExists(Store store);
-    //void addReviewToStore(Long storeId, Review review);
+    void addReviewToStore(Long storeId, Review review);
 
     //this is an optional additional feature because it needs specific PostalCodes perhaps
     // List<Store> getStoresWithinDistance(BigDecimal latitude, BigDecimal longitude, double maxDistance);

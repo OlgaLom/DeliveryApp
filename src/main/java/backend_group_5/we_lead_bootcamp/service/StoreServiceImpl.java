@@ -124,16 +124,16 @@ public List<Object[]> findTopRatedStores(int limit, StoreCategoryVariation categ
         return existingStore != null && !existingStore.getId().equals(store.getId());
     }
 
-//    @Override
-//    public void addReviewToStore(Long storeId, Review review) {
-//        Store store = getById(storeId);
-//        if (store != null) {
-//            List<Review> reviews = store.getReviews();
-//            reviews.add(review);
-//            review.setStore(store);
-//            update(store);
-//        }
-//    }
+    @Override
+    public void addReviewToStore(Long storeId, Review review) {
+        Store store = getById(storeId);
+        if (store != null) {
+            List<Review> reviews = store.getReviews();
+            reviews.add(review);
+            review.setStore(store);
+            update(store);
+        }
+    }
 
 
     /*show all products in store (?)
