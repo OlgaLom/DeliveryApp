@@ -27,23 +27,23 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
 
         // Load customer and store and create an order by adding/updating/removing content before finalizing it
         User firstCustomer = customerService.findByEmail("john.doe@example.com");
-        Store firstStore = storeService.getStoreByName("COFFEE HUGS");
+        Store firstStore = storeService.getStoreByName("SOUVLAKI BAR");
         Order firstOrder = orderService.initiateOrder(firstCustomer,firstStore);
 
         // Add item(s) both existing and non-existing
         orderService.addItem(firstOrder, productService.findBySerial("SN1000-0001"), 2);
         orderService.addItem(firstOrder, productService.findBySerial("SN1000-0002"), 1);
-        orderService.addItem(firstOrder, productService.findBySerial("SN1100-0003"), 1);
-//        logger.info("Order Items → {}.", firstOrder.getOrderItems() );
+ //        logger.info("Order Items → {}.", firstOrder.getOrderItems() );
+
         // Add a non-existing product
         orderService.addItem(firstOrder, productService.findBySerial("SN1000-6666"), 1);
         // Update item(s)
-        orderService.addItem(firstOrder, productService.findBySerial("SN1000-0001"), 1);
+        orderService.addItem(firstOrder, productService.findBySerial("SN1000-0001"), 3);
         orderService.updateItem(firstOrder, productService.findBySerial("SN1000-0002"), 2);
         // Remove item(s)
-        orderService.removeItem(firstOrder, productService.findBySerial("SN1100-0003"));
+        orderService.removeItem(firstOrder, productService.findBySerial("SN1100-0002"));
         // Add some more item(s)
-        orderService.addItem(firstOrder, productService.findBySerial("SN1100-0003"), 5);
+        orderService.addItem(firstOrder, productService.findBySerial("SN1100-0002"), 5);
 
 //      Address addr1 = firstCustomer.getAddress();
         OrderAddress addr1 = OrderAddress.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build();
@@ -58,14 +58,12 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
         // Load customer and store and create an order by adding/updating/removing content before finalizing it
         User SecondCustomer = customerService.findByEmail("alice.jones@example.com");
 //        logger.info("firstCustomer → {}.",firstCustomer.getEmail() );
-        Store secondStore = storeService.getStoreByName("MAMA BAKERY");
+        Store secondStore = storeService.getStoreByName("DERLICATESSEN");
 //        logger.info("firstStore → {}.",firstStore.getName() );
         Order secondOrder = orderService.initiateOrder(SecondCustomer,secondStore);
 
         // Add item(s) both existing and non-existing
-        orderService.addItem(secondOrder, productService.findBySerial("SN1100-0002"), 9);
-        orderService.addItem(secondOrder, productService.findBySerial("SN1100-0001"), 1);
-        orderService.addItem(secondOrder, productService.findBySerial("SN1100-0003"), 1);
+        orderService.addItem(secondOrder, productService.findBySerial("SN1100-0002"), 13);
 
 
 //      Address addr1 = firstCustomer.getAddress();
@@ -77,7 +75,7 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
 
         // Load customer and store and create an order by adding/updating/removing content before finalizing it
         User thirdCustomer = customerService.findByEmail("mary.ferry@windowslivex.com");
-        Store thirdStore = storeService.getStoreByName("MAMA BAKERY");
+        Store thirdStore = storeService.getStoreByName("SOUVLAKI BAR");
         Order thirdOrder = orderService.initiateOrder(thirdCustomer,thirdStore);
 
         // Add item(s) both existing and non-existing
@@ -93,15 +91,15 @@ public class OrderSampleContentCreator extends BaseComponent implements CommandL
 
         // Load customer and store and create an order by adding/updating/removing content before finalizing it
         User fourthCustomer = customerService.findByEmail("jane.smith@example.com");
-        Store fourthStore = storeService.getStoreByName("KOUTOUKI");
+        Store fourthStore = storeService.getStoreByName("CREPOMANIAC");
         Order fourthOrder = orderService.initiateOrder(fourthCustomer,fourthStore);
 
         // Add item(s) both existing and non-existing
-        orderService.addItem(fourthOrder, productService.findBySerial("SN1000-0001"), 7);
-        orderService.addItem(fourthOrder, productService.findBySerial("SN1000-0002"), 1);
-        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0001"), 1);
-        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0002"), 2);
-        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0003"), 4);
+        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0001"), 7);
+//        orderService.addItem(fourthOrder, productService.findBySerial("SN1000-0002"), 1);
+//        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0001"), 1);
+//        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0002"), 2);
+//        orderService.addItem(fourthOrder, productService.findBySerial("SN1100-0003"), 4);
 
 
         OrderAddress addr4 = OrderAddress.builder().address("place").streetNumber(1).city("coty").build();
