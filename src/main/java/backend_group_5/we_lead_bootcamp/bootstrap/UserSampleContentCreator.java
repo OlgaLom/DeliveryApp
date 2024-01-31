@@ -6,8 +6,6 @@ import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.model.enums.Role;
 import backend_group_5.we_lead_bootcamp.service.OrderService;
-import backend_group_5.we_lead_bootcamp.service.ProductService;
-import backend_group_5.we_lead_bootcamp.service.StoreService;
 import backend_group_5.we_lead_bootcamp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -24,9 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserSampleContentCreator extends BaseComponent implements CommandLineRunner {
     private final UserService userService;
-    private final StoreService storeService;
     private final OrderService orderService;
-    private final ProductService productService;
+
 
     @Override
     public void run(String... args) {
