@@ -38,11 +38,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
         return storeMapper;
     }
 
-    //~~~~~TOTAL ENDPOINTS: 12~~~~~~~~~~~~~~~~//
-    //~~~~~ENDPOINTS THAT WORKING: 8~~~~~~~~~~//
-    //~~~~~ENDPOINTS RETURNING EMPTY DATA:1~~~//
-    //~~~~~ENDPOINTS WITH ERRORS:3~~~~~~~~~~~~//
-
 
     @PostMapping("/create")
     public ResponseEntity<String> createStore(@RequestBody Store store) {
@@ -54,23 +49,13 @@ public class StoreController extends BaseController<Store, StoreResource> {
         }
     }
 
-    //    @PostMapping
-//    public ResponseEntity<StoreResource> createStore(@RequestBody StoreResource storeResource) {
+//    @PutMapping("/updateStore")
+//    public ResponseEntity<StoreResource> updateStore( @RequestBody StoreResource storeResource) {
 //        Store store = storeMapper.toDomain(storeResource);
-//        Store createdStore = storeService.createStore(store);
-//        StoreResource createdStoreResource = storeMapper.toResource(createdStore);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdStoreResource);
+//        Store updatedStore = storeService.updateStore(store);
+//        StoreResource updatedStoreResource = storeMapper.toResource(updatedStore);
+//        return ResponseEntity.ok(updatedStoreResource);
 //    }
-
-    //500ari could not commit JPA transaction
-//    @Transactional
-    @PutMapping("/updateStore")
-    public ResponseEntity<StoreResource> updateStore( @RequestBody StoreResource storeResource) {
-        Store store = storeMapper.toDomain(storeResource);
-        Store updatedStore = storeService.updateStore(store);
-        StoreResource updatedStoreResource = storeMapper.toResource(updatedStore);
-        return ResponseEntity.ok(updatedStoreResource);
-    }
 
 //"data": [], (coffee)
     @GetMapping("/search/{keyword}")
@@ -89,21 +74,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-    //"status": 400,
-    //"message": "Required request parameter 'category' for method parameter type StoreCategory is not present",
-//    @GetMapping("/category-rating")
-//    public ResponseEntity<ApiResponse<List<StoreResource>>> findStoresByCategoryAndRating(
-//            @RequestParam StoreCategory category,
-//            @RequestParam int rating) {
-//        return ResponseEntity.ok(
-//                ApiResponse.<List<StoreResource>>builder()
-//                        .data(storeMapper.toResources(storeService.findStoresByCategoryAndRating(category, rating)))
-//                        .build());
-//    }
-
-   //"status": 500,
-   //"message": "class java.lang.Double cannot be cast to class backend_group_5.we_lead_bootcamp.model.Store
-   // (java.lang.Double is in module java.base of loader 'bootstrap'; backend_group_5.we_lead_bootcamp.model.Store is in unnamed module of loader 'app')",
     @GetMapping("/top-rated")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findTopRatedStores(
             @RequestParam(required = false) Integer limit,
@@ -126,21 +96,6 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .build());
     }
 
-//        List<Object[]> findTopRatedStores = storeService.findTopRatedStores(limit);
-//
-//        List<StoreResource> stResources = findTopRatedStores.stream()
-//                .map(orderArray -> (Store) orderArray[0])  // Explicitly cast Object[] to Order
-//                .map(storeMapper::toResource)
-//                .collect(Collectors.toList());
-//
-//        return ResponseEntity.ok(
-//                ApiResponse.<List<StoreResource>>builder()
-//                        .data(stResources)
-//                        .build());
-
-//UPDATE: WORKS FOR 5 (SET ON DUMMY)-> http://localhost:8080/stores/min-order-amount?minOrderAmount=5
-//"status": 400,
-//"message": "Required request parameter 'minOrderAmount' for method parameter type BigDecimal is not present"
     @GetMapping("/min-order-amount")
     public ResponseEntity<ApiResponse<List<StoreResource>>> findStoresWithMinOrderAmount(@RequestParam BigDecimal minOrderAmount) {
         return ResponseEntity.ok(
@@ -170,10 +125,7 @@ public class StoreController extends BaseController<Store, StoreResource> {
         storeService.updateDeliveryTime(storeId, deliveryTime);
         return ResponseEntity.noContent().build();
     }
-    //UPDATE: OK
-    //"status": 500,
-    //"message": "Could not write JSON: failed to lazily initialize a collection of role:
-    // backend_group_5.we_lead_bootcamp.model.Store.products: could not initialize proxy - no Session"
+
     @GetMapping("/reviews/{storeId}")
     public ResponseEntity<ApiResponse<List<Review>>> findReviewsByStore(@PathVariable Long storeId) {
         Store store = storeService.getById(storeId);
@@ -182,51 +134,5 @@ public class StoreController extends BaseController<Store, StoreResource> {
                         .data(store != null ? storeService.findReviewsByStore(store) : null)
                         .build());
     }
-
-
-   // OTHER METHODS
-    //Get all stores
-//    @GetMapping
-//    public ResponseEntity<ApiResponse<List<StoreResource>>> findAllStores() {
-//        return ResponseEntity.ok(
-//                ApiResponse.<List<StoreResource>>builder()
-//                        .data(storeMapper.toResources(storeService.findAll()))
-//                        .build());
-//    }
-
-    // UPDATE: LITHIKE ME COMMENT OUT : CONFLICT ME BASE
-//    // Get store by ID
-//    @GetMapping("/{storeId}")
-//    public ResponseEntity<ApiResponse<StoreResource>> getStoreById(@PathVariable("storeId") final Long storeId) {
-//        return ResponseEntity.ok(
-//                ApiResponse.<StoreResource>builder()
-//                        .data(storeMapper.toResource(storeService.getById(storeId)))
-//                        .build());
-//    }
-
-    //UPDATE GIA DELETE : LITHIKE ME COMMENT OUT GT CONFLICT ME BASE
-// "status": 500,
-// "message": "Ambiguous handler methods mapped for '/stores/61':
-// {public org.springframework.http.ResponseEntity backend_group_5.we_lead_bootcamp.controller.StoreController.getStoreById(java.lang.Long),
-// public org.springframework.http.ResponseEntity backend_group_5.we_lead_bootcamp.controller.BaseController.get(java.lang.Long)}",
-//    @DeleteMapping("/{storeId}")
-//    public ResponseEntity<Void> deleteStoreById(@PathVariable Long storeId) {
-//        storeService.deleteStoreById(storeId);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
-    /*@ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiResponse<Void> handleNoSuchElementException(NoSuchElementException ex) {
-        return ApiResponse.<Void>builder()
-                .apiError(ApiError.builder()
-                        .status(HttpStatus.NOT_FOUND.value())
-                        .message("Resource not found")
-                        .build())
-                .build();
-    } gets ApiError
-    */
-
 
 }

@@ -35,30 +35,23 @@ public class ProductController extends BaseController<Product, ProductResource>{
     protected BaseMapper<Product, ProductResource> getMapper(){return productMapper;}
 
     //createProduct
-    //@RequestMapping("create")
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<ProductResource>>createProduct
-    (@RequestBody final ProductResource productResource){
-        var product=getBaseService().create(getMapper().toDomain(productResource));
-        return new ResponseEntity<>(
-            ApiResponse.<ProductResource>builder().
-                data(getMapper().toResource(product)).build(),
-
+    public ResponseEntity<Product> createProduct
+    (@RequestBody final ProductResource productResource,@RequestParam Long productCategoryId){
+        Product newProduct=productService.create(productMapper.toDomain(productResource),productCategoryId);
+        return new ResponseEntity<>(newProduct,
             getNoCacheHeaders(),
             HttpStatus.CREATED
      );
     }
 
     //updateProduct
-//    @Transactional
-//    @PutMapping("/update")
-////    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public ResponseEntity<ProductResource> updateProduct(@RequestBody final ProductResource productResource){
-//        Product product=productMapper.toDomain(productResource);
-//        Product updatedProduct=getBaseService(update(productResource));
-//        ProductResource updatedProductResource= productMapper.toResource(updatedProduct);
-//        return ResponseEntity.ok(updatedProductResource);
-//    }
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateProduct(@RequestBody final ProductResource productResource){
+        getBaseService().update(getMapper().toDomain(productResource));
+
+    }
 
     //deleteProductById
     @DeleteMapping("/delete/{productId}")
@@ -66,23 +59,26 @@ public class ProductController extends BaseController<Product, ProductResource>{
     public void deleteProductById(@PathVariable("productId") final Long productId) {
         getBaseService().deleteById(productId);
     }
+
     //countProduct
-   // @RequestMapping()
     @PostMapping("/count")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void countProduct(final ProductResource productResource){
         var product=productMapper.toDomain(productResource);
         productService.count();
     }
+
     //findBySerial
     @GetMapping("/serial/{serial}")
     public ResponseEntity<ApiResponse<ProductResource>> getProductBySerial
     (@PathVariable("serial") final String serial){
 
         return ResponseEntity.ok(
-                ApiResponse.<ProductResource>builder().data(productMapper.toResource(productService.findBySerial(serial)))
+                ApiResponse.<ProductResource>builder()
+                        .data(productMapper.toResource(productService.findBySerial(serial)))
                         .build());
     }
+
     //getProductName
     @GetMapping("/productName/{name}")
     public ResponseEntity<ApiResponse<ProductResource>> getProductByName
@@ -90,6 +86,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         final ProductResource productResource= getMapper().toResource(productService.getProductName(name));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
+
     //getProductById
     @GetMapping("/productId/{productId}")
     public ResponseEntity<ApiResponse<ProductResource>> getProductById
@@ -97,6 +94,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         final ProductResource productResource= getMapper().toResource(productService.getById(productId));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
+
     //getProductByPrice
     @GetMapping("/productPrice/{price}")
     public ResponseEntity<ApiResponse<ProductResource>> getProductByPrice
@@ -104,6 +102,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
         final ProductResource productResource= getMapper().toResource(productService.getProductPrice(price));
         return ResponseEntity.ok(ApiResponse.<ProductResource>builder().data(productResource).build());
     }
+
     //getProductDescription
     @GetMapping("/productDescription/{description}")
     public ResponseEntity<ApiResponse<ProductResource>> getProductByDescription
@@ -122,6 +121,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
                 .data(productMapper.toResources(productSizes))
                 .build());
     }
+
     //getVariationByFlavour
     @GetMapping("/productFlavour/{flavour}")
     public ResponseEntity<ApiResponse<List<ProductResource>>> getVariationByFlavour
@@ -131,6 +131,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
                 .data(productMapper.toResources(productFlavours))
                 .build());
     }
+
     //getVariationBySauces
     @GetMapping("/productSauces/{sauces}")
     public ResponseEntity<ApiResponse<List<ProductResource>>> getVariationBySauces
@@ -138,9 +139,10 @@ public class ProductController extends BaseController<Product, ProductResource>{
         List<Product> productSauces= productService.getProductBySauces(sauces);
         return ResponseEntity.ok(ApiResponse.<List<ProductResource>>builder()
                 .data(productMapper.toResources(productSauces))
-                .build());    }
-    //getVariationByToppings
+                .build());
+    }
 
+    //getVariationByToppings
     @GetMapping("/productToppings/{toppings}")
     public ResponseEntity<ApiResponse<List<ProductResource>>> getProductsByToppings
     (@PathVariable final Toppings toppings){
@@ -149,6 +151,7 @@ public class ProductController extends BaseController<Product, ProductResource>{
                 .data(productMapper.toResources(productToppings))
                 .build());
     }
+
     //getStore
     @GetMapping( "/store/{storeId}")
     public ResponseEntity<ApiResponse<List<ProductResource>>> getProductsByStore
@@ -159,8 +162,4 @@ public class ProductController extends BaseController<Product, ProductResource>{
                         .data(productMapper.toResources(storeProducts))
                         .build());
     }
-
-
-
-
 }

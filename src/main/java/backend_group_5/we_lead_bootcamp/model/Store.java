@@ -27,9 +27,8 @@ public class Store extends BaseModel {
     @NotBlank(message = "Phone number must not be blank")
     @Size(min = 10, max = 10, message = "Phone number must be of 10 digits")
     @Column(unique = true)
-    //@Pattern(regexp = "\\d{10}", message = "Phone number must be of 10 digits")
-    private String phone; // error for 10digits @Bootstrap, also with String(value.of())
-    @NotBlank(message = "VAT Number is required") //string - VAT can be alphanumeric
+    private String phone;
+    @NotBlank(message = "VAT Number is required")
     @Column(unique = true)
     private String vatNumber;
     @DecimalMin(value = "0.0", inclusive = false, message = "The minimum order amount must be greater than zero")
@@ -45,7 +44,7 @@ public class Store extends BaseModel {
     @OneToMany(mappedBy = "store", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
     @NotNull (message = "Delivery Time is required")
-    private Integer deliveryTime; // in minutes
+    private Integer deliveryTime;
     private Double rating;
 
 

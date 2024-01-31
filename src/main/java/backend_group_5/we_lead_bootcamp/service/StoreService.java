@@ -2,9 +2,7 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Review;
 import backend_group_5.we_lead_bootcamp.model.Store;
-import backend_group_5.we_lead_bootcamp.model.StoreCategory;
 import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
-import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,17 +11,12 @@ public interface StoreService extends BaseService<Store, Long> {
     Store createStore(Store store);
     Store getStoreByName(String name);
     List<Store> createAllStores(List<Store> stores);
-    Store updateStore( Store store);
+    //Store updateStore( Store store);
     void deleteStoreById(Long storeId);
     List<Store> findAllStoresByNameIgnoreCase(String name);
     //specified keyword many stores - for the lowercase (e.g. CafeShop and cafeShop)
 
     List<Store> findAllStoresByCategory(StoreCategoryVariation category);
-//    //stores per Category
-
-//    List<Store> findStoresByCategoryAndRating(StoreCategory category, int rating);
-//    List<Object[]> findTopRatedStores(Integer limit, StoreCategoryVariation category);
-//    //gives top stores with limit e.g. top10
     List<Object[]> findTopRatedStores(int limit, StoreCategoryVariation category);
     List<Store> findStoresWithMinOrderAmount(BigDecimal minOrderAmount);
     //List<Product> getAllProductsInStore(Long storeId);

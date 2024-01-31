@@ -7,15 +7,15 @@ import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.ProductCategoryService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.ProductCategoryResource;
+import backend_group_5.we_lead_bootcamp.transfer.resource.ProductResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("Product Category")
+@RequestMapping("productCategory")
 @RequiredArgsConstructor
 public class ProductCategoryController extends BaseController<ProductCategory, ProductCategoryResource> {
     private final ProductCategoryService productCategoryService;
@@ -36,10 +36,13 @@ public class ProductCategoryController extends BaseController<ProductCategory, P
                 .build());
     }
 
-//    @GetMapping
-//    public ResponseEntity<ApiResponse<ProductCategoryResource>> getProductCategoryName(){
-//        return ResponseEntity.ok(ApiResponse.<ProductCategoryResource>builder()
-//                .data(getMapper().toResource(productCategoryService.getProductCategoryName())).build());
-//    }
+    @GetMapping("/{productCategoryName}")
+    public ResponseEntity<ApiResponse<List<ProductCategoryResource>>> getProductCategoryName(
+            @PathVariable("productCategoryName") final String name){
+        List<ProductCategory> productCategoryName=productCategoryService.getProductCategoryName(name);
+        return ResponseEntity.ok(
+                ApiResponse.<List<ProductCategoryResource>>builder()
+                        .data(productCategoryMapper.toResources(productCategoryName)).build());
+    }
 
 }
