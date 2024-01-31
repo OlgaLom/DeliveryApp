@@ -147,6 +147,9 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
         ///////////TEST UPDATE PHONE/////////////
         userService.updatePhone(customersCreated.get(0).getEmail(),"9134567903");
 
+        logger.info("show user order history",userService.getOrderHistory(new_user.getId()));
+
+
     }
 
 }
