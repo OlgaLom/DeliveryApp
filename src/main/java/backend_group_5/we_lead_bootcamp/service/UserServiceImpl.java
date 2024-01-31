@@ -72,8 +72,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             System.err.println("Exception encountered in hashPassword()");
-            // You might want to throw an exception or handle the error in a different way
-            return ""; // Placeholder return value, handle the error accordingly
+
+            return "";
         } finally {
             spec.clearPassword();
         }
@@ -124,24 +124,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
         user.setRole(Role.USER);
         userRepository.save(user);
-//h create method yparxei hdh sto base service alla emeis theloyme na ginettai encryption sto password
-        // otan dhmioyrgeitai o xristis opote isos gi ayto na voleyei na einai seperate method
+
         return user;
-    }
-    @Override
-    @Transactional
-   public List<User> findAll(){
-        List<User> users = userRepository.findAll(); // your logic to get users
-        for (User user : users) {
-            // Accessing the collection to initialize it
-            user.getAddressList().size();
-        }
-        return users;
     }
 
     @Override
     public void deleteAccount(final String  email){
-       // String email = user.getEmail();
+
         Long Id = userRepository.findByEmail(email).getId();
         deleteById(Id);
     }

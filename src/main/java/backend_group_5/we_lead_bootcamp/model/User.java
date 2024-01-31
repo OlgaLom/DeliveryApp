@@ -63,18 +63,6 @@ public class User extends  BaseModel{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn
     private List<Store> favouriteStores;
-//    public Integer setAge() {
-//        if (birthDate != null) {
-//            LocalDate currentDate = LocalDate.now();
-//            System.out.println(currentDate);
-//            long years = ChronoUnit.YEARS.between(birthDate, currentDate);
-//            this.age = Math.toIntExact(years);
-//
-//        } else {
-//            this.age = null; // or set to a default value
-//        }
-//        return age;
-//
-//    }
+
 
 }

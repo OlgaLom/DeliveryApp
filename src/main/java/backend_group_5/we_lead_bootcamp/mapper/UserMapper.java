@@ -13,6 +13,7 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User, UserResource>{
 
     @Mapping(target = "addressList", ignore = true)
+    @Mapping(target = "password",ignore = true)
     @Named("toLightResource")
     UserResource toLightResource(User user);
     PaymentMethod toDomainPaymentMethod(PaymentMethod paymentMethod);

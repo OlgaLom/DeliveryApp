@@ -43,7 +43,6 @@ public class UserResource extends BaseResource{
     private List<AddressResource> addressList;
     @NotNull
     private String phone;
-    //private Address addressObj;se List Sto Address class perilamvanetai to address, streetNumber kai city san idea to vazo to sizitame
 
     private  String city;
 

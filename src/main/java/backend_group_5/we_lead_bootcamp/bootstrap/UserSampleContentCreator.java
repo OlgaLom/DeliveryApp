@@ -30,7 +30,7 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 
     @Override
     public void run(String... args) {
-        // Get all customers
+
 
         orderService.findAll().forEach(ord -> logger.info("All Orders → {}", ord));
 
@@ -41,23 +41,7 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 //        ~~~~~
 //        CREATE NEW USERS
 //        ~~~~~
-//        List<User> UsersCreated = userService.createAll(
-//
-//                User.builder().email("jpn.doe@example.com")
-//                        .phone("987654321")
-//                        .password("strongPass456")
-//                        .birthDate(LocalDate.parse("1980-10-20"))
-//                        //.address("123 Main Street")
-//                        .addressList(Arrays.asList(
-//                                Address.builder().address("Main Street").streetNumber(123).city("AnotherCity").build()))
-//                        .firstName("John")
-//                        .lastName("Doe")
-//                        // .city("AnotherCity")
-//                        .paymentMethod(PaymentMethod.PAYPAL)
-//                        .role(Role.USER)
-//                        .build()
-//        );
-//        logger.info("New Users→ {}.", UsersCreated);
+
 
 
     String salt1 = userService.generateSalt(8);
@@ -126,30 +110,7 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
                     .role(Role.USER)
                     .build());
 
-             /*  User.builder().email("peter.mercury@outlookx.com")
-//                        .firstName("Peter").lastName("Mercury")
-//                        .address("Freddie Street 28th")
-//                        .age(32).build(),
-//                User.builder().email("magdalene.ferguson@gmailx.com")
-//                        .firstName("Magdalene").lastName("Ferguson")
-//                        .address("Jelly Avenue 73")
-//                        .age(32).build(),
-//                User.builder().email("jones.pirves@gmailx.com")
-//                        .firstName("Jones").lastName("Pirves")
-//                        .address("3rd Mountain Hike, 3")
-//                        .age(32).build(),
-//                User.builder().email("michael.anderson@gmailx.com")
-//                        .firstName("Michael").lastName("Anderson")
-//                        .address("Hollywood Street 63")
-//                        .age(32).build(),
-//                User.builder().email("yennefer.lawrance@windowslivex.com")
-                        .firstName("Yennefer").lastName("Lawrance")
-                        .address("Rivia 43")
-                        .age(32).build(),
-                User.builder().email("mary.ferry@windowslivex.com")
-                        .firstName("Mary").lastName("Ferry")
-                        .address("Downtown 17, California")
-                        .age(32).build());*/
+
 
 
         User newUserRequest = new User();
@@ -170,7 +131,7 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 
 
       logger.info("Created customer via createAccount",new_user);
-        //logger.info("Created customer via createAccount",user_alice);
+
         logger.info("Created {} customers.", customersCreated.size());
                 customersCreated.stream()
                 .sorted(Comparator.comparing(User::getId))

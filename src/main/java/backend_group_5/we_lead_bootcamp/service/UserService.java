@@ -15,7 +15,7 @@ public interface UserService  extends  BaseService<User,Long>{
     User findByEmail(String email);
     User logIn(String user,String password);
     void logOut();
-    List<User> findAll();
+
      String hashPassword(String password, String salt) ;
     boolean verifyPassword (String password, String key, String salt);
     String generateSalt (final int length);

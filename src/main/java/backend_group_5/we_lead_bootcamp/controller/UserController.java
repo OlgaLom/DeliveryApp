@@ -66,14 +66,12 @@ public class UserController extends BaseController<User, UserResource> {
 
         var user = getMapper().toDomain(userResource);
 
-        //user.setAddressList(userMapper.toDomainAddressList(userResource.getAddressList()));
+
         user.setPaymentMethod(userMapper.toDomainPaymentMethod(userResource.getPaymentMethod()));
         System.out.println(user.getPaymentMethod());
 
-
-
         return new ResponseEntity<>(ApiResponse.<UserResource>builder()
-                .data(userMapper.toResource(userService.createAccount(user)))
+                .data(userMapper.toLightResource(userService.createAccount(user)))
                 .build(),
                 getNoCacheHeaders(),
                 HttpStatus.CREATED);
