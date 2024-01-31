@@ -5,7 +5,9 @@ import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.OrderByOrderNumber;
 import backend_group_5.we_lead_bootcamp.transfer.resource.OrderResource;
+import jakarta.persistence.EnumType;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -164,11 +166,17 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
 
     }
 
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Order findByOrderNumber(final String OrderNumber){
+//        return orderRepository.findByOrderNumber(OrderNumber);
+//    }
     @Override
     @Transactional(readOnly = true)
-    public Order findByOrderNumber(final String OrderNumber){
+    public OrderByOrderNumber<String,BigDecimal, EnumType, Date,EnumType,String,String,String,String> findByOrderNumber(final String OrderNumber){
         return orderRepository.findByOrderNumber(OrderNumber);
     }
+
 
 //    @Override
 //    public List<Order> findOrdersByUser(Long userId){

@@ -3,20 +3,37 @@ package backend_group_5.we_lead_bootcamp.repository;
 import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.OrderByOrderNumber;
+import jakarta.persistence.EnumType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 //The @Repository annotation is used to indicate that a class is a Data Access Object (DAO)
 // [ its primary purpose is to inform Spring to manage the bean lifecycle and provide additional features specific to data access. ]
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
-    @Query("SELECT ord FROM Order ord WHERE ord.orderNumber = :orderNum")
-    Order findByOrderNumber(final String orderNum);
+//    @Query(value = "SELECT ord.*" +
+//            "FROM Order ord " +
+//            "LEFT JOIN ord.user us " +
+//            "JOIN FETCH ord.store st " +
+//            "JOIN FETCH ord.orderAddressList adr " +
+//            "JOIN FETCH ord.orderItems items " +
+//            "WHERE ord.orderNumber = :orderNum" , nativeQuery = true)
+    @Query("SELECT new backend_group_5.we_lead_bootcamp.transfer.OrderByOrderNumber( ord.orderNumber , ord.orderTotal,  ord.paymentMethod, ord.createDate, ord.orderStatus,ur.firstName, ur.lastName, ur.email ,  st.name ) " +
+            "FROM Order ord " +
+            "LEFT JOIN User ur ON ur.id = ord.id " +
+            "JOIN Store st ON st.id = ord.id " +
+            "JOIN OrderAddress adr ON adr.id = ord.id " +
+            "JOIN OrderItem items ON items.id = ord.id " +
+            "WHERE ord.orderNumber = :orderNum " +
+            "group by ord.id")
+    OrderByOrderNumber<String,BigDecimal, EnumType, Date,EnumType,String,String,String,String> findByOrderNumber(final String orderNum);
 
     @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) = :orderDate")
     List<Order> findByOrderDate(LocalDate orderDate);
@@ -61,11 +78,11 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues();
 
     @Query("SELECT ord " +
-            "FROM Order ord "+
+            "FROM Order ord " +
             "JOIN FETCH ord.orderAddressList addr " +
-            "WHERE addr.address LIKE %:ordAddress% OR " +
-            "addr.streetNumber = :ordStreetNum OR " +
-            "addr.city LIKE %:ordCity%")
+            "WHERE (:ordAddress IS NULL OR addr.address LIKE %:ordAddress%) " +
+            "AND (:ordStreetNum IS NULL OR addr.streetNumber = :ordStreetNum) " +
+            "AND (:ordCity IS NULL OR addr.city LIKE %:ordCity%)")
     List<Order> findOrdersByAddress(String ordAddress, Integer ordStreetNum, String ordCity);
 
     @Query("SELECT ord FROM Order ord JOIN ord.user us")

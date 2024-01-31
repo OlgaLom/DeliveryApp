@@ -4,9 +4,12 @@ import backend_group_5.we_lead_bootcamp.model.*;
 import backend_group_5.we_lead_bootcamp.model.enums.OrderStatus;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.OrderByOrderNumber;
+import jakarta.persistence.EnumType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface OrderService extends BaseService<Order, Long>{
@@ -23,8 +26,8 @@ public interface OrderService extends BaseService<Order, Long>{
 
     Order finalizeOrder(Order order, PaymentMethod paymentMethod, OrderAddress address, String orderNote);
 
-    Order findByOrderNumber(String OrderNumber);
-
+//    Order findByOrderNumber(String OrderNumber);
+    OrderByOrderNumber<String,BigDecimal, EnumType, Date,EnumType,String,String,String,String> findByOrderNumber(String OrderNumber);
     List<Order> findOrdersByDate(LocalDate orderDate);
 
     List<Order> findOrdersByOrderStatus( OrderStatus orderStatus);

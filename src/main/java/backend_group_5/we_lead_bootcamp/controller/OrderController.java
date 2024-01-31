@@ -7,7 +7,9 @@ import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.service.*;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
+import backend_group_5.we_lead_bootcamp.transfer.OrderByOrderNumber;
 import backend_group_5.we_lead_bootcamp.transfer.resource.*;
+import jakarta.persistence.EnumType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.Long.parseLong;
@@ -73,11 +76,18 @@ public class OrderController extends BaseController<Order, OrderResource>{
     }
 
     // Get order by order number
+//    @GetMapping("/orderNumber/{orderNumber}")
+//    public ResponseEntity<ApiResponse<OrderResource>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
+//        return ResponseEntity.ok(
+//                ApiResponse.<OrderResource>builder()
+//                        .data(orderMapper.toResource(orderService.findByOrderNumber(ordNumber)))
+//                        .build());
+//    }
     @GetMapping("/orderNumber/{orderNumber}")
-    public ResponseEntity<ApiResponse<OrderResource>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
-        return ResponseEntity.ok(
-                ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toLightResource(orderService.findByOrderNumber(ordNumber)))
+    public ResponseEntity<ApiResponse<OrderByOrderNumber<String,BigDecimal, EnumType, Date,EnumType,String,String,String,String>>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
+         return ResponseEntity.ok(
+                ApiResponse.<OrderByOrderNumber<String,BigDecimal,EnumType, Date,EnumType,String,String,String,String>>builder()
+                        .data( orderService.findByOrderNumber(ordNumber) )
                         .build());
     }
 
@@ -218,7 +228,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toLightResources(ordersByDateRangeAboveTotal))
                         .build());
     }
-
+    // Get orders by ranged date and below total
     @GetMapping(value = "/date-range-below-total", params = {"fromDate","untilDate","orderTotal"})
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByDateRangeAndBelowTotal(
             @RequestParam @DateTimeFormat(pattern = "d-M-yyyy") final LocalDate fromDate,
@@ -231,7 +241,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toLightResources(ordersByDateRangeBelowTotal))
                         .build());
     }
-
+    // Get orders and above total
     @GetMapping("/above-total/{orderTotal}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAboveTotal(
             @PathVariable final BigDecimal orderTotal) {
@@ -253,7 +263,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toLightResources(ordersByBelowTotal))
                         .build());
     }
-
+    // Get orders by order item name
     @GetMapping(value = "/item", params = {"itemName"})
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderItem(
             @RequestParam final String itemName) {
@@ -264,6 +274,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toLightResources(ordersByItemsName))
                         .build());
     }
+    // Get orders by address info [ Partially match ]
     @GetMapping("/address")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAddress(
             @RequestParam(required = false) final String address,
@@ -277,7 +288,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .data(orderMapper.toLightResources(ordersByAddress))
                         .build());
     }
-
+    // Get stores revenues
    @GetMapping("/stores-revenues")
     public ResponseEntity<ApiResponse<List<KeyValue<String,BigDecimal>>>>findOrdersByStoresRevenues() {
 
