@@ -9,14 +9,18 @@ import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.KeyValue;
 import backend_group_5.we_lead_bootcamp.transfer.resource.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+
+import static java.lang.Long.parseLong;
 
 // @RestController:
 // → With this annotation we define this class responsibly for handling incoming request and returning responses
@@ -33,12 +37,14 @@ public class OrderController extends BaseController<Order, OrderResource>{
     private final OrderService orderService;
     private final OrderMapper orderMapper;
 
+    private final ProductService productService;
     private final ProductMapper productMapper;
 
+    private final UserService userService;
     private final UserMapper userMapper;
 
+    private final  StoreService storeService;
     private final StoreMapper storeMapper;
-
 
     @Override
     protected BaseService<Order,Long> getBaseService(){return orderService;}
@@ -48,59 +54,63 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
 
     //Get all orders
-//    @GetMapping
-//    public ResponseEntity<ApiResponse<List<OrderResource>>> findAll(){
-//        return ResponseEntity.ok(
-//                ApiResponse.<List<OrderResource>>builder()
-//                        .data(orderMapper.toResources(orderService.findAll()))
-//                        .build());
-//    }
+    @Override
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<OrderResource>>> findAll(){
+        return ResponseEntity.ok(
+                ApiResponse.<List<OrderResource>>builder()
+                        .data( orderMapper.toLightResources( orderService.findAll()) )
+                        .build());
+    }
+    //Get by id
+    @Override
+    @GetMapping("{id}")
+    public ResponseEntity<ApiResponse<OrderResource>> get(@PathVariable("id") final Long id){
+        return ResponseEntity.ok(
+                ApiResponse.<OrderResource>builder()
+                        .data(orderMapper.toLightResource(orderService.getById(id)))
+                        .build());
+    }
 
     // Get order by order number
     @GetMapping("/orderNumber/{orderNumber}")
     public ResponseEntity<ApiResponse<OrderResource>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.findByOrderNumber(ordNumber)))
+                        .data(orderMapper.toLightResource(orderService.findByOrderNumber(ordNumber)))
                         .build());
     }
 
     //Initiate Order
-    // @PostMapping(params = {"user", "store"}) // No need for params we will pass the data to the body
-//    @RequestMapping("initialize")
-    @PostMapping("/initialize")
-    public ResponseEntity<ApiResponse<OrderResource>> createOrder(@RequestBody final UserResource userR,@RequestBody final StoreResource storeR) {
-       logger.warn("userR→ {}",userR);
+    @PostMapping(path = "/initialize",params = {"UserId","StoreId"})
+    public ResponseEntity<ApiResponse<OrderResource>> createOrder(
+            @RequestParam("UserId") final Long UserId,
+            @RequestParam("StoreId") final Long StoreId) {
 
-//        User user = userMapper.toDomain(userR);
-//        Store store = storeMapper.toDomain(storeR);
+        UserResource userR = userMapper.toResource(userService.getById(UserId) );
+        User user = userMapper.toDomain( userR);
+
+        StoreResource storeR = storeMapper.toResource(storeService.getById(StoreId) );
+        Store store = storeMapper.toDomain(storeR);
+
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.getById(1L)))
+                        .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
                         .build());
-
-//        return ResponseEntity.ok(
-//                ApiResponse.<OrderResource>builder()
-//                        .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
-//                        .build());
     }
 
-    //Add item
-    // @PostMapping(params = {"order","product","quantity"})
-//    @RequestMapping("/items/add")
+    //Add item - NOT FINISHED
     @PostMapping("/items/add")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR, @RequestBody final int quantity){
+    public void addItem(@RequestBody final OrderResource orderR, final ProductResource productR, final int quantity){
 
             var ord = orderMapper.toDomain(orderR);
-            var prod = productMapper.toDomain(productR);
+            var prod = productMapper.toDomain( productR ); ;
 
             orderService.addItem(ord, prod, quantity);
     }
 
-    //Update item
-//    @PutMapping(params = {"order","product","quantity"})
-//    @RequestMapping("/items/update")
+    //Update item - NOT FINISHED
     @PutMapping("/items/update")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR, @RequestBody final int quantity){
@@ -109,8 +119,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         orderService.updateItem(ord,prod,quantity);
     }
-    //@DeleteMapping(params = {"order","product"})
-//    @RequestMapping
+    // Delete an Item - NOT FINISHED
     @DeleteMapping("/items/remove")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeItem(@RequestBody final OrderResource orderR, @RequestBody final ProductResource productR){
@@ -120,10 +129,8 @@ public class OrderController extends BaseController<Order, OrderResource>{
         orderService.removeItem(ord,prod);
     }
 
-    //Finalize Order
-    // @PostMapping(params = {"order", "paymentMethod","address","orderNote"})
+    //Finalize Order - NOT FINISHED
     @PostMapping("/finalize")
-//    @RequestMapping
     public ResponseEntity<ApiResponse<OrderResource>> finalizeOrder(
             @RequestBody final OrderResource orderR,
             @RequestBody final PaymentMethod paymentMethod,
@@ -141,12 +148,13 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
     //Get All orders of a user
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByUser(@PathVariable("userId") final Long userId) {
+    public ResponseEntity<ApiResponse<List<OrderResource>>> getOrdersByUser(
+            @PathVariable("userId") final Long userId) {
         List<Order> userOrders = orderService.findOrdersByUser(userId);
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(userOrders))
+                        .data(orderMapper.toLightResources(userOrders))
                         .build());
     }
     @GetMapping("/store/{storeId}")
@@ -155,7 +163,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(storeOrders))
+                        .data(orderMapper.toLightResources(storeOrders))
                         .build());
     }
 
@@ -167,11 +175,10 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByDate))
+                        .data(orderMapper.toLightResources(ordersByDate))
                         .build());
     }
     //Get orders by status
-
     @GetMapping("/status/{orderStatus}")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByOrderStatus(
             @PathVariable OrderStatus orderStatus) {
@@ -180,7 +187,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByStatus))
+                        .data(orderMapper.toLightResources(ordersByStatus))
                         .build());
     }
 
@@ -194,7 +201,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByDateRange))
+                        .data(orderMapper.toLightResources(ordersByDateRange))
                         .build());
     }
 
@@ -208,7 +215,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByDateRangeAboveTotal))
+                        .data(orderMapper.toLightResources(ordersByDateRangeAboveTotal))
                         .build());
     }
 
@@ -221,7 +228,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByDateRangeBelowTotal))
+                        .data(orderMapper.toLightResources(ordersByDateRangeBelowTotal))
                         .build());
     }
 
@@ -232,7 +239,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByAboveTotal))
+                        .data(orderMapper.toLightResources(ordersByAboveTotal))
                         .build());
     }
 
@@ -243,7 +250,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByBelowTotal))
+                        .data(orderMapper.toLightResources(ordersByBelowTotal))
                         .build());
     }
 
@@ -254,22 +261,25 @@ public class OrderController extends BaseController<Order, OrderResource>{
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByItemsName))
+                        .data(orderMapper.toLightResources(ordersByItemsName))
                         .build());
     }
     @GetMapping("/address")
     public ResponseEntity<ApiResponse<List<OrderResource>>> findOrdersByAddress(
-            @RequestBody final OrderAddress orderAddress) {
-        List<Order> ordersByAddress = orderService.findOrdersByAddress(orderAddress);
+            @RequestParam(required = false) final String address,
+            @RequestParam(required = false) final Integer streetNumber,
+            @RequestParam(required = false) final String city ) {
+
+        List<Order> ordersByAddress = orderService.findOrdersByAddress(address,streetNumber,city);
 
         return ResponseEntity.ok(
                 ApiResponse.<List<OrderResource>>builder()
-                        .data(orderMapper.toResources(ordersByAddress))
+                        .data(orderMapper.toLightResources(ordersByAddress))
                         .build());
     }
 
    @GetMapping("/stores-revenues")
-    public ResponseEntity<ApiResponse<List<KeyValue<String, BigDecimal>>>>findOrdersByStoresRevenues() {
+    public ResponseEntity<ApiResponse<List<KeyValue<String,BigDecimal>>>>findOrdersByStoresRevenues() {
 
        List<KeyValue<String, BigDecimal>> ordersByStoresRevenues = orderService.findOrdersByStoresRevenues();
 
@@ -279,6 +289,14 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
+//    @GetMapping("/orderwithusers")
+//    public ResponseEntity<ApiResponse<List<OrderAndUserResource>>>findAllOrderWithUserData() {
+//
+//        return ResponseEntity.ok(
+//                ApiResponse.<List<OrderAndUserResource>>builder()
+//                        .data(orderMapper.toResources(orderService.findAllOrderWithUserData()))
+//                        .build());
+//    }
 
 
 

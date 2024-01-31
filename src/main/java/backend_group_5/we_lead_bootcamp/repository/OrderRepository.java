@@ -30,7 +30,11 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord FROM Order ord WHERE ord.store.id = :storeId")
     List<Order> findOrdersByStore(Long storeId);
 
-    @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) >= :fromDate AND CAST(ord.createDate AS DATE) <= :untilDate AND ord.orderTotal >= :total")
+    @Query("SELECT ord " +
+            "FROM Order ord " +
+            "WHERE CAST(ord.createDate AS DATE) >= :fromDate " +
+            "AND CAST(ord.createDate AS DATE) <= :untilDate " +
+            "AND ord.orderTotal >= :total")
     List<Order> findOrdersByRangedDateAndAboveTotal(LocalDate fromDate, LocalDate untilDate, BigDecimal total);
 
     @Query("SELECT ord FROM Order ord WHERE CAST(ord.createDate AS DATE) >= :fromDate AND CAST(ord.createDate AS DATE) <= :untilDate AND ord.orderTotal <= :total")
@@ -48,13 +52,26 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query("SELECT ord FROM Order ord JOIN FETCH ord.orderItems oi WHERE oi.product.name LIKE %:orderItemName%")
     List<Order> findOrdersByOrderItem(String orderItemName);
 
-    @Query("SELECT new backend_group_5.we_lead_bootcamp.transfer.KeyValue( st.name, SUM(ord.orderTotal) ) FROM Order ord JOIN ord.store st WHERE ord.store.id = st.id GROUP BY st.name ORDER BY SUM(ord.orderTotal) ASC")
+    @Query("SELECT new backend_group_5.we_lead_bootcamp.transfer.KeyValue( st.name, SUM(ord.orderTotal) ) " +
+            "FROM Order ord " +
+            "JOIN ord.store st " +
+            "WHERE ord.store.id = st.id " +
+            "GROUP BY st.name " +
+            "ORDER BY SUM(ord.orderTotal) ASC")
     List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues();
 
     @Query("SELECT ord " +
             "FROM Order ord "+
             "JOIN FETCH ord.orderAddressList addr " +
-            "WHERE addr.address LIKE %:ordAddress% OR addr.streetNumber = :ordStreetNum OR addr.city LIKE %:ordCity%")
+            "WHERE addr.address LIKE %:ordAddress% OR " +
+            "addr.streetNumber = :ordStreetNum OR " +
+            "addr.city LIKE %:ordCity%")
     List<Order> findOrdersByAddress(String ordAddress, Integer ordStreetNum, String ordCity);
+
+    @Query("SELECT ord FROM Order ord JOIN ord.user us")
+    List<Order> findAllOrderWithUserData();
+
+//    @Query("SELECT ord FROM Order ord")
+//    List<Order> findAllOrders();
 
 }

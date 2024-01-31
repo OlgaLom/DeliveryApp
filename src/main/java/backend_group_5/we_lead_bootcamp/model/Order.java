@@ -51,6 +51,7 @@ public class Order extends BaseModel{
     @Column(length = 11, nullable = false)
     private PaymentMethod paymentMethod;
 
+    @ToString.Exclude
     @NotNull(message = "Store Object cannot be null.")
     @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
