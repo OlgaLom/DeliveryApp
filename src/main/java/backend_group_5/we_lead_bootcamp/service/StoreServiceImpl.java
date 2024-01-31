@@ -1,5 +1,6 @@
 package backend_group_5.we_lead_bootcamp.service;
 
+import backend_group_5.we_lead_bootcamp.model.Product;
 import backend_group_5.we_lead_bootcamp.model.Review;
 import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.enums.StoreCategoryVariation;
@@ -31,6 +32,10 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
     @Override
     public Store getStoreByName(String name) {
         return storeRepository.getStoreByName(name);
+    }
+    @Override
+    public Store getById(Long id) {
+        return getRepository().getReferenceById(id);
     }
 
     @Override

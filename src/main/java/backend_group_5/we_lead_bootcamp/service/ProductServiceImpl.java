@@ -101,7 +101,6 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         return productRepository.getProductByToppings(toppings);
     }
     @Override
-    //@Transactional(readOnly = true)
     public List<Product> findProductsByStore(Long storeId) {
         return productRepository.findProductsByStore(storeId);
     }
