@@ -3,14 +3,10 @@ package backend_group_5.we_lead_bootcamp.model;
 import backend_group_5.we_lead_bootcamp.model.enums.PaymentMethod;
 import backend_group_5.we_lead_bootcamp.model.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Getter
@@ -30,6 +26,7 @@ public class User extends  BaseModel{
     private String email;
 
     @Column
+    @NotNull
     private String password;
 
     //@NotNull(message = "First name cannot be null")
@@ -39,6 +36,7 @@ public class User extends  BaseModel{
     @Column
     private  String lastName;
     @Temporal(TemporalType.DATE)
+    @NotNull
     @Column
     private LocalDate birthDate; //dd/MM/yyyy
     @Min(value = 18, message = "A customer cannot be under 18")
@@ -48,7 +46,9 @@ public class User extends  BaseModel{
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private List<Address> addressList;
-    @Column
+    @Size(min = 10, max = 10, message = "Phone number must be of 10 digits")
+    @Column(unique = true)
+    @NotNull
     private String phone;
     @Column
     private  String city;
@@ -63,17 +63,18 @@ public class User extends  BaseModel{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn
     private List<Store> favouriteStores;
-    public Integer setAge() {
-        if (birthDate != null) {
-            LocalDate currentDate = LocalDate.now();
-            System.out.println(currentDate);
-            long years = ChronoUnit.YEARS.between(birthDate, currentDate);
-            this.age = Math.toIntExact(years);
-            System.out.println(age);
-        } else {
-            this.age = null; // or set to a default value
-        }
-        return age;
-    }
+//    public Integer setAge() {
+//        if (birthDate != null) {
+//            LocalDate currentDate = LocalDate.now();
+//            System.out.println(currentDate);
+//            long years = ChronoUnit.YEARS.between(birthDate, currentDate);
+//            this.age = Math.toIntExact(years);
+//
+//        } else {
+//            this.age = null; // or set to a default value
+//        }
+//        return age;
+//
+//    }
 
 }

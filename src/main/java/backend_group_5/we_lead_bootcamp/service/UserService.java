@@ -4,6 +4,7 @@ import backend_group_5.we_lead_bootcamp.model.Address;
 import backend_group_5.we_lead_bootcamp.model.Order;
 import backend_group_5.we_lead_bootcamp.model.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserService  extends  BaseService<User,Long>{
@@ -18,7 +19,7 @@ public interface UserService  extends  BaseService<User,Long>{
      String hashPassword(String password, String salt) ;
     boolean verifyPassword (String password, String key, String salt);
     String generateSalt (final int length);
-
+     Integer setAge(LocalDate birthDate);
 
     void updatePhone(String email, String phone);
     void updateEmail(String email,String new_email,String password);

@@ -71,11 +71,11 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
                     .email("c.giannacoulis@codehub.gr")
                     .phone("1234567890")
                     .password(userService.hashPassword("securePassword123",salt1))
-
                     .addressList(Arrays.asList(
                             Address.builder().address("Tennessee Avenue").streetNumber(3583).city("SomeCity").build()))
                     .firstName("Constantinos")
                     .lastName("Giannacoulis")
+                    .age(userService.setAge(LocalDate.parse("1950-10-20")))
                     .birthDate(LocalDate.parse("1950-10-20"))
                     .storedSalt(salt1)
                     .paymentMethod(PaymentMethod.CREDIT_CARD)
@@ -83,21 +83,21 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
                     .build()
             ,
             User.builder().email("john.doe@example.com")
-                    .phone("987654321")
+                    .phone("9876543210")
                     .password(userService.hashPassword("strongPass456",salt2))
-
                     .addressList(Arrays.asList(
                             Address.builder().address("Main Street").streetNumber(123).city("AnotherCity").build()))
                     .firstName("John")
                     .lastName("Doe")
                     .birthDate(LocalDate.parse("1990-03-12"))
+                    .age(userService.setAge(LocalDate.parse("1990-03-12")))
                     .storedSalt(salt2)
                     .paymentMethod(PaymentMethod.PAYPAL)
                     .role(Role.USER)
                     .build(),
             User.builder()
                     .email("jane.smith@example.com")
-                    .phone("555555555")
+                    .phone("5555555559")
                     .password(userService.hashPassword("securePass789",salt3))
 
                     .addressList(Arrays.asList(
@@ -105,16 +105,18 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
                     .firstName("Jane")
                     .lastName("Smith")
                     .birthDate(LocalDate.parse("1970-12-12"))
+                    .age(userService.setAge(LocalDate.parse("1970-12-12")))
                     .paymentMethod(PaymentMethod.COD)
                     .storedSalt(salt3)
                     .role(Role.USER)
                     .build(),
             User.builder()
                     .email("alice.jones@example.com")
-                    .phone("111223344")
-                    .password("password123")
-
-
+                    .phone("1112233446")
+                    .password(userService.hashPassword("password123",salt4))
+                    .birthDate(LocalDate.parse("2000-02-18"))
+                    .age(userService.setAge(LocalDate.parse("2000-02-18")))
+                    .storedSalt(salt4)
                     .addressList(Arrays.asList(
                             Address.builder().address("Elm Street").streetNumber(789).city("CityX").build()))
                     .firstName("Alice")
@@ -155,9 +157,10 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
         newUserRequest.setPassword("marypassword");
         newUserRequest.setFirstName("Mary");
         newUserRequest.setLastName("Shelley");
+        newUserRequest.setPhone("3456781234");
         newUserRequest.setBirthDate(LocalDate.parse("1990-12-19"));
-        newUserRequest.setAge(newUserRequest.setAge()); // Calculate age based on birth date
-
+        // Calculate age based on birth date
+        newUserRequest.setPaymentMethod(PaymentMethod.COD);
         newUserRequest.setPaymentMethod(PaymentMethod.CREDIT_CARD);
         newUserRequest.setAddressList(Arrays.asList(
                 Address.builder().address("place").streetNumber(1).city("coty").build(),

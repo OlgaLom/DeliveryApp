@@ -18,6 +18,8 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
@@ -111,8 +113,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setFirstName(new_user.getFirstName());
         user.setLastName(new_user.getLastName());
         user.setBirthDate(new_user.getBirthDate());
-        user.setAge(new_user.setAge());
+        user.setAge(setAge(user.getBirthDate()));
+        user.setPhone(new_user.getPhone());
         user.setAddressList(new_user.getAddressList());
+
 
 
 
@@ -236,6 +240,21 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         //user.setAddressList(address);
         addressRepository.save(address);
         userRepository.save(user);
+    }
+    @Override
+    public Integer setAge(LocalDate birthDate) {
+        Integer age;
+        if (birthDate != null) {
+            LocalDate currentDate = LocalDate.now();
+            System.out.println(currentDate);
+            long years = ChronoUnit.YEARS.between(birthDate, currentDate);
+             age = Math.toIntExact(years);
+
+        } else {
+            age = null; // or set to a default value
+        }
+        return age;
+
     }
 
 
