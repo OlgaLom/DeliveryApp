@@ -64,10 +64,7 @@ public class StoreCategoryServiceImpl extends BaseServiceImpl<StoreCategory> imp
     public boolean doesCategoryExist(Long categoryId) {
         return storeCategoryRepository.existsById(categoryId);
     }
-//    @Override
-//    public List<StoreCategory> findAllCategories() {
-//        return findAll();
-//    }
+
     @Override
     public long countCategories() {
         return count();

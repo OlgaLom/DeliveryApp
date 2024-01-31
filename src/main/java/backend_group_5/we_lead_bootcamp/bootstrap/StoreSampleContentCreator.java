@@ -98,23 +98,23 @@ public class StoreSampleContentCreator extends BaseComponent implements CommandL
 //        logger.info("Created {}.", newstore);
 
         List<Store> stores = List.of(
-                Store.builder().name("MAMA BAKERY").address("Karolou 1").phone("698765432")
+                Store.builder().name("MAMA BAKERY").address("Karolou 1").phone("6987654320")
                         .vatNumber("VAT456").minOrderAmount(BigDecimal.valueOf(5.0)).category(StoreCategoryVariation.ASIAN_FOOD).deliveryTime(60).build(),
-                Store.builder().name("ASIAN HOUSE").address("Evzonon 32").phone("987654321")
+                Store.builder().name("ASIAN HOUSE").address("Evzonon 32").phone("9876543211")
                         .vatNumber("VAT789").minOrderAmount(BigDecimal.valueOf(5.5)).category(StoreCategoryVariation.GRILL).deliveryTime(30).build(),
-                Store.builder().name("SOUVLAKI BAR").address("Nikis 103").phone("698761223")
+                Store.builder().name("SOUVLAKI BAR").address("Nikis 103").phone("6987612232")
                         .vatNumber("VAT001").minOrderAmount(BigDecimal.valueOf(7.5)).category(StoreCategoryVariation.CAFE).deliveryTime(25).build(),
-                Store.builder().name("COFFEE HUGS").address("Athinon 53").phone("698761333")
+                Store.builder().name("COFFEE HUGS").address("Athinon 53").phone("6987613333")
                         .vatNumber("VAT002").minOrderAmount(BigDecimal.valueOf(15.0)).category(StoreCategoryVariation.BURGER).deliveryTime(35).build(),
-                Store.builder().name("BURGER TEMPLE").address("Gounari 5").phone("698877665")
+                Store.builder().name("BURGER TEMPLE").address("Gounari 5").phone("6988776654")
                         .vatNumber("VAT003").minOrderAmount(BigDecimal.valueOf(2.5)).category(StoreCategoryVariation.DELI).deliveryTime(50).build(),
-                Store.builder().name("DERLICATESSEN").address("Olympou 35").phone("231098887")
+                Store.builder().name("DERLICATESSEN").address("Olympou 35").phone("2310988875")
                         .vatNumber("VAT004").minOrderAmount(BigDecimal.valueOf(5.0)).category(StoreCategoryVariation.GRILL).deliveryTime(35).build(),
-                Store.builder().name("KOUTOUKI").address("Filippou 2").phone("231023345")
+                Store.builder().name("KOUTOUKI").address("Filippou 2").phone("2310233455")
                         .vatNumber("VAT005").minOrderAmount(BigDecimal.valueOf(7.5)).category(StoreCategoryVariation.CREPERIE).deliveryTime(20).build(),
-                Store.builder().name("CREPOMANIAC").address("Eirinis 17").phone("231012234")
+                Store.builder().name("CREPOMANIAC").address("Eirinis 17").phone("2310122345")
                         .vatNumber("VAT006").minOrderAmount(BigDecimal.valueOf(3.5)).category(StoreCategoryVariation.BREAKFAST).deliveryTime(30).build(),
-                Store.builder().name("AT TIFANNY'S").address("Egnatias 15").phone("698776655")
+                Store.builder().name("AT TIFANNY'S").address("Egnatias 15").phone("6987766556")
                         .vatNumber("VAT007").minOrderAmount(BigDecimal.valueOf(3.5)).category(StoreCategoryVariation.BRUNCH).deliveryTime(45).build()
                 // Add more stores as needed
         );

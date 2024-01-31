@@ -18,27 +18,15 @@ import java.util.List;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long> {
- //   Store createStore(Store store); // Sto service impl to createStore to onomase save(JPA)
     Store getStoreByName(String name);
-//    List<Store> createAllStores(List<Store> stores); // Sto service impl to createStore to onomase saveAll(JPA)
-//    Store updateStore(Long storeId, Store store); // Sto service impl to createStore to onomase save(JPA)
+    //Store updateStore(Long storeId, Store store);
     void deleteStoreById(Long storeId);
     List<Store> findAllStoresByNameIgnoreCase(String name);
     List<Store> findAllStoresByCategory(@NotNull(message = "Category field is required") StoreCategoryVariation category);
-//    @Query("SELECT st FROM Store st JOIN st.reviews rev WHERE st.category = :category GROUP BY st.name HAVING AVG(rev.rating) > :rating  ")
-//    List<Store> findStoresByCategoryAndRating(@NotNull(message = "Category field is required") StoreCategoryVariation category, double rating);
-//    @Transactional
-////    @Modifying
-////    @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
-////            "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
-////    List<Object[]> findTopRatedStores(); //Pageable pageable
-//    @Query( "SELECT AVG(rev.rating) as rating, st.name as storeName " +
-//            "FROM Store st JOIN st.reviews rev GROUP BY st.name ORDER BY rating DESC")
-//    Page<Object[]> findTopRatedStores(Pageable pageable);
-@Query("SELECT AVG(rev.rating) as rating, st as store FROM Store st JOIN st.reviews rev " +
+    @Query("SELECT AVG(rev.rating) as rating, st as store FROM Store st JOIN st.reviews rev " +
         "WHERE :category IS NULL OR st.category = :category " +
         "GROUP BY st ORDER BY rating DESC")
-List<Object[]> findTopRatedStoresByCategory(@Param("category") StoreCategoryVariation category);
+    List<Object[]> findTopRatedStoresByCategory(@Param("category") StoreCategoryVariation category);
 
     List<Store> findStoresByMinOrderAmount(BigDecimal minOrderAmount);
     @Query("SELECT st.reviews FROM Store st WHERE st.id = :storeId")

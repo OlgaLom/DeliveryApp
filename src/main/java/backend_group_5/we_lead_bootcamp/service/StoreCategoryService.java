@@ -12,7 +12,6 @@ public interface StoreCategoryService extends BaseService<StoreCategory, Long> {
     Optional<StoreCategory> getStoreCategoryByName(StoreCategoryVariation name);
     StoreCategory updateCategory(Long categoryId, StoreCategoryVariation newName);
 
-
     void deleteCategory(Long categoryId);
     void deleteCategoryByName(StoreCategoryVariation name);
 
@@ -22,7 +21,6 @@ public interface StoreCategoryService extends BaseService<StoreCategory, Long> {
 
     List<StoreCategory> createAllCategories(List<StoreCategory> categories);
 
-//    List<StoreCategory> findAllCategories();
     long countCategories();
 
 

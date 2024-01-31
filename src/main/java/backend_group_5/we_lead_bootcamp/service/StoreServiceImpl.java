@@ -38,10 +38,10 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.saveAll(stores);
     }
 
-    @Override
-    public Store updateStore( Store store){
-        return storeRepository.save(store);
-    }
+//    @Override
+//    public Store updateStore( Store store){
+//        return storeRepository.save(store);
+//    }
 
     @Override
     public void deleteStoreById(Long storeId) {
@@ -56,23 +56,9 @@ public class StoreServiceImpl extends BaseServiceImpl<Store> implements StoreSer
         return storeRepository.findAllStoresByCategory(category);
     }
 
-//    @Override
-//    public List<Store> findStoresByCategoryAndRating(StoreCategory category,int rating){
-//        return storeRepository.findStoresByCategoryAndRating(category.getDisplayName(),rating);
-//    }
-
-    //Pageable - PageReq (JPA) Pagination is a technique used to limit the number of results returned from a query
-    // and to provide the client with the ability to request more results as needed.
-    // Pageable - info about the page
-    //PageRequest - Request for the (e.g) 1st page, with number limit in items per page
-
-//    @Override
-//    public Page<Object[]> findTopRatedStores(int limit) {
-//        return storeRepository.findTopRatedStores(PageRequest.of(0,limit));
-//    }
-@Override
-public List<Object[]> findTopRatedStores(int limit, StoreCategoryVariation category) {
-    return storeRepository.findTopRatedStoresByCategory(category)
+    @Override
+    public List<Object[]> findTopRatedStores(int limit, StoreCategoryVariation category) {
+        return storeRepository.findTopRatedStoresByCategory(category)
             .stream()
             .limit(limit)
             .collect(Collectors.toList());
