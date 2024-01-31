@@ -33,10 +33,6 @@ public class  OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSe
     }
 
     @Override
-    public List<Order> findAll(){
-        return orderRepository.findAll();
-    }
-    @Override
     public Order initiateOrder(final User user, final Store store) {
         return Order.builder().user(user).store(store).build();
     }
