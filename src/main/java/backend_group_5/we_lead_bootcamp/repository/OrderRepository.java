@@ -74,7 +74,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
             "JOIN ord.store st " +
             "WHERE ord.store.id = st.id " +
             "GROUP BY st.name " +
-            "ORDER BY SUM(ord.orderTotal) ASC")
+            "ORDER BY SUM(ord.orderTotal) DESC")
     List<KeyValue<String, BigDecimal>> findOrdersByStoresRevenues();
 
     @Query("SELECT ord " +
