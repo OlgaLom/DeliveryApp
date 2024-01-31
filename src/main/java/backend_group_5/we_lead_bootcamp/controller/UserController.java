@@ -43,13 +43,23 @@ public class UserController extends BaseController<User, UserResource> {
     }
 
 
- /*   @ResponseBody
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
-    public String hello() {
-        return "hello world";
-    }*/
-//
+    @Override
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<UserResource>>> findAll(){
+        return ResponseEntity.ok(
+                ApiResponse.<List<UserResource>>builder()
+                        .data(userMapper.toLightResources( userService.findAll()))
+                        .build());
+    }
 
+    @Override
+    @GetMapping("{id}")
+    public ResponseEntity<ApiResponse<UserResource>> get(@PathVariable("id") final Long id){
+        return ResponseEntity.ok(
+                ApiResponse.<UserResource>builder()
+                        .data(userMapper.toLightResource(userService.getById(id)))
+                        .build());
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UserResource>> createAccount(@RequestBody UserResource userResource) {
@@ -60,28 +70,7 @@ public class UserController extends BaseController<User, UserResource> {
         user.setPaymentMethod(userMapper.toDomainPaymentMethod(userResource.getPaymentMethod()));
         System.out.println(user.getPaymentMethod());
 
-        //mporei na mn xreiazetai
-        /*example request
-        {
-  "email": "user@example.com",
-  "password": "secretpassword",
-  "firstName": "John",
-  "lastName": "Doe",
-  "age": 25,
-  "addressList": [
-    {
-        "address": "123 Main St",
-        "streetNumber": 124,
-        "city": "City1"
 
-    }
-  ],
-  "phone": 1234567890,
-  "city": "UserCity",
-  "paymentMethod": "CREDIT_CARD",
-  "role": "USER"
-}
-         */
 
         return new ResponseEntity<>(ApiResponse.<UserResource>builder()
                 .data(userMapper.toResource(userService.createAccount(user)))
