@@ -10,7 +10,6 @@ import backend_group_5.we_lead_bootcamp.service.BaseService;
 import backend_group_5.we_lead_bootcamp.service.UserService;
 import backend_group_5.we_lead_bootcamp.transfer.ApiResponse;
 import backend_group_5.we_lead_bootcamp.transfer.resource.AddressResource;
-import backend_group_5.we_lead_bootcamp.transfer.resource.StoreResource;
 import backend_group_5.we_lead_bootcamp.transfer.resource.UserResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -92,17 +91,13 @@ public class UserController extends BaseController<User, UserResource> {
     }
 
     @PostMapping("/login")
-    public void login(@RequestParam String username,@RequestParam String password) {
-     /*   var loginRequest = userMapper.toDomain(userResource);
-        String username = loginRequest.getEmail();
-        String password = loginRequest.getPassword();*/
-        User user=userService.logIn(username,password);
-        System.out.println(user);
-       // return new ResponseEntity<>(ApiResponse.<UserResource>builder()
-         //       .data(userMapper.toResource(userService.logIn(username,password)))
-           //     .build(),
-              //  getNoCacheHeaders(),
-             //   HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<UserResource>> login(@RequestParam String username,@RequestParam String password) {
+
+        return new ResponseEntity<>(ApiResponse.<UserResource>builder()
+                .data(userMapper.toLightResource(userService.logIn(username,password)))
+                .build(),
+                getNoCacheHeaders(),
+                HttpStatus.CREATED);
 
     }
 
@@ -140,18 +135,16 @@ public class UserController extends BaseController<User, UserResource> {
     }
     @PutMapping("/update/favourite")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateFavouriteStore(@RequestBody UserResource userResource, @RequestBody StoreResource storeResource){
-        var user = userMapper.toDomain(userResource);
-        Long id = user.getId();
-        var store = storeMapper.toDomain(storeResource);
-        System.out.println(userService.updateFavouriteStores(id,store));
+    public void updateFavouriteStore(@RequestBody String email, String storeName){
 
-
+        var user = userService.findByEmail(email);
+        userService.updateFavouriteStores(user,storeName);
     }
     @PutMapping("/update/address")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAddress(@RequestBody UserResource userResource, @RequestBody AddressResource addressResource){
-        var user = userMapper.toDomain(userResource);
+    public void updateAddress(@RequestParam String email,@RequestBody  AddressResource addressResource){
+
+        User user = userService.findByEmail(email);
         var address = addressMapper.toDomain(addressResource);
         userService.updateAddress(user.getId(),address);
 

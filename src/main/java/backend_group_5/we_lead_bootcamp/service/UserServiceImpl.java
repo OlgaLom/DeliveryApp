@@ -2,11 +2,11 @@ package backend_group_5.we_lead_bootcamp.service;
 
 import backend_group_5.we_lead_bootcamp.model.Address;
 import backend_group_5.we_lead_bootcamp.model.Order;
-import backend_group_5.we_lead_bootcamp.model.Store;
 import backend_group_5.we_lead_bootcamp.model.User;
 import backend_group_5.we_lead_bootcamp.model.enums.Role;
 import backend_group_5.we_lead_bootcamp.repository.AddressRepository;
 import backend_group_5.we_lead_bootcamp.repository.OrderRepository;
+import backend_group_5.we_lead_bootcamp.repository.StoreRepository;
 import backend_group_5.we_lead_bootcamp.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final OrderRepository orderRepository;
+    private final StoreRepository storeRepository;
     private static final SecureRandom RAND = new SecureRandom();
     private static final int ITERATIONS = 65536;
     private static final int KEY_LENGTH = 512;
@@ -112,7 +113,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setBirthDate(new_user.getBirthDate());
         user.setAge(new_user.setAge());
         user.setAddressList(new_user.getAddressList());
-        System.out.println("THIS IS THE PAYMENT METHOD ");
+
+
 
         user.setPaymentMethod(new_user.getPaymentMethod());
 
@@ -146,13 +148,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    @Transactional
     public User logIn(String user,String password) {
         User result = null;
         User user_login = userRepository.findByEmail(user);
         String key = hashPassword(password, user_login.getPassword());
         String salt = user_login.getStoredSalt();
         if (verifyPassword(password,user_login.getPassword(),salt)) {
-            System.out.println("LOGGRF IN");
+            System.out.println("LOGGED IN");
 
             result = user_login;
         } else {
@@ -231,17 +234,21 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         List<Address> addressList = user.getAddressList();
        addressList.add(address);
         //user.setAddressList(address);
+        addressRepository.save(address);
         userRepository.save(user);
     }
 
 
 
     @Override
-    public User updateFavouriteStores(Long userId, Store store) {
-        User user = userRepository.getReferenceById(userId);
-        user.getFavouriteStores().add(store);
-        userRepository.save(user);
-        return user;
+    @Transactional
+    public void updateFavouriteStores(User user, String name) {
+
+        System.out.println(user);
+
+       storeRepository.getStoreByName(name);
+
+
     }
     //add favourite store
 
