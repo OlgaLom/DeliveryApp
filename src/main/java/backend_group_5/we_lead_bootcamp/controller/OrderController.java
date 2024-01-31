@@ -83,6 +83,7 @@ public class OrderController extends BaseController<Order, OrderResource>{
 //                        .data(orderMapper.toResource(orderService.findByOrderNumber(ordNumber)))
 //                        .build());
 //    }
+    // Get order by order number - New (but not best) Implementation
     @GetMapping("/orderNumber/{orderNumber}")
     public ResponseEntity<ApiResponse<OrderByOrderNumber<String,BigDecimal, EnumType, Date,EnumType,String,String,String,String>>> getOrderByOrderNumber(@PathVariable("orderNumber") final String ordNumber){
          return ResponseEntity.ok(
@@ -91,21 +92,21 @@ public class OrderController extends BaseController<Order, OrderResource>{
                         .build());
     }
 
-    //Initiate Order
+    //Initiate Order - NOT FINISHED
     @PostMapping(path = "/initialize",params = {"UserId","StoreId"})
     public ResponseEntity<ApiResponse<OrderResource>> createOrder(
             @RequestParam("UserId") final Long UserId,
             @RequestParam("StoreId") final Long StoreId) {
 
-        UserResource userR = userMapper.toResource(userService.getById(UserId) );
-        User user = userMapper.toDomain( userR);
+        User userObj = userService.getById(UserId);
 
-        StoreResource storeR = storeMapper.toResource(storeService.getById(StoreId) );
-        Store store = storeMapper.toDomain(storeR);
+        Store storeObj = storeService.getById(StoreId);
 
+//        logger.warn("INITIATE ORDER → {}", orderMapper.toLightResource( orderService.initiateOrder(userObj,storeObj)) );
+//        return null;
         return ResponseEntity.ok(
                 ApiResponse.<OrderResource>builder()
-                        .data(orderMapper.toResource(orderService.initiateOrder(user,store)))
+                        .data(orderMapper.toResource(orderService.initiateOrder(userObj,storeObj)))
                         .build());
     }
 

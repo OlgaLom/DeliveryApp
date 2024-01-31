@@ -53,8 +53,4 @@ public interface OrderService extends BaseService<Order, Long>{
 
 //    List<Order> findAllOrderWithUserData();
 
-//    List<Order> findAll();
-
-
-
 }
