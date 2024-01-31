@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Component
-@Profile("generate-catalog-products")
+@Profile("generate-products")
 @RequiredArgsConstructor
 public class ProductCatalogSampleContentCreator extends BaseComponent implements CommandLineRunner{
     private final ProductService productService;
